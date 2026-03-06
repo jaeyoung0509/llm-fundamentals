@@ -24,16 +24,16 @@
 
 ## 추천 학습 순서
 
-<MermaidDiagram>
-flowchart LR
-  A["기초 수학 감각"] --> B["텐서와 PyTorch"]
-  B --> C["딥러닝 기본기"]
-  C --> D["Attention과 Transformer"]
-  D --> E["GPT-1부터 GPT-3까지"]
-  E --> F["RL과 RLHF"]
-  F --> G["평가, RAG, 배포, 운영"]
-  G --> H["프로젝트와 포트폴리오"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;기초 수학 감각&quot;] --> B[&quot;텐서와 PyTorch&quot;]
+  B --> C[&quot;딥러닝 기본기&quot;]
+  C --> D[&quot;Attention과 Transformer&quot;]
+  D --> E[&quot;GPT-1부터 GPT-3까지&quot;]
+  E --> F[&quot;RL과 RLHF&quot;]
+  F --> G[&quot;평가, RAG, 배포, 운영&quot;]
+  G --> H[&quot;프로젝트와 포트폴리오&quot;]`"
+/>
 
 ## 12주 러닝 스프린트
 

@@ -18,13 +18,13 @@ RLHF는 사람이 선호하는 응답을 더 자주 만들도록 모델을 보�
 
 ## 큰 그림
 
-<MermaidDiagram>
-flowchart LR
-  A["환경 또는 사용자 반응"] --> B["보상"]
-  B --> C["정책 업데이트"]
-  C --> D["새 응답 정책"]
-  D --> A
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;환경 또는 사용자 반응&quot;] --> B[&quot;보상&quot;]
+  B --> C[&quot;정책 업데이트&quot;]
+  C --> D[&quot;새 응답 정책&quot;]
+  D --> A`"
+/>
 
 ## 직관으로 보는 개념
 

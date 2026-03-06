@@ -17,13 +17,13 @@
 
 ## 권장 학습 순서
 
-<MermaidDiagram>
-flowchart TD
-  A["함수, 로그, 지수"] --> B["벡터와 행렬"]
-  B --> C["미분과 gradient"]
-  C --> D["확률과 softmax"]
-  D --> E["PyTorch training loop"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;함수, 로그, 지수&quot;] --> B[&quot;벡터와 행렬&quot;]
+  B --> C[&quot;미분과 gradient&quot;]
+  C --> D[&quot;확률과 softmax&quot;]
+  D --> E[&quot;PyTorch training loop&quot;]`"
+/>
 
 ## 수학 집중 TODO
 

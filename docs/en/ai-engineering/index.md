@@ -19,15 +19,15 @@ AI engineering means managing evaluation, deployment, observability, cost, and s
 
 ## System View
 
-<MermaidDiagram>
-flowchart LR
-  A["data and documents"] --> B["model/prompt experiments"]
-  B --> C["evaluation"]
-  C --> D["deployment"]
-  D --> E["monitoring"]
-  E --> F["improvement loop"]
-  F --> B
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;data and documents&quot;] --> B[&quot;model/prompt experiments&quot;]
+  B --> C[&quot;evaluation&quot;]
+  C --> D[&quot;deployment&quot;]
+  D --> E[&quot;monitoring&quot;]
+  E --> F[&quot;improvement loop&quot;]
+  F --> B`"
+/>
 
 ## Pattern Table
 

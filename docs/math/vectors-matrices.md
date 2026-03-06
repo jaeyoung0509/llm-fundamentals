@@ -14,13 +14,13 @@
 
 ## 한눈에 보는 shape 감각
 
-<MermaidDiagram>
-flowchart LR
-  A["입력 벡터 x: (d,)"] --> B["가중치 W: (d, h)"]
-  B --> C["출력 표현 h: (h,)"]
-  D["토큰 행렬 X: (n, d)"] --> E["W_q, W_k, W_v"]
-  E --> F["Q, K, V: (n, h)"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;입력 벡터 x: (d,)&quot;] --> B[&quot;가중치 W: (d, h)&quot;]
+  B --> C[&quot;출력 표현 h: (h,)&quot;]
+  D[&quot;토큰 행렬 X: (n, d)&quot;] --> E[&quot;W_q, W_k, W_v&quot;]
+  E --> F[&quot;Q, K, V: (n, h)&quot;]`"
+/>
 
 ## 왜 shape를 읽는 습관이 중요한가
 

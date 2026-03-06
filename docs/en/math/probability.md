@@ -12,13 +12,13 @@ A model is not a machine that always emits one certain answer. It produces a dis
 
 ## Output as a Distribution
 
-<MermaidDiagram>
-flowchart LR
-  A["logits"] --> B["softmax"]
-  B --> C["probability distribution"]
-  C --> D["argmax choice"]
-  C --> E["sampling choice"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;logits&quot;] --> B[&quot;softmax&quot;]
+  B --> C[&quot;probability distribution&quot;]
+  C --> D[&quot;argmax choice&quot;]
+  C --> E[&quot;sampling choice&quot;]`"
+/>
 
 ## Model Connections
 

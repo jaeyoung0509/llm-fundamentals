@@ -12,13 +12,13 @@
 
 ## 분포로 읽는 출력
 
-<MermaidDiagram>
-flowchart LR
-  A["로짓"] --> B["softmax"]
-  B --> C["확률 분포"]
-  C --> D["argmax 선택"]
-  C --> E["sampling 선택"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;로짓&quot;] --> B[&quot;softmax&quot;]
+  B --> C[&quot;확률 분포&quot;]
+  C --> D[&quot;argmax 선택&quot;]
+  C --> E[&quot;sampling 선택&quot;]`"
+/>
 
 ## 자주 만나는 개념
 

@@ -14,13 +14,13 @@
 
 ## Shape Intuition
 
-<MermaidDiagram>
-flowchart LR
-  A["input x: (d,)"] --> B["weight W: (d, h)"]
-  B --> C["output h: (h,)"]
-  D["token matrix X: (n, d)"] --> E["Q, K, V projections"]
-  E --> F["Q, K, V: (n, h)"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;input x: (d,)&quot;] --> B[&quot;weight W: (d, h)&quot;]
+  B --> C[&quot;output h: (h,)&quot;]
+  D[&quot;token matrix X: (n, d)&quot;] --> E[&quot;Q, K, V projections&quot;]
+  E --> F[&quot;Q, K, V: (n, h)&quot;]`"
+/>
 
 ## Why Shapes Matter
 

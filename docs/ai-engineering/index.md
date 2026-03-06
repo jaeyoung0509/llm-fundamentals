@@ -19,15 +19,15 @@ AI Engineering은 모델 성능만이 아니라 평가, 배포, 관측성, 비�
 
 ## 시스템 관점 그림
 
-<MermaidDiagram>
-flowchart LR
-  A["데이터와 문서"] --> B["모델/프롬프트 실험"]
-  B --> C["평가"]
-  C --> D["배포"]
-  D --> E["모니터링"]
-  E --> F["개선 루프"]
-  F --> B
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;데이터와 문서&quot;] --> B[&quot;모델/프롬프트 실험&quot;]
+  B --> C[&quot;평가&quot;]
+  C --> D[&quot;배포&quot;]
+  D --> E[&quot;모니터링&quot;]
+  E --> F[&quot;개선 루프&quot;]
+  F --> B`"
+/>
 
 ## 실무에서 자주 보는 질문
 

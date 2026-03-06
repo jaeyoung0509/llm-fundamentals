@@ -10,15 +10,15 @@ Understanding GPT-3 does not automatically produce practical fluency. Real outco
 
 ## Practical Control Panel
 
-<MermaidDiagram>
-flowchart LR
-  A["prompt"] --> B["tokenization"]
-  B --> C["context window"]
-  C --> D["model logits"]
-  D --> E["temperature / top-k / top-p"]
-  E --> F["final generation"]
-  F --> G["evaluation"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;prompt&quot;] --> B[&quot;tokenization&quot;]
+  B --> C[&quot;context window&quot;]
+  C --> D[&quot;model logits&quot;]
+  D --> E[&quot;temperature / top-k / top-p&quot;]
+  E --> F[&quot;final generation&quot;]
+  F --> G[&quot;evaluation&quot;]`"
+/>
 
 ## What to Cover in the First Pass
 

@@ -16,14 +16,14 @@ parameter = parameter - learning_rate * gradient
 
 ## 학습이 일어나는 흐름
 
-<MermaidDiagram>
-flowchart LR
-  A["입력 x"] --> B["모델 예측 y_hat"]
-  B --> C["손실 계산"]
-  C --> D["gradient 계산"]
-  D --> E["파라미터 업데이트"]
-  E --> B
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;입력 x&quot;] --> B[&quot;모델 예측 y_hat&quot;]
+  B --> C[&quot;손실 계산&quot;]
+  C --> D[&quot;gradient 계산&quot;]
+  D --> E[&quot;파라미터 업데이트&quot;]
+  E --> B`"
+/>
 
 ## 왜 chain rule이 중요한가
 

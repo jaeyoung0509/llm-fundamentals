@@ -17,6 +17,13 @@ Production build:
 npm run docs:build
 ```
 
+Validation:
+
+```bash
+npx playwright install chromium
+npm test
+```
+
 GitHub Pages deployment target: `https://jaeyoung0509.github.io/llm-fundamentals/`
 
 ## Key Paths

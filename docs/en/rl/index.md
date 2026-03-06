@@ -18,13 +18,13 @@ RLHF adjusts a model toward preferred human responses through rewards and policy
 
 ## Big Picture
 
-<MermaidDiagram>
-flowchart LR
-  A["environment or human feedback"] --> B["reward"]
-  B --> C["policy update"]
-  C --> D["new response policy"]
-  D --> A
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;environment or human feedback&quot;] --> B[&quot;reward&quot;]
+  B --> C[&quot;policy update&quot;]
+  C --> D[&quot;new response policy&quot;]
+  D --> A`"
+/>
 
 ## Exercises
 

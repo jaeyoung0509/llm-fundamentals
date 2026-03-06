@@ -12,15 +12,15 @@ Neural networks are not just one straight line. Values get normalized, amplified
 
 ## Flow at a Glance
 
-<MermaidDiagram>
-flowchart LR
-  A["input x"] --> B["linear transform"]
-  B --> C["non-linear function"]
-  C --> D["logits"]
-  D --> E["exponentials"]
-  E --> F["softmax probabilities"]
-  F --> G["log loss"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;input x&quot;] --> B[&quot;linear transform&quot;]
+  B --> C[&quot;non-linear function&quot;]
+  C --> D[&quot;logits&quot;]
+  D --> E[&quot;exponentials&quot;]
+  E --> F[&quot;softmax probabilities&quot;]
+  F --> G[&quot;log loss&quot;]`"
+/>
 
 ## Core Ideas
 

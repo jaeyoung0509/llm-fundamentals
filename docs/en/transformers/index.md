@@ -18,15 +18,15 @@ Transformers dramatically increased language-model capability by letting each to
 
 ## Attention Flow
 
-<MermaidDiagram>
-flowchart LR
-  A["Input tokens"] --> B["Embeddings + positions"]
-  B --> C["Build Q, K, V"]
-  C --> D["Similarity scores"]
-  D --> E["Softmax weights"]
-  E --> F["Weighted value mix"]
-  F --> G["FFN + residual"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;Input tokens&quot;] --> B[&quot;Embeddings + positions&quot;]
+  B --> C[&quot;Build Q, K, V&quot;]
+  C --> D[&quot;Similarity scores&quot;]
+  D --> E[&quot;Softmax weights&quot;]
+  E --> F[&quot;Weighted value mix&quot;]
+  F --> G[&quot;FFN + residual&quot;]`"
+/>
 
 ## Minimal Self-Attention Sketch
 

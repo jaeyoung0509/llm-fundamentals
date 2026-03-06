@@ -17,13 +17,13 @@ Math is not a separate school subject here. It is the language needed to read ev
 
 ## Recommended Order
 
-<MermaidDiagram>
-flowchart TD
-  A["Functions, logs, growth"] --> B["Vectors and matrices"]
-  B --> C["Derivatives and gradients"]
-  C --> D["Probability and softmax"]
-  D --> E["PyTorch training loop"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;Functions, logs, growth&quot;] --> B[&quot;Vectors and matrices&quot;]
+  B --> C[&quot;Derivatives and gradients&quot;]
+  C --> D[&quot;Probability and softmax&quot;]
+  D --> E[&quot;PyTorch training loop&quot;]`"
+/>
 
 ## Math Priority TODO
 

@@ -10,13 +10,13 @@ Transformer를 곧바로 배우면 "좋은 구조" 정도로만 이해하기 쉽
 
 ## 시대 흐름 다이어그램
 
-<MermaidDiagram>
-flowchart LR
-  A["n-gram / one-hot"] --> B["word2vec / embeddings"]
-  B --> C["seq2seq"]
-  C --> D["attention"]
-  D --> E["Transformer"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;n-gram / one-hot&quot;] --> B[&quot;word2vec / embeddings&quot;]
+  B --> C[&quot;seq2seq&quot;]
+  C --> D[&quot;attention&quot;]
+  D --> E[&quot;Transformer&quot;]`"
+/>
 
 ## 1차 패스에서 볼 것
 

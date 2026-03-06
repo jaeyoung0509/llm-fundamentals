@@ -10,15 +10,15 @@ GPT-3를 이해했다고 해서 바로 실전 감각이 생기지는 않는다. 
 
 ## 실전 제어판
 
-<MermaidDiagram>
-flowchart LR
-  A["입력 프롬프트"] --> B["토큰화"]
-  B --> C["컨텍스트 윈도우"]
-  C --> D["모델 출력 로짓"]
-  D --> E["temperature / top-k / top-p"]
-  E --> F["최종 생성"]
-  F --> G["평가와 개선"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;입력 프롬프트&quot;] --> B[&quot;토큰화&quot;]
+  B --> C[&quot;컨텍스트 윈도우&quot;]
+  C --> D[&quot;모델 출력 로짓&quot;]
+  D --> E[&quot;temperature / top-k / top-p&quot;]
+  E --> F[&quot;최종 생성&quot;]
+  F --> G[&quot;평가와 개선&quot;]`"
+/>
 
 ## 1차 패스에서 볼 것
 

@@ -11,6 +11,7 @@ This repository is building a bilingual ebook that helps readers move from math 
 - When adding a concept, try to connect definition, intuition, diagram, and code.
 - Put runnable code in `examples/`.
 - Keep diagrams reproducible with Mermaid when possible.
+- Run `npm test` before pushing when Mermaid diagrams or VitePress pages change.
 
 ## Branch and PR Policy
 
@@ -23,4 +24,3 @@ This repository is building a bilingual ebook that helps readers move from math 
 - Explain concepts in plain language first.
 - Do not add math just for completeness.
 - End each chapter with exercises or a short checklist.
-

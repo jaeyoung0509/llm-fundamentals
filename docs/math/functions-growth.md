@@ -12,15 +12,15 @@
 
 ## 한눈에 보는 흐름
 
-<MermaidDiagram>
-flowchart LR
-  A["입력 x"] --> B["선형 변환"]
-  B --> C["비선형 함수"]
-  C --> D["로짓"]
-  D --> E["지수"]
-  E --> F["softmax 확률"]
-  F --> G["log loss"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;입력 x&quot;] --> B[&quot;선형 변환&quot;]
+  B --> C[&quot;비선형 함수&quot;]
+  C --> D[&quot;로짓&quot;]
+  D --> E[&quot;지수&quot;]
+  E --> F[&quot;softmax 확률&quot;]
+  F --> G[&quot;log loss&quot;]`"
+/>
 
 ## 핵심 개념
 

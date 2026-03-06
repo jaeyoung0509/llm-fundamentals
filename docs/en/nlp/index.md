@@ -10,13 +10,13 @@ If you jump straight into Transformers, they can feel like just another good arc
 
 ## Timeline
 
-<MermaidDiagram>
-flowchart LR
-  A["n-gram / one-hot"] --> B["word2vec / embeddings"]
-  B --> C["seq2seq"]
-  C --> D["attention"]
-  D --> E["Transformer"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;n-gram / one-hot&quot;] --> B[&quot;word2vec / embeddings&quot;]
+  B --> C[&quot;seq2seq&quot;]
+  C --> D[&quot;attention&quot;]
+  D --> E[&quot;Transformer&quot;]`"
+/>
 
 ## What to Cover in the First Pass
 

@@ -16,14 +16,14 @@ parameter = parameter - learning_rate * gradient
 
 ## Learning Loop
 
-<MermaidDiagram>
-flowchart LR
-  A["input x"] --> B["prediction y_hat"]
-  B --> C["loss"]
-  C --> D["gradient"]
-  D --> E["parameter update"]
-  E --> B
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;input x&quot;] --> B[&quot;prediction y_hat&quot;]
+  B --> C[&quot;loss&quot;]
+  C --> D[&quot;gradient&quot;]
+  D --> E[&quot;parameter update&quot;]
+  E --> B`"
+/>
 
 ## Why the Chain Rule Matters
 

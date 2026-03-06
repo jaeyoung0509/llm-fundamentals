@@ -30,16 +30,16 @@ It is faster to complete one full pass across the field first, then return for d
 
 ## Recommended Sequence
 
-<MermaidDiagram>
-flowchart LR
-  A["Math intuition"] --> B["Tensors and PyTorch"]
-  B --> C["Deep learning basics"]
-  C --> D["Attention and Transformers"]
-  D --> E["GPT-1 to GPT-3"]
-  E --> F["RL and RLHF"]
-  F --> G["Evaluation, RAG, deployment"]
-  G --> H["Projects and portfolio"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;Math intuition&quot;] --> B[&quot;Tensors and PyTorch&quot;]
+  B --> C[&quot;Deep learning basics&quot;]
+  C --> D[&quot;Attention and Transformers&quot;]
+  D --> E[&quot;GPT-1 to GPT-3&quot;]
+  E --> F[&quot;RL and RLHF&quot;]
+  F --> G[&quot;Evaluation, RAG, deployment&quot;]
+  G --> H[&quot;Projects and portfolio&quot;]`"
+/>
 
 ## 12-Week Sprint
 

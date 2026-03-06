@@ -18,15 +18,15 @@ Transformer는 각 토큰이 다른 토큰을 얼마나 참고할지 직접 계�
 
 ## attention 흐름
 
-<MermaidDiagram>
-flowchart LR
-  A["입력 토큰"] --> B["임베딩 + 위치 정보"]
-  B --> C["Q, K, V 생성"]
-  C --> D["유사도 계산"]
-  D --> E["softmax 가중치"]
-  E --> F["가중합된 표현"]
-  F --> G["FFN + Residual"]
-</MermaidDiagram>
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;입력 토큰&quot;] --> B[&quot;임베딩 + 위치 정보&quot;]
+  B --> C[&quot;Q, K, V 생성&quot;]
+  C --> D[&quot;유사도 계산&quot;]
+  D --> E[&quot;softmax 가중치&quot;]
+  E --> F[&quot;가중합된 표현&quot;]
+  F --> G[&quot;FFN + Residual&quot;]`"
+/>
 
 ## 최소 self-attention 구현 스케치
 
