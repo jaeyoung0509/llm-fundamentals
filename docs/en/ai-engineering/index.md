@@ -17,6 +17,32 @@ AI engineering means managing evaluation, deployment, observability, cost, and s
 - cost and latency,
 - security and privacy risk.
 
+## System View
+
+<MermaidDiagram>
+flowchart LR
+  A["data and documents"] --> B["model/prompt experiments"]
+  B --> C["evaluation"]
+  C --> D["deployment"]
+  D --> E["monitoring"]
+  E --> F["improvement loop"]
+  F --> B
+</MermaidDiagram>
+
+## Pattern Table
+
+| Pattern | Main purpose |
+| --- | --- |
+| RAG | improve answers with retrieved external knowledge |
+| tool calling | perform actions such as search, calculation, or API usage |
+| agent workflow | chain planning and execution over multiple steps |
+
+## Exercises
+
+1. Explain RAG vs tool calling.
+2. Explain why eval-driven development matters before deployment.
+3. Name three metrics that belong on an operations dashboard.
+
 ## Checklist
 
 - can you explain why eval-driven development matters,

@@ -8,6 +8,16 @@ Transformers did not appear from nowhere. They emerged as a response to the bott
 
 If you jump straight into Transformers, they can feel like just another good architecture. Earlier NLP methods make it clearer why attention mattered so much.
 
+## Timeline
+
+<MermaidDiagram>
+flowchart LR
+  A["n-gram / one-hot"] --> B["word2vec / embeddings"]
+  B --> C["seq2seq"]
+  C --> D["attention"]
+  D --> E["Transformer"]
+</MermaidDiagram>
+
 ## What to Cover in the First Pass
 
 - tokenization and one-hot representations,
@@ -23,6 +33,12 @@ If you jump straight into Transformers, they can feel like just another good arc
 | word2vec / embeddings | map words into vector space | weak long-context handling |
 | seq2seq / attention | make input-output mapping more flexible | still constrained by sequential processing |
 | Transformer | attention-first parallel structure | compute and scale become new issues |
+
+## Exercises
+
+1. Explain one-hot vs embeddings in representational terms.
+2. Explain why seq2seq struggled on long inputs.
+3. Explain why Transformers are better for parallelization.
 
 ## Checklist
 

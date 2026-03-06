@@ -8,6 +8,18 @@ Knowing model architecture is not enough. Practical LLM work also requires contr
 
 Understanding GPT-3 does not automatically produce practical fluency. Real outcomes depend heavily on context windows, sampling settings, prompt structure, and evaluation habits.
 
+## Practical Control Panel
+
+<MermaidDiagram>
+flowchart LR
+  A["prompt"] --> B["tokenization"]
+  B --> C["context window"]
+  C --> D["model logits"]
+  D --> E["temperature / top-k / top-p"]
+  E --> F["final generation"]
+  F --> G["evaluation"]
+</MermaidDiagram>
+
 ## What to Cover in the First Pass
 
 - tokens and context windows,
@@ -23,6 +35,12 @@ Understanding GPT-3 does not automatically produce practical fluency. Real outco
 | context window | determines how much information the model can use at once |
 | sampling parameters | affect stability and diversity of output |
 | evaluation criteria | turn “looks good” into something observable and testable |
+
+## Exercises
+
+1. Explain the difference between temperature and top-p.
+2. Explain why longer context is not always better.
+3. Explain why prompt quality still needs evaluation outside the prompt itself.
 
 ## Checklist
 

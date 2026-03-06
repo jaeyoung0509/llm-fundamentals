@@ -12,6 +12,20 @@
 - matrix: many bundles of data or many parameters,
 - matrix multiplication: a way to move inputs into a new representation space.
 
+## Shape Intuition
+
+<MermaidDiagram>
+flowchart LR
+  A["input x: (d,)"] --> B["weight W: (d, h)"]
+  B --> C["output h: (h,)"]
+  D["token matrix X: (n, d)"] --> E["Q, K, V projections"]
+  E --> F["Q, K, V: (n, h)"]
+</MermaidDiagram>
+
+## Why Shapes Matter
+
+Many implementation mistakes are shape mistakes. Reading a model means reading both values and dimensions.
+
 ## Model Connections
 
 | Operation | Model role |
@@ -20,5 +34,10 @@
 | matrix | weights, batches |
 | matrix multiplication | linear layers and attention score computation |
 
-Next: [Derivatives and Gradients](/en/math/gradients)
+## Exercises
 
+1. If input is `(32, 128)` and weight is `(128, 256)`, what is the output shape.
+2. Explain why an embedding table is naturally “vocabulary size x embedding dimension”.
+3. Explain why `QK^T` becomes an `(n, n)` relation table.
+
+Next: [Derivatives and Gradients](/en/math/gradients)
