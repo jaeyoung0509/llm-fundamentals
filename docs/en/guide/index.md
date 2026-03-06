@@ -8,6 +8,22 @@ This curriculum tries to hold three things at the same time:
 - PyTorch implementation is introduced early,
 - durable engineering patterns come before trend-chasing.
 
+## Default Mindset
+
+This book is best read with one concrete persona in mind: a middle-school student who is already good at Python and is entering high school with the goal of mastering LLMs.
+
+- Python syntax and basic programming are already comfortable.
+- Linear algebra, calculus, and probability have not yet been tied to models.
+- The first objective is not perfection. It is to complete one full pass across the map.
+
+## First-Pass Strategy
+
+1. build math intuition fast,
+2. hand-write a PyTorch training loop,
+3. reach Transformers and GPT-3,
+4. get one pass over RLHF and AI engineering,
+5. return for depth where needed.
+
 ## Recommended Sequence
 
 <MermaidDiagram>
@@ -34,6 +50,14 @@ flowchart LR
 | Week 10 | RL and RLHF | PPO and RLHF concept map |
 | Weeks 11-12 | AI engineering project | Mini RAG or document QA demo |
 
+## First-Pass Exit Criteria
+
+- explain why each math block matters for models,
+- write a training loop in PyTorch,
+- explain the core structure of Transformers and GPT-3,
+- describe where RLHF, RAG, evaluation, and deployment fit,
+- hold the whole map in your head even before deep specialization.
+
 ## Starting Points by Reader Type
 
 ### If math feels weak
@@ -51,4 +75,3 @@ flowchart LR
 
 - Follow [Python and PyTorch](/en/python-pytorch/) -> [Transformers](/en/transformers/) -> [AI Engineering](/en/ai-engineering/).
 - Build something early, then deepen math and RLHF later.
-
