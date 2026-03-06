@@ -52,6 +52,17 @@
 - developers who can code but need to rebuild their math intuition
 - future AI engineers who want evaluation, deployment, and operations context
 
+## Midpoint Audit: Current Weak Spots
+
+- [ ] Deepen the math section so it teaches paper-reading skills, not just chapter summaries.
+- [ ] Add notation guidance: what `x`, `W`, `X`, `QK^T`, `p(y|x)`, `L(theta)` mean in practice.
+- [ ] Add bridges from math pages to PyTorch tensor code and later Transformer equations.
+- [ ] Expand `Python and PyTorch` with autograd, datasets, dataloaders, and debugging habits.
+- [ ] Expand `Deep Learning Basics` with activation, loss, optimization, and regularization.
+- [ ] Expand `Transformer` with multi-head attention, scaling, masking, and decoder-only reading.
+- [ ] Expand `Projects` from rough prompts into scoped project specs with evaluation criteria.
+- [ ] Sync the deeper Korean math content into English after the Korean source stabilizes.
+
 ## MVP Definition
 
 The MVP should satisfy the following:
@@ -113,6 +124,8 @@ docs/
 - [ ] Connect the vectors/matrices page to embeddings, linear layers, and attention scores.
 - [ ] Add chain rule and backpropagation diagrams to the gradients page.
 - [ ] Add clear links between distributions, expectation, variance, softmax, and sampling to the probability page.
+- [ ] Add a notation survival guide for reading math in ML papers.
+- [ ] Add “how to read this in a paper” sections to each math page.
 - [ ] Add exercises and a next-step bridge to each math subpage.
 - [ ] Synchronize English translations after the Korean math source stabilizes.
 
