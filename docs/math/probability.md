@@ -146,14 +146,28 @@ p_theta(y_t | y_<t, x)
 
 ## 연습
 
+### 기초 확인
+
 1. argmax와 sampling의 차이를 생성 품질 관점에서 설명해본다.
 2. temperature를 높이면 왜 더 다양한 출력이 나올 수 있는지 적어본다.
 3. 기대값과 분산을 학습 안정성 관점에서 연결해본다.
+
+### 논문 읽기 훈련
+
+1. `p_theta(y_t | y_<t, x)`를 자연어로 풀어 설명해본다.
+2. 어떤 논문이 "model confidence is poorly calibrated"라고 했을 때, 그 말이 무엇을 뜻하는지 적어본다.
+3. `maximize likelihood`와 `minimize cross-entropy`가 왜 같은 방향을 가리키는지 설명해본다.
+
+### 코드 연결 훈련
+
+1. `softmax_sampling.py`에서 temperature를 낮췄을 때 어떤 토큰이 더 자주 뽑힐지 예측해본다.
+2. `torch.multinomial`과 `argmax`가 출력 다양성에 어떤 차이를 만드는지 설명해본다.
 
 ## 생각해볼 질문
 
 1. softmax 출력이 높다고 해서 왜 항상 확실한 것은 아닐까
 2. sampling temperature는 분포를 어떻게 바꿀까
 3. 분산이 큰 학습은 왜 불안정하게 느껴질까
+4. 높은 confidence와 좋은 calibration은 왜 같은 말이 아닐까
 
 다음: [Python과 PyTorch](/python-pytorch/)

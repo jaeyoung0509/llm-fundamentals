@@ -152,14 +152,28 @@ We optimize the parameters theta by minimizing cross-entropy with Adam.
 
 ## 연습
 
+### 기초 확인
+
 1. gradient가 양수라는 말이 파라미터 업데이트에 어떤 의미인지 설명해본다.
 2. learning rate가 너무 큰 경우 어떤 학습 곡선이 나올지 상상해본다.
 3. chain rule이 왜 깊은 네트워크에서 필수인지 적어본다.
+
+### 논문 읽기 훈련
+
+1. `theta <- theta - eta grad_theta L`에서 `theta`, `eta`, `grad_theta L`이 각각 무엇을 뜻하는지 적어본다.
+2. 어떤 논문이 "training became unstable"라고 했을 때, learning rate와 gradient scale 관점에서 어떤 문제를 의심할 수 있는지 적어본다.
+3. `E[L]`가 loss 식에 나오면 왜 "샘플 전체 평균"을 먼저 떠올려야 하는지 설명해본다.
+
+### 코드 연결 훈련
+
+1. `loss.backward()`와 `optimizer.step()`의 차이를 코드와 수식 양쪽으로 설명해본다.
+2. `gradient_chain_rule.py`에서 `dL/dw`가 왜 그 값이 되는지 손으로 먼저 계산해본다.
 
 ## 생각해볼 질문
 
 1. gradient가 0에 가까우면 학습은 어떻게 될까
 2. learning rate가 너무 크면 어떤 일이 생길까
 3. backpropagation을 chain rule 없이 설명할 수 있을까
+4. optimizer를 바꾸는 것과 loss를 바꾸는 것은 왜 완전히 다른 결정일까
 
 다음: [확률과 softmax](/math/probability)

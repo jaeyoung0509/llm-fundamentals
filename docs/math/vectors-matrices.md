@@ -142,25 +142,6 @@ Q = XW_Q, K = XW_K, V = XW_V
 
 - [self_attention.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/transformers/self_attention.py)에서 `weights.shape`와 `output.shape`를 직접 보면 `QK^T`와 가중합 결과 shape를 확인할 수 있다.
 
-## 자주 나오는 shape 패턴
-
-| shape | 보통 뜻 |
-| --- | --- |
-| `(batch, dim)` | 배치 벡터 |
-| `(batch, seq, dim)` | 토큰 시퀀스 배치 |
-| `(seq, seq)` | attention score 또는 mask |
-| `(vocab, dim)` | 임베딩 테이블 |
-
-## 코드 연결
-
-- `nn.Linear(d, h)`는 보통 `(…, d)`를 `(…, h)`로 바꾼다
-- `x @ W`는 표현을 새 공간으로 투영하는 기본 연산이다
-- `query @ key.transpose(-2, -1)`는 토큰 관계 점수 표를 만든다
-
-## 작은 실험으로 확인하기
-
-- [self_attention.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/transformers/self_attention.py)에서 `weights.shape`와 `output.shape`를 직접 보면 `QK^T`와 가중합 결과 shape를 확인할 수 있다.
-
 ## 논문을 읽을 때 자주 틀리는 포인트
 
 - `(n, d)`와 `(d, n)`을 무심코 뒤집는다.
@@ -181,14 +162,28 @@ Q = XW_Q, K = XW_K, V = XW_V
 
 ## 연습
 
+### 기초 확인
+
 1. 입력이 `(32, 128)`이고 가중치가 `(128, 256)`일 때 출력 shape를 써본다.
 2. 임베딩 행렬이 왜 "단어 사전 x 임베딩 차원" 구조가 되는지 설명해본다.
 3. `QK^T`가 `(n, n)`이 되는 이유를 토큰 관계 표 관점으로 설명해본다.
+
+### 논문 읽기 훈련
+
+1. `Q = XW_Q, K = XW_K, V = XW_V`에서 `X`, `W_Q`, `Q`의 shape 역할을 각각 적어본다.
+2. 어떤 논문에서 배치 차원을 생략하고 `X in R^(n x d)`만 적어놓았을 때, 실제 코드에서는 어떤 차원이 추가될 가능성이 큰지 적어본다.
+3. `A in R^(n x n)`이 나오면 왜 "토큰 관계 표"를 먼저 떠올려야 하는지 설명해본다.
+
+### 코드 연결 훈련
+
+1. `self_attention.py`에서 `weights.shape`와 `output.shape`를 실행 전에 먼저 예측해본다.
+2. `nn.Linear(d, h)`를 attention projection과 연결해서 설명해본다.
 
 ## 생각해볼 질문
 
 1. 임베딩 벡터는 왜 단순 숫자 묶음이 아닌가
 2. 선형층이 하는 일을 행렬곱 관점에서 설명할 수 있는가
 3. attention에서 `QK^T`가 왜 shape를 바꾸는가
+4. 논문 식에는 없지만 구현에는 꼭 필요한 차원은 무엇이 있을까
 
 다음: [미분과 gradient](/math/gradients)

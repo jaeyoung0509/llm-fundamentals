@@ -191,14 +191,28 @@ L = -sum_t log p_theta(y_t | x, y_<t)
 
 ## 연습
 
+### 기초 확인
+
 1. 로짓이 `[2, 1, 0]`일 때 가장 큰 로짓이 왜 softmax 후 더 두드러지는지 말로 설명해본다.
 2. `loss = -log(p_correct)`에서 `p_correct = 0.9`와 `0.1`의 차이를 직관적으로 설명해본다.
 3. 활성화 함수가 없는 MLP가 왜 표현력이 약해지는지 적어본다.
+
+### 논문 읽기 훈련
+
+1. `L = -sum_t log p_theta(y_t | x, y_<t)`에서 `log`, `sum`, `p_theta`의 역할을 각각 한 문장으로 적어본다.
+2. 어떤 논문이 "cross-entropy improved slightly"라고 썼을 때, 왜 그 작은 차이가 실제 생성 품질 차이로 이어질 수 있는지 적어본다.
+3. `softmax(logits / T)`에서 `T`가 커질수록 분포가 왜 평평해지는지 설명해본다.
+
+### 코드 연결 훈련
+
+1. `torch.softmax(logits, dim=-1)`와 `CrossEntropyLoss`가 각각 어디에 쓰이는지 PyTorch 코드 관점에서 적어본다.
+2. `softmax_sampling.py`에서 temperature를 `0.5`, `1.0`, `2.0`으로 바꿨을 때 어떤 변화가 나올지 실행 전에 예측해본다.
 
 ## 생각해볼 질문
 
 1. softmax에 지수가 없다면 어떤 문제가 생길까
 2. 왜 확률이 1에 가까울수록 log loss는 작아질까
 3. 비선형성이 없다면 여러 층을 쌓는 의미가 얼마나 줄어들까
+4. perplexity가 낮아졌다고 해서 항상 사람이 보기에도 좋아졌다고 말할 수 있을까
 
 다음: [벡터와 행렬](/math/vectors-matrices)
