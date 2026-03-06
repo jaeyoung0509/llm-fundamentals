@@ -40,6 +40,15 @@
 
 기호를 보면 먼저 숫자를 대입해보는 습관이 좋다. 예를 들어 `n=128`, `d=768`처럼 상상하면 attention 식이 훨씬 덜 추상적으로 보인다.
 
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;x in R^d&quot;] --> B[&quot;one vector&quot;]
+  C[&quot;X in R^(n x d)&quot;] --> D[&quot;n vectors stacked&quot;]
+  E[&quot;W in R^(d x h)&quot;] --> F[&quot;projection matrix&quot;]
+  D --> G[&quot;XW in R^(n x h)&quot;]
+  F --> G`"
+/>
+
 ## 기본 예시
 
 ### 선형층
@@ -53,6 +62,14 @@
 ### attention score
 
 `Q`가 `(n, h)`, `K`가 `(n, h)`라면 `QK^T`는 `(n, n)`이 된다. 각 토큰이 다른 토큰을 얼마나 참고할지 계산하는 표가 만들어지는 셈이다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;Q: (n, h)&quot;] --> C[&quot;QK^T&quot;]
+  B[&quot;K^T: (h, n)&quot;] --> C
+  C --> D[&quot;scores: (n, n)&quot;]
+  D --> E[&quot;token-to-token relation table&quot;]`"
+/>
 
 ### 임베딩 행렬
 
@@ -83,6 +100,16 @@ Q = XW_Q, K = XW_K, V = XW_V
 - 결과 `Q`, `K`, `V`: attention 계산에 쓰일 새 표현들
 
 즉, 행렬곱은 단순 계산 기술이 아니라 "표현을 다른 역할로 바꾸는 변환"이다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;X&quot;] --> B[&quot;W_Q&quot;]
+  A --> C[&quot;W_K&quot;]
+  A --> D[&quot;W_V&quot;]
+  B --> E[&quot;Q&quot;]
+  C --> F[&quot;K&quot;]
+  D --> G[&quot;V&quot;]`"
+/>
 
 ## 논문을 읽을 때 자주 틀리는 포인트
 

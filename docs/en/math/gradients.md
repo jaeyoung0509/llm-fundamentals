@@ -29,6 +29,43 @@ parameter = parameter - learning_rate * gradient
 
 Neural networks are compositions of functions. Backpropagation works because the chain rule propagates the effect of the final loss back through earlier layers.
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;forward&quot;] --> B[&quot;representation&quot;]
+  B --> C[&quot;logits&quot;]
+  C --> D[&quot;loss&quot;]
+  D --> E[&quot;backward&quot;]
+  E --> F[&quot;gradients on parameters&quot;]`"
+/>
+
+## Tiny Chain Rule Example
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;w changes&quot;] --> B[&quot;z changes&quot;]
+  B --> C[&quot;L changes&quot;]
+  C --> D[&quot;combine local effects&quot;]`"
+/>
+
+## Gradient To Update
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;loss L&quot;] --> B[&quot;partial L / partial w&quot;]
+  B --> C[&quot;direction signal&quot;]
+  C --> D[&quot;optimizer update&quot;]`"
+/>
+
+## Optimization Loop
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;current parameters&quot;] --> B[&quot;compute loss&quot;]
+  B --> C[&quot;compute gradients&quot;]
+  C --> D[&quot;optimizer rule&quot;]
+  D --> E[&quot;new parameters&quot;]`"
+/>
+
 ## Model Connections
 
 | Math idea | Model role |

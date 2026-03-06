@@ -26,6 +26,37 @@
 
 Many implementation mistakes are shape mistakes. Reading a model means reading both values and dimensions.
 
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;x in R^d&quot;] --> B[&quot;one vector&quot;]
+  C[&quot;X in R^(n x d)&quot;] --> D[&quot;n vectors stacked&quot;]
+  E[&quot;W in R^(d x h)&quot;] --> F[&quot;projection matrix&quot;]
+  D --> G[&quot;XW in R^(n x h)&quot;]
+  F --> G`"
+/>
+
+## Attention Score View
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;Q: (n, h)&quot;] --> C[&quot;QK^T&quot;]
+  B[&quot;K^T: (h, n)&quot;] --> C
+  C --> D[&quot;scores: (n, n)&quot;]
+  D --> E[&quot;token relation table&quot;]`"
+/>
+
+## Projection View
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;X&quot;] --> B[&quot;W_Q&quot;]
+  A --> C[&quot;W_K&quot;]
+  A --> D[&quot;W_V&quot;]
+  B --> E[&quot;Q&quot;]
+  C --> F[&quot;K&quot;]
+  D --> G[&quot;V&quot;]`"
+/>
+
 ## Model Connections
 
 | Operation | Model role |

@@ -20,6 +20,43 @@ A model is not a machine that always emits one certain answer. It produces a dis
   C --> E[&quot;sampling choice&quot;]`"
 />
 
+## Conditional Probability View
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;context x&quot;] --> B[&quot;model&quot;]
+  B --> C[&quot;p(y|x)&quot;]
+  C --> D[&quot;distribution over candidates&quot;]`"
+/>
+
+## Sampling Flow
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;logits&quot;] --> B[&quot;temperature adjust&quot;]
+  B --> C[&quot;softmax&quot;]
+  C --> D[&quot;sharp or flat distribution&quot;]
+  D --> E[&quot;argmax / sampling&quot;]`"
+/>
+
+## Likelihood And Cross-Entropy
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;maximize likelihood&quot;] --> D[&quot;raise probability on correct data&quot;]
+  B[&quot;minimize NLL&quot;] --> D
+  C[&quot;minimize cross-entropy&quot;] --> D`"
+/>
+
+## Next-Token Reading
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;past tokens&quot;] --> B[&quot;model state&quot;]
+  B --> C[&quot;next-token probabilities&quot;]
+  C --> D[&quot;choose next token&quot;]`"
+/>
+
 ## Model Connections
 
 | Math idea | Model example |

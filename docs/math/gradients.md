@@ -43,6 +43,15 @@ forward에서는 왼쪽에서 오른쪽으로 값을 계산하고, backward에�
 
 이 관점이 잡히면 `grad_theta L`은 갑자기 등장한 신비한 기호가 아니라, 계산 그래프를 거슬러 올라가며 모은 민감도라는 뜻이 된다.
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;forward&quot;] --> B[&quot;representation&quot;]
+  B --> C[&quot;logits&quot;]
+  C --> D[&quot;loss&quot;]
+  D --> E[&quot;backward&quot;]
+  E --> F[&quot;gradients on parameters&quot;]`"
+/>
+
 ## 아주 작은 chain rule 예시
 
 `z = wx + b`, `L = z^2`라고 하자. 그러면 `w`가 loss에 미치는 영향은 두 단계로 나뉜다.
@@ -51,6 +60,13 @@ forward에서는 왼쪽에서 오른쪽으로 값을 계산하고, backward에�
 2. `z`가 `L`을 바꾼다.
 
 즉, "앞 변수의 변화가 중간 변수를 거쳐 마지막 loss까지 어떻게 전달되는가"를 곱해서 읽는 것이 chain rule의 핵심이다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;w changes&quot;] --> B[&quot;z changes&quot;]
+  B --> C[&quot;L changes&quot;]
+  C --> D[&quot;combine local effects&quot;]`"
+/>
 
 ## 손실 함수 관점에서 미분 보기
 
@@ -72,6 +88,13 @@ forward에서는 왼쪽에서 오른쪽으로 값을 계산하고, backward에�
 | `E[L]` | 평균 loss 또는 기대 loss |
 
 `partial`이 보이면 "이 변수 하나만 바꿔보는 민감도"라고 읽으면 된다.
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;loss L&quot;] --> B[&quot;partial L / partial w&quot;]
+  B --> C[&quot;direction signal&quot;]
+  C --> D[&quot;optimizer update&quot;]`"
+/>
 
 ## 모델 연결
 
@@ -105,6 +128,14 @@ We optimize the parameters theta by minimizing cross-entropy with Adam.
 - 방법: Adam optimizer가 업데이트 크기와 방향을 조절한다
 
 핵심은 optimizer 이름보다 "loss를 줄이기 위한 반복 업데이트"라는 구조다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;current parameters&quot;] --> B[&quot;compute loss&quot;]
+  B --> C[&quot;compute gradients&quot;]
+  C --> D[&quot;optimizer rule&quot;]
+  D --> E[&quot;new parameters&quot;]`"
+/>
 
 ## 자주 생기는 오해
 

@@ -39,6 +39,13 @@
 
 특히 `|` 기호는 "조건이 주어졌을 때"라고 읽는다. 언어모델에서는 보통 "이전 토큰이 주어졌을 때 다음 토큰의 확률"이라는 뜻이다.
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;context x&quot;] --> B[&quot;model&quot;]
+  B --> C[&quot;p(y|x)&quot;]
+  C --> D[&quot;distribution over candidates&quot;]`"
+/>
+
 ## 기대값과 분산을 왜 보는가
 
 - 기대값은 "평균적으로 어떤 결과가 나오는가"를 본다
@@ -57,6 +64,14 @@ softmax는 점수를 분포처럼 읽을 수 있게 해 준다. 그 다음 선�
 
 temperature는 이 분포를 더 날카롭게 하거나 더 평평하게 만든다.
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;logits&quot;] --> B[&quot;temperature adjust&quot;]
+  B --> C[&quot;softmax&quot;]
+  C --> D[&quot;sharp or flat distribution&quot;]
+  D --> E[&quot;argmax / sampling&quot;]`"
+/>
+
 ## likelihood와 cross-entropy
 
 논문에서 `maximize likelihood`와 `minimize cross-entropy`는 자주 사실상 같은 방향을 가리킨다.
@@ -66,6 +81,13 @@ temperature는 이 분포를 더 날카롭게 하거나 더 평평하게 만든�
 - cross-entropy는 실제 정답 분포와 모델 분포 차이를 줄이는 손실로 읽을 수 있다.
 
 표현이 달라 보여도 "정답에 더 높은 확률을 주도록 학습한다"는 핵심은 같다.
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;maximize likelihood&quot;] --> D[&quot;raise probability on correct data&quot;]
+  B[&quot;minimize NLL&quot;] --> D
+  C[&quot;minimize cross-entropy&quot;] --> D`"
+/>
 
 ## 모델 연결
 
@@ -98,6 +120,13 @@ p_theta(y_t | y_<t, x)
 - `y_t`: 지금 맞혀야 할 토큰
 
 즉, "현재까지 본 문맥을 바탕으로 다음 토큰 분포를 예측한다"는 뜻이다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;past tokens&quot;] --> B[&quot;model state&quot;]
+  B --> C[&quot;next-token probabilities&quot;]
+  C --> D[&quot;choose next token&quot;]`"
+/>
 
 ## 평가와 연결되는 감각
 

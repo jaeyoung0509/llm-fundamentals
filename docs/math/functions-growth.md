@@ -67,6 +67,14 @@
 | 선형 + 선형 + 선형 | 여전히 선형 변환에 가깝다 |
 | 선형 + 비선형 + 선형 | 더 복잡한 경계를 표현할 수 있다 |
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;linear&quot;] --> B[&quot;linear&quot;]
+  B --> C[&quot;still mostly linear&quot;]
+  D[&quot;linear&quot;] --> E[&quot;non-linearity&quot;]
+  E --> F[&quot;richer decision boundary&quot;]`"
+/>
+
 ## 모델 예시
 
 ### softmax
@@ -76,6 +84,14 @@ prob_i = exp(logit_i) / sum_j exp(logit_j)
 ```
 
 이 식에서 지수는 점수 차이를 확률 차이로 키우고, 분모는 전체를 0과 1 사이의 분포로 정규화한다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;logits&quot;] --> B[&quot;exp on each score&quot;]
+  B --> C[&quot;positive values&quot;]
+  C --> D[&quot;divide by total sum&quot;]
+  D --> E[&quot;probability distribution&quot;]`"
+/>
 
 ### cross-entropy
 
@@ -95,6 +111,13 @@ loss = -log(p_correct)
 4. 여러 토큰이나 샘플에 대해 합인지 평균인지 본다.
 
 예를 들어 언어모델에서는 보통 각 시점의 정답 토큰 확률을 높이고 싶다. 그래서 `-log p(correct token)`을 각 토큰마다 더하거나 평균낸다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;model outputs p(correct)&quot;] --> B{&quot;is p high?&quot;}
+  B -->|&quot;yes&quot;| C[&quot;small loss&quot;]
+  B -->|&quot;no&quot;| D[&quot;large loss&quot;]`"
+/>
 
 ## scale 감각
 
@@ -143,6 +166,14 @@ L = -sum_t log p_theta(y_t | x, y_<t)
 - `-sum_t`: 모든 시점에서 틀린 정도를 모아 벌점으로 만든 것
 
 식 모양보다 "정답 확률을 높이려는 목적 함수"라는 뜻을 먼저 읽는 것이 중요하다.
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;find p_theta(y_t | context)&quot;] --> B[&quot;take log&quot;]
+  B --> C[&quot;negate it&quot;]
+  C --> D[&quot;sum over tokens&quot;]
+  D --> E[&quot;training loss&quot;]`"
+/>
 
 ## 생각해볼 질문
 
