@@ -8,7 +8,7 @@
 
 ## Why It Matters
 
-Neural networks are not just one straight line. Values get normalized, amplified, compressed, and compared at different scales, which is why functions, logs, and exponentials show up repeatedly.
+Neural networks do not behave like one straight line. Values get amplified, normalized, and compressed across different scales.
 
 ## Flow at a Glance
 
@@ -26,19 +26,17 @@ Neural networks are not just one straight line. Values get normalized, amplified
 
 ### Function
 
-A function is a rule that maps input to output. A model is ultimately a stack of many such rules.
+A function maps input to output. A model is a stack of such mappings.
 
 ### Exponential
 
-Exponentials magnify score differences quickly. That is why softmax can turn modest logit gaps into clearer probability gaps.
+Exponentials magnify score differences quickly.
 
 ### Logarithm
 
-Logarithms compress multiplicative structure and make very large or very small values easier to work with. That is why they appear in cross-entropy and negative log-likelihood.
+Logarithms compress multiplicative structure and help interpret loss.
 
 ## Function Composition
-
-Neural networks are usually compositions of functions, not single functions.
 
 ```text
 x -> linear -> activation -> logits -> softmax -> loss
@@ -64,6 +62,17 @@ Stacking only linear layers stays close to one large linear transform. Deep mode
   E --> F[&quot;richer decision boundary&quot;]`"
 />
 
+## Linear vs Exponential As A Graph
+
+<MermaidDiagram
+  :code="`xychart
+    title &quot;Linear vs Exponential Growth&quot;
+    x-axis &quot;x&quot; [-2, -1, 0, 1, 2]
+    y-axis &quot;value&quot; -2 --> 8
+    line [-2, -1, 0, 1, 2]
+    line [0.14, 0.37, 1.0, 2.72, 7.39]`"
+/>
+
 ## Softmax Flow
 
 <MermaidDiagram
@@ -83,6 +92,16 @@ Stacking only linear layers stays close to one large linear transform. Deep mode
   B -->|&quot;no&quot;| D[&quot;large loss&quot;]`"
 />
 
+## Negative Log Loss Curve
+
+<MermaidDiagram
+  :code="`xychart
+    title &quot;Negative Log Loss Curve&quot;
+    x-axis &quot;p(correct)&quot; [0.1, 0.3, 0.5, 0.7, 0.9]
+    y-axis &quot;-log(p)&quot; 0 --> 2.5
+    line [2.30, 1.20, 0.69, 0.36, 0.10]`"
+/>
+
 ## Reading The Paper Formula
 
 <MermaidDiagram
@@ -96,7 +115,7 @@ Stacking only linear layers stays close to one large linear transform. Deep mode
 ## Perplexity Connection
 
 - when cross-entropy goes down, perplexity also goes down,
-- perplexity can be read as a rough measure of how confused the model still is about the next token.
+- perplexity can be read as how confused the model still is about the next token.
 
 ## Code Connection
 
@@ -114,14 +133,14 @@ Stacking only linear layers stays close to one large linear transform. Deep mode
 
 ## Exercises
 
-1. Explain why softmax would lose expressive contrast without exponentials.
-2. Explain why `-log(p_correct)` penalizes low correct-token probability so strongly.
+1. Explain why softmax would lose contrast without exponentials.
+2. Explain why `-log(p_correct)` punishes low correct-token probability strongly.
 3. Explain why deep networks need non-linearity.
 
 ## Questions
 
 1. What would break if softmax had no exponentials
-2. Why does log loss get smaller when the correct probability gets closer to 1
-3. Why does stacking layers matter less without non-linearity
+2. Why does log loss shrink as the correct probability moves toward 1
+3. Why do stacked layers matter less without non-linearity
 
 Next: [Vectors and Matrices](/en/math/vectors-matrices)

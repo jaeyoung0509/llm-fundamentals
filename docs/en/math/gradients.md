@@ -27,7 +27,7 @@ parameter = parameter - learning_rate * gradient
 
 ## Why the Chain Rule Matters
 
-Neural networks are compositions of functions. Backpropagation works because the chain rule propagates the effect of the final loss back through earlier layers.
+Neural networks are compositions of functions. Backpropagation works because the chain rule propagates the final loss back through earlier layers.
 
 <MermaidDiagram
   :code="`flowchart LR
@@ -47,8 +47,6 @@ Neural networks are compositions of functions. Backpropagation works because the
   C --> D[&quot;combine local effects&quot;]`"
 />
 
-The key habit is not only computing a derivative, but seeing the path by which influence travels.
-
 ## Gradient To Update
 
 <MermaidDiagram
@@ -56,6 +54,31 @@ The key habit is not only computing a derivative, but seeing the path by which i
   A[&quot;loss L&quot;] --> B[&quot;partial L / partial w&quot;]
   B --> C[&quot;direction signal&quot;]
   C --> D[&quot;optimizer update&quot;]`"
+/>
+
+## Stable vs Unstable Loss Curves
+
+<MermaidDiagram
+  :code="`xychart
+    title &quot;Stable vs Unstable Loss Curves&quot;
+    x-axis &quot;step&quot; [1, 2, 3, 4, 5, 6]
+    y-axis &quot;loss&quot; 0 --> 3.5
+    line [3.0, 2.2, 1.6, 1.1, 0.8, 0.6]
+    line [3.0, 2.4, 2.9, 1.7, 2.5, 1.4]`"
+/>
+
+## Vanishing And Exploding Gradients
+
+- if gradients become too small, early layers barely learn,
+- if gradients become too large, updates become unstable.
+
+<MermaidDiagram
+  :code="`xychart
+    title &quot;Gradient Scale Across Layers&quot;
+    x-axis &quot;layer&quot; [1, 2, 3, 4, 5]
+    y-axis &quot;|gradient|&quot; 0 --> 1.2
+    line [1.0, 0.55, 0.24, 0.08, 0.02]
+    line [0.10, 0.22, 0.45, 0.82, 1.10]`"
 />
 
 ## Optimization Loop
@@ -67,13 +90,6 @@ The key habit is not only computing a derivative, but seeing the path by which i
   C --> D[&quot;optimizer rule&quot;]
   D --> E[&quot;new parameters&quot;]`"
 />
-
-## Vanishing And Exploding Gradients
-
-- if gradients become too small, early layers barely learn,
-- if gradients become too large, updates become unstable.
-
-This is why activations, initialization, and normalization matter.
 
 ## Code Connection
 
