@@ -1,0 +1,29 @@
+name: Exercise
+description: Add or improve practice questions, quizzes, or coding exercises.
+title: "[Exercise] "
+labels:
+  - exercise
+body:
+  - type: input
+    id: module
+    attributes:
+      label: Module
+      placeholder: python-pytorch
+    validations:
+      required: true
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Exercise description
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done criteria
+      value: |
+        - [ ] Exercise prompt is clear
+        - [ ] Expected learning outcome is stated
+        - [ ] Korean and English versions are aligned
+    validations:
+      required: true

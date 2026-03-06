@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Project roadmap
+    url: https://github.com/jaeyoung0509/llm-fundamentals/issues/1
+    about: Start from the roadmap epic before opening new work.

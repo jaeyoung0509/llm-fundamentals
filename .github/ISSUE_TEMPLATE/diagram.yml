@@ -1,0 +1,20 @@
+name: Diagram
+description: Add or improve a Mermaid or visual explanation.
+title: "[Diagram] "
+labels:
+  - diagram
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      placeholder: docs/guide/index.md
+    validations:
+      required: true
+  - type: textarea
+    id: diagram
+    attributes:
+      label: Diagram request
+      description: Describe what relationship or flow should be visualized
+    validations:
+      required: true

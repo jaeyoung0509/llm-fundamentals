@@ -1,0 +1,20 @@
+name: Translation
+description: Track Korean and English alignment issues.
+title: "[Translation] "
+labels:
+  - translation
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      placeholder: docs/transformers/index.md
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: Translation gap
+      description: What is missing or mismatched
+    validations:
+      required: true

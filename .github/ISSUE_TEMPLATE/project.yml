@@ -1,0 +1,31 @@
+name: Project
+description: Plan a project chapter or runnable example.
+title: "[Project] "
+labels:
+  - project
+body:
+  - type: input
+    id: project_name
+    attributes:
+      label: Project name
+      placeholder: Mini RAG for study notes
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What should be built and what should stay out of scope
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      value: |
+        - [ ] Project goal is clear
+        - [ ] Architecture is documented
+        - [ ] Evaluation plan is defined
+        - [ ] Reader can run the example locally
+    validations:
+      required: true

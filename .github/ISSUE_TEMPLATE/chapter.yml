@@ -1,0 +1,33 @@
+name: Chapter
+description: Plan or write a chapter page or module.
+title: "[Chapter] "
+labels:
+  - chapter
+body:
+  - type: input
+    id: section
+    attributes:
+      label: Section
+      description: Which chapter or page is this for
+      placeholder: math / transformers / ai-engineering
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should the chapter teach
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Define concrete done criteria
+      value: |
+        - [ ] Korean page is updated
+        - [ ] English page is updated
+        - [ ] At least one diagram or code example is included
+        - [ ] Links and navigation are valid
+    validations:
+      required: true
