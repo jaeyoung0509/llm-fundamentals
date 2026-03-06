@@ -24,6 +24,21 @@ const koSidebar = [
     ]
   },
   {
+    text: '수학 심화 트랙 (선택 심화)',
+    items: [
+      { text: '수학 심화 개요', link: '/math-advanced/' },
+      { text: '삼각함수와 주기성', link: '/math-advanced/trigonometry-periodicity' },
+      { text: '고급 선형대수', link: '/math-advanced/advanced-linear-algebra' },
+      { text: '고유값, 고유벡터, SVD', link: '/math-advanced/eigendecomposition-svd' },
+      { text: '다변수 미적분', link: '/math-advanced/multivariable-calculus' },
+      { text: '통계와 추정', link: '/math-advanced/statistics-estimation' },
+      { text: '최적화와 수치 안정성', link: '/math-advanced/optimization-numerical-stability' },
+      { text: '정보 이론', link: '/math-advanced/information-theory' },
+      { text: '푸리에와 위치 신호', link: '/math-advanced/fourier-positional-signals' },
+      { text: '수학 심화 최종 점검', link: '/math-advanced/final-checkpoint' }
+    ]
+  },
+  {
     text: '모델 트랙',
     items: [
       { text: 'NLP와 Transformer 이전 배경', link: '/nlp/' },
@@ -63,6 +78,21 @@ const enSidebar = [
       { text: 'Math Final Checkpoint', link: '/en/math/final-checkpoint' },
       { text: 'Python and PyTorch', link: '/en/python-pytorch/' },
       { text: 'Deep Learning Basics', link: '/en/deep-learning/' }
+    ]
+  },
+  {
+    text: 'Math Expansion Track (Optional Deep Dive)',
+    items: [
+      { text: 'Advanced Math Overview', link: '/en/math-advanced/' },
+      { text: 'Trigonometry and Periodicity', link: '/en/math-advanced/trigonometry-periodicity' },
+      { text: 'Advanced Linear Algebra', link: '/en/math-advanced/advanced-linear-algebra' },
+      { text: 'Eigendecomposition and SVD', link: '/en/math-advanced/eigendecomposition-svd' },
+      { text: 'Multivariable Calculus', link: '/en/math-advanced/multivariable-calculus' },
+      { text: 'Statistics and Estimation', link: '/en/math-advanced/statistics-estimation' },
+      { text: 'Optimization and Numerical Stability', link: '/en/math-advanced/optimization-numerical-stability' },
+      { text: 'Information Theory', link: '/en/math-advanced/information-theory' },
+      { text: 'Fourier and Positional Signals', link: '/en/math-advanced/fourier-positional-signals' },
+      { text: 'Advanced Math Final Checkpoint', link: '/en/math-advanced/final-checkpoint' }
     ]
   },
   {

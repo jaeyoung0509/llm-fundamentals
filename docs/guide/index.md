@@ -35,6 +35,22 @@
   G --> H[&quot;프로젝트와 포트폴리오&quot;]`"
 />
 
+## 핵심 경로 vs 수학 심화 경로
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;수학 기초&quot;] --> B[&quot;수학 최종 점검&quot;]
+  B --> C[&quot;핵심 경로: PyTorch&quot;]
+  B --> D[&quot;선택 심화: 수학 심화 트랙&quot;]
+  D --> E[&quot;논문 읽기 심화&quot;]
+  C --> F[&quot;Transformer / GPT-3&quot;]
+  E --> F`"
+/>
+
+- 핵심 경로는 빠르게 구현과 모델 구조까지 가는 기본 사다리다.
+- 수학 심화 경로는 논문 읽기 난도가 올라갈 때 다시 들어가는 선택 심화다.
+- Transformer, RLHF, 고급 논문을 깊게 읽고 싶다면 [수학 심화 개요](/math-advanced/)를 병행하는 편이 좋다.
+
 ## 12주 러닝 스프린트
 
 | 기간 | 집중 주제 | 산출물 |
@@ -47,6 +63,17 @@
 | 9주 | LLM 실전 기초 | 프롬프트/평가 체크리스트 |
 | 10주 | RL과 RLHF | PPO/RLHF 개념 맵 |
 | 11-12주 | AI Engineering 프로젝트 | 미니 RAG 또는 문서 QA 데모 |
+
+## 선택형 수학 심화 브랜치
+
+아래 브랜치는 필수 진입 장벽이 아니다. 대신 수학 기초를 끝낸 뒤, 논문 읽기 난도가 높아질 때 끼워 넣는 가속 트랙이다.
+
+| 시점 | 심화 주제 | 추천 이유 |
+| --- | --- | --- |
+| 2주차 이후 | [삼각함수와 주기성](/math-advanced/trigonometry-periodicity) | positional encoding, RoPE, 주기 신호 감각 보강 |
+| 4-5주차 | [고급 선형대수](/math-advanced/advanced-linear-algebra), [고유값, 고유벡터, SVD](/math-advanced/eigendecomposition-svd) | 임베딩 공간, 저랭크 구조, 압축 감각 보강 |
+| 6-8주차 | [다변수 미적분](/math-advanced/multivariable-calculus), [최적화와 수치 안정성](/math-advanced/optimization-numerical-stability) | 깊은 네트워크 학습 안정성과 curvature 감각 보강 |
+| 8주차 이후 | [통계와 추정](/math-advanced/statistics-estimation), [정보 이론](/math-advanced/information-theory), [푸리에와 위치 신호](/math-advanced/fourier-positional-signals) | 평가, 분포 비교, 위치 신호와 스펙트럼 해석 보강 |
 
 ## 논문 읽기용 수학 사다리
 
@@ -89,11 +116,13 @@ theta <- theta - eta * grad_theta L
 - [수학 기초](/math/)부터 시작한다.
 - 수식을 외우기보다 손실 함수와 gradient의 의미를 잡는다.
 - 2장으로 넘어갈 때는 벡터, 미분, 기대값의 직관만 챙겨도 충분하다.
+- 기초를 끝낸 뒤 논문 난도가 높아지면 [수학 심화 개요](/math-advanced/)를 분기 트랙으로 탄다.
 
 ### 파이썬은 되지만 수학이 흐릿한 사람
 
 - [수학 기초](/math/) -> [Python과 PyTorch](/python-pytorch/) -> [Transformer](/transformers/) 순으로 간다.
 - 한 번 전체를 돌고 나서 다시 수학 세부를 메우는 편이 효율적이다.
+- Transformer, RLHF 논문을 깊게 읽기 전에는 [수학 심화 개요](/math-advanced/)에서 필요한 장만 골라 병행한다.
 
 ### 코드는 되는데 이론이 약한 사람
 

@@ -33,6 +33,22 @@ It is faster to complete one full pass across the field first, then return for d
   G --> H[&quot;Projects and portfolio&quot;]`"
 />
 
+## Core Path vs Math Deep-Dive Path
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;Math foundations&quot;] --> B[&quot;Math final checkpoint&quot;]
+  B --> C[&quot;Core path: PyTorch&quot;]
+  B --> D[&quot;Optional deep dive: advanced math&quot;]
+  D --> E[&quot;paper-reading depth&quot;]
+  C --> F[&quot;Transformers / GPT-3&quot;]
+  E --> F`"
+/>
+
+- the core path is the fastest route to implementation and model structure,
+- the advanced math path is an optional branch for paper-heavy depth,
+- if serious Transformer or RLHF papers still feel mathematically dense, branch into [Advanced Math Overview](/en/math-advanced/).
+
 ## 12-Week Sprint
 
 | Period | Focus | Output |
@@ -45,6 +61,17 @@ It is faster to complete one full pass across the field first, then return for d
 | Week 9 | LLM practical basics | Prompting and eval checklist |
 | Week 10 | RL and RLHF | PPO and RLHF concept map |
 | Weeks 11-12 | AI engineering project | Mini RAG or document QA demo |
+
+## Optional Math-Deepening Branch
+
+This branch is not a prerequisite wall. It is a reinforcement track to slot in after the basic math foundation is stable.
+
+| Timing | Deep-dive topic | Why it helps |
+| --- | --- | --- |
+| After week 2 | [Trigonometry and Periodicity](/en/math-advanced/trigonometry-periodicity) | positional encoding, RoPE, periodic signal intuition |
+| Weeks 4-5 | [Advanced Linear Algebra](/en/math-advanced/advanced-linear-algebra), [Eigendecomposition and SVD](/en/math-advanced/eigendecomposition-svd) | embedding geometry, low-rank structure, compression |
+| Weeks 6-8 | [Multivariable Calculus](/en/math-advanced/multivariable-calculus), [Optimization and Numerical Stability](/en/math-advanced/optimization-numerical-stability) | curvature, training stability, conditioning |
+| After week 8 | [Statistics and Estimation](/en/math-advanced/statistics-estimation), [Information Theory](/en/math-advanced/information-theory), [Fourier and Positional Signals](/en/math-advanced/fourier-positional-signals) | evaluation, distribution shift, positional/spectral views |
 
 ## First-Pass Exit Criteria
 
@@ -61,11 +88,13 @@ It is faster to complete one full pass across the field first, then return for d
 - Start with [Math Foundations](/en/math/).
 - Focus on the meaning of gradients and loss before formalism.
 - Move forward once vectors, derivatives, and expectation feel intuitive.
+- After the base track, use [Advanced Math Overview](/en/math-advanced/) as a selective reinforcement branch.
 
 ### If you can code but your theory is weak
 
 - Start with [Math Foundations](/en/math/) -> [Python and PyTorch](/en/python-pytorch/) -> [Transformers](/en/transformers/).
 - Return to [LLMs and GPT-3](/en/llms/) after the core ladder feels stable.
+- Before dense paper reading, slot in the advanced math chapters that match the formulas you keep seeing.
 
 ### If you want practical engineering context fast
 

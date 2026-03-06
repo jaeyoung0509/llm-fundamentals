@@ -10,6 +10,10 @@
 - [x] Add the `Math Final Checkpoint` chapter in Korean and English
 - [x] Mirror the rewritten Korean math structure to English with section parity
 - [x] Add a math-specific content lint to prevent duplicate headings and repeated blocks
+- [x] Add the advanced math track overview pages in Korean and English
+- [x] Add advanced math chapters for trig, linear algebra, SVD, multivariable calculus, statistics, optimization, information theory, and Fourier topics
+- [x] Add the advanced math final checkpoint in Korean and English
+- [x] Extend content lint to cover the advanced math track and mirror parity
 - [x] Python/PyTorch and deep learning sections deepened
 - [x] Transformer and GPT-3 sections expanded with Mermaid-heavy explanations
 - [x] RLHF, AI Engineering, and Projects chapters expanded beyond outline level
@@ -35,6 +39,20 @@
 - [ ] Define image and diagram asset rules
 - [ ] Define the policy for external references and primary papers
 - [ ] Add a short contributor note for the Korean-first, English-mirror workflow
+
+## Math Expansion Epic
+
+- [x] `math-advanced/` overview
+- [x] `math-advanced/trigonometry-periodicity`
+- [x] `math-advanced/advanced-linear-algebra`
+- [x] `math-advanced/eigendecomposition-svd`
+- [x] `math-advanced/multivariable-calculus`
+- [x] `math-advanced/statistics-estimation`
+- [x] `math-advanced/optimization-numerical-stability`
+- [x] `math-advanced/information-theory`
+- [x] `math-advanced/fourier-positional-signals`
+- [x] `math-advanced/final-checkpoint`
+- [x] English mirrors for all advanced math pages
 
 ## Later Polish
 

@@ -21,7 +21,39 @@ const targetConfigs = [
     ]
   },
   {
+    dir: path.join(rootDir, 'docs', 'math-advanced'),
+    locale: 'ko',
+    requiredHeadings: [
+      '왜 중요한가',
+      '한 문장 핵심',
+      '표기법 리부트',
+      'Mermaid로 보는 핵심 구조',
+      '직관과 한 가지 예시',
+      '논문에서는 이렇게 보인다',
+      'PyTorch와 코드로 연결하기',
+      '자주 틀리는 지점',
+      '연습',
+      '다음 장으로 연결'
+    ]
+  },
+  {
     dir: path.join(rootDir, 'docs', 'en', 'math'),
+    locale: 'en',
+    requiredHeadings: [
+      'Why This Matters',
+      'One Sentence Takeaway',
+      'Notation Reboot',
+      'Mermaid Mental Model',
+      'Intuition With One Concrete Example',
+      'How This Shows Up In Papers',
+      'How This Maps To PyTorch/Code',
+      'Common Failure Modes Or Misconceptions',
+      'Exercises',
+      'Bridge To Next Chapter'
+    ]
+  },
+  {
+    dir: path.join(rootDir, 'docs', 'en', 'math-advanced'),
     locale: 'en',
     requiredHeadings: [
       'Why This Matters',
@@ -209,13 +241,29 @@ async function validateFile(filePath, requiredHeadings, failures) {
 async function main() {
   const failures = []
   let fileCount = 0
+  const mirrorDirs = new Map()
 
   for (const config of targetConfigs) {
     const files = await collectMarkdownFiles(config.dir)
     fileCount += files.length
+    mirrorDirs.set(config.dir, files)
 
     for (const filePath of files) {
       await validateFile(filePath, config.requiredHeadings, failures)
+    }
+  }
+
+  const koAdvancedDir = path.join(rootDir, 'docs', 'math-advanced')
+  const enAdvancedDir = path.join(rootDir, 'docs', 'en', 'math-advanced')
+  const koAdvancedFiles = mirrorDirs.get(koAdvancedDir) || []
+  const enAdvancedFiles = mirrorDirs.get(enAdvancedDir) || []
+  const enAdvancedSet = new Set(enAdvancedFiles.map((filePath) => path.relative(enAdvancedDir, filePath)))
+
+  for (const filePath of koAdvancedFiles) {
+    const relativePath = path.relative(koAdvancedDir, filePath)
+
+    if (!enAdvancedSet.has(relativePath)) {
+      failures.push(`docs/math-advanced/${relativePath}: missing English mirror at docs/en/math-advanced/${relativePath}`)
     }
   }
 

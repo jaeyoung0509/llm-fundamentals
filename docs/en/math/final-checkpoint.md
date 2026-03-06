@@ -124,6 +124,6 @@ Three repeated questions keep the mapping honest:
 
 ## Bridge To Next Chapter
 
-If this checkpoint feels natural, the math foundations are ready to support implementation. The next chapter turns that fluency into tensors, autograd, and training loops.
+If this checkpoint feels natural, two paths open up. You can go directly into implementation with PyTorch, or branch into the advanced math track for deeper paper-reading fluency.
 
-Next: [Python and PyTorch](/en/python-pytorch/)
+Next: [Advanced Math Overview](/en/math-advanced/) or [Python and PyTorch](/en/python-pytorch/)

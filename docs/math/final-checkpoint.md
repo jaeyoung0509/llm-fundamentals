@@ -126,6 +126,6 @@ L = -sum_t log softmax(XW)_y_t
 
 ## 다음 장으로 연결
 
-수학 최종 점검까지 통과했다면 이제 수식이 코드와 자연스럽게 이어질 준비가 된 상태다. 다음 장에서는 이 감각을 실제 텐서와 autograd로 옮긴다.
+수학 최종 점검까지 통과했다면 이제 두 갈래가 열린다. 핵심 경로로 곧바로 구현에 들어가려면 PyTorch로 넘어가면 되고, 논문 수식 해석을 더 깊게 밀어붙이고 싶다면 수학 심화 트랙으로 들어가면 된다.
 
-다음 장: [Python과 PyTorch](/python-pytorch/)
+다음 장: [수학 심화 개요](/math-advanced/) 또는 [Python과 PyTorch](/python-pytorch/)
