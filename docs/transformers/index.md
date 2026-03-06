@@ -4,6 +4,10 @@
 
 RNN 계열은 긴 의존성을 다루기 어렵고 병렬화에도 한계가 있었다. attention은 "무엇을 얼마나 참고할 것인가"를 직접 계산하면서 이 병목을 크게 줄였다.
 
+## 이 장에서 꼭 가져갈 한 문장
+
+Transformer는 각 토큰이 다른 토큰을 얼마나 참고할지 직접 계산함으로써 언어 모델의 표현력을 크게 끌어올렸다.
+
 ## 핵심 블록
 
 - 토큰 임베딩
@@ -42,5 +46,15 @@ output = weights @ value
 - softmax가 attention 분포를 어떻게 만드는가
 - multi-head가 왜 필요한가
 - decoder-only 구조가 GPT와 어떻게 연결되는가
+
+## 체크리스트
+
+- attention이 RNN의 어떤 한계를 줄였는지 설명할 수 있는가
+- Q, K, V의 역할을 직관적으로 말할 수 있는가
+- decoder-only Transformer가 GPT와 어떻게 연결되는지 설명할 수 있는가
+
+## 다음 장으로 어떻게 연결되는가
+
+Transformer 구조를 이해하면, 이제 GPT 계열이 이 구조를 어떻게 확장해 GPT-3까지 갔는지 볼 수 있다.
 
 다음 장: [LLM과 GPT-3](/llms/)

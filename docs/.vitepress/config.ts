@@ -24,8 +24,10 @@ const koSidebar = [
   {
     text: '모델 트랙',
     items: [
+      { text: 'NLP와 Transformer 이전 배경', link: '/nlp/' },
       { text: 'Transformer', link: '/transformers/' },
       { text: 'LLM과 GPT-3', link: '/llms/' },
+      { text: 'LLM 실전 기본기', link: '/llm-basics/' },
       { text: '강화학습과 RLHF', link: '/rl/' }
     ]
   },
@@ -62,8 +64,10 @@ const enSidebar = [
   {
     text: 'Models',
     items: [
+      { text: 'NLP Before Transformers', link: '/en/nlp/' },
       { text: 'Transformers', link: '/en/transformers/' },
       { text: 'LLMs and GPT-3', link: '/en/llms/' },
+      { text: 'Practical LLM Basics', link: '/en/llm-basics/' },
       { text: 'Reinforcement Learning', link: '/en/rl/' }
     ]
   },

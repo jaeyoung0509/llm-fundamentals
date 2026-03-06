@@ -16,6 +16,10 @@ This book is best read with one concrete persona in mind: a middle-school studen
 - Linear algebra, calculus, and probability have not yet been tied to models.
 - The first objective is not perfection. It is to complete one full pass across the map.
 
+## One Sentence to Keep
+
+It is faster to complete one full pass across the field first, then return for depth, than to demand perfect understanding from page one.
+
 ## First-Pass Strategy
 
 1. build math intuition fast,
@@ -75,3 +79,15 @@ flowchart LR
 
 - Follow [Python and PyTorch](/en/python-pytorch/) -> [Transformers](/en/transformers/) -> [AI Engineering](/en/ai-engineering/).
 - Build something early, then deepen math and RLHF later.
+
+## Checklist
+
+- can you describe the full learning order,
+- can you explain why a first pass matters,
+- can you choose your own starting point.
+
+## How This Connects Forward
+
+Once the learning strategy is clear, the next step is to enter the most important foundation track: math.
+
+Next: [Math Foundations](/en/math/)

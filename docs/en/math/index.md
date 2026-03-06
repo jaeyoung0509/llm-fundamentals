@@ -11,6 +11,10 @@
 
 This is the load-bearing section of the book. If the math layer stays fuzzy, PyTorch, Transformers, GPT-3, and RLHF all risk turning into vocabulary memorization.
 
+## One Sentence to Keep
+
+Math is not a separate school subject here. It is the language needed to read every later model and training loop.
+
 ## Recommended Order
 
 <MermaidDiagram>
@@ -62,5 +66,15 @@ Models do not output certainty. They estimate distributions over possible answer
 | Vectors and Matrices | how do we bundle and transform data | [Vectors and Matrices](/en/math/vectors-matrices) |
 | Derivatives and Gradients | how do we reduce loss | [Derivatives and Gradients](/en/math/gradients) |
 | Probability and Softmax | why is model output a distribution | [Probability and Softmax](/en/math/probability) |
+
+## Checklist
+
+- can you explain why vectors matter for representations,
+- can you explain gradients as loss-reduction signals,
+- can you explain why model outputs are distributions.
+
+## How This Connects Forward
+
+Once math starts to feel like model language, the next step is to express that language directly in tensors and training loops.
 
 Next: [Python and PyTorch](/en/python-pytorch/)
