@@ -25,14 +25,12 @@ Math is not a separate school subject here. It is the language needed to read ev
   D --> E[&quot;PyTorch training loop&quot;]`"
 />
 
-## Math Priority TODO
+## What To Focus On In This Section
 
-- [ ] connect function graphs to loss curves,
-- [ ] connect logs and exponentials to cross-entropy and softmax,
-- [ ] connect matrix multiplication to embeddings and linear layers,
-- [ ] connect the chain rule to backpropagation,
-- [ ] connect distributions and expectation to sampling and evaluation,
-- [ ] add at least three exercises per sub-page.
+- how functions, logs, and exponentials connect to softmax and loss,
+- how matrix multiplication shows up in embeddings, linear layers, and attention,
+- how the chain rule becomes backpropagation,
+- how probability, expectation, and variance connect to sampling and evaluation.
 
 ## Minimal Syllabus
 

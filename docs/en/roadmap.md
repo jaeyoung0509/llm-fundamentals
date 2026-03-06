@@ -4,34 +4,52 @@
 
 The mid-point goal of this book is clear understanding up to GPT-3. The final goal is to become an AI engineer who can reason about evaluation, deployment, and operations.
 
-## Default Reader
+## Current State
 
-The default reader is a middle-school student who is already strong at Python and is entering high school ready to take model-building seriously.
+The repository has already moved beyond the first pass. Math, PyTorch, deep learning basics, Transformers, GPT-3, and AI engineering now have intermediate depth. The remaining work is to raise weaker chapters, keep English mirrors aligned, and sync operational docs with reality.
 
-## First Goal
+## Current Learning Ladder
 
-The immediate goal is not maximum depth. It is to finish one full pass across the field.
-
-- build the core math intuition,
-- train models directly in PyTorch,
-- understand Transformers and GPT-3,
-- see one full pass over RLHF and AI engineering,
-- return later to deepen weak areas.
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;Math foundations&quot;] --> B[&quot;Python and PyTorch&quot;]
+  B --> C[&quot;Deep learning basics&quot;]
+  C --> D[&quot;NLP before Transformers&quot;]
+  D --> E[&quot;Transformers&quot;]
+  E --> F[&quot;LLMs and GPT-3&quot;]
+  F --> G[&quot;Practical LLM basics&quot;]
+  G --> H[&quot;RLHF&quot;]
+  H --> I[&quot;AI Engineering&quot;]
+  I --> J[&quot;Projects&quot;]`"
+/>
 
 ## Milestones
 
 | Stage | Question | Exit criteria |
 | --- | --- | --- |
-| 1 | What math do we actually need | Explain vectors, derivatives, and probability in model terms |
-| 2 | Can we build the training loop ourselves | Use tensors, autograd, dataloaders, and optimizers |
-| 3 | Why did Transformers appear | Explain the need for and shape of attention |
-| 4 | What changed with GPT-3 | Explain scale, in-context learning, and limitations |
-| 5 | How do RLHF and modern practice connect | Describe PPO, evaluation, RAG, deployment, and risk |
+| 1 | What math do we actually need | Explain vectors, derivatives, and probability in model and paper terms |
+| 2 | Can we build the training loop ourselves | Explain tensors, autograd, dataloaders, optimizers, and debugging |
+| 3 | Why did Transformers appear | Explain attention, masking, positional encoding, and decoder-only structure |
+| 4 | What changed with GPT-3 | Explain scale, next-token prediction, in-context learning, and limitations |
+| 5 | How do RLHF and modern practice connect | Explain reward models, PPO, evaluation, RAG, deployment, and risk |
 
-## Current Priorities
+## Remaining Priorities
 
-1. Complete the first full pass of the curriculum.
-2. Keep math as the most important foundation track.
-3. Keep Korean and English aligned in structure.
-4. Store runnable code in `examples/`.
-5. Use GitHub templates for collaboration.
+1. Raise weak chapters to a solid intermediate level.
+2. Keep Korean and English aligned in learning structure.
+3. Sync TODO and roadmap with the real documentation state.
+4. Upgrade the project chapter into portfolio-grade specifications.
+
+## Completion Criteria
+
+- every core Korean chapter feels beyond outline level,
+- English mirrors preserve the same learning ladder,
+- core chapters include diagrams, paper-reading cues, exercises, and chapter bridges,
+- `npm test` passes.
+
+## Recommended Starting Points
+
+- [Math Foundations](/en/math/) if math feels weak,
+- [Python and PyTorch](/en/python-pytorch/) if implementation fluency is the main goal,
+- [Transformers](/en/transformers/) if model structure is the immediate interest,
+- [AI Engineering](/en/ai-engineering/) if systems and operations are the priority.

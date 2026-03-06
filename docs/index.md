@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: LLM Fundamentals
-  text: 수학부터 GPT-3, RL, 그리고 AI Engineering까지
-  tagline: 수학을 다시 붙잡아야 하는 개발자와 학습자도 따라올 수 있도록, 기초 수학부터 PyTorch, Transformer, GPT-3, RL, AI Engineering까지 잇는 이중 언어 ebook 프로젝트.
+  text: 수학부터 GPT-3, RLHF, 그리고 AI Engineering까지
+  tagline: 수학 감각을 다시 세우고, PyTorch로 구현하고, Transformer와 GPT-3를 읽고, 평가와 운영까지 이어지는 이중 언어 ebook 프로젝트.
   image:
     src: /llm-mark.svg
     alt: LLM Fundamentals
@@ -21,17 +21,17 @@ hero:
 
 features:
   - title: Math for Builders
-    details: 함수, 벡터, 미분, 확률을 모델과 손실 함수 관점으로 다시 배운다.
+    details: 함수, 벡터, 미분, 확률을 논문 식과 모델 동작 관점으로 다시 배운다.
   - title: PyTorch First
-    details: 개념 설명이 끝나면 바로 텐서 연산, autograd, training loop 구현으로 이어진다.
-  - title: GPT-3 Milestone
-    details: Transformer와 GPT-3의 핵심 메커니즘을 이해 가능한 수준으로 단계별 해설한다.
-  - title: RL and RLHF
-    details: 밴딧, MDP, PPO, RLHF를 고수준 직관과 실무 연결로 정리한다.
+    details: 개념을 읽은 뒤 바로 텐서, autograd, training loop, debugging으로 연결한다.
+  - title: Transformer to GPT-3
+    details: attention, masking, decoder-only 구조, scale, in-context learning을 단계별로 해설한다.
+  - title: RLHF and Alignment
+    details: bandit, MDP, reward model, PPO, RLHF를 고수준 직관과 실무 연결로 정리한다.
   - title: AI Engineering
-    details: 평가, RAG, 배포, 모니터링, 비용, 보안까지 실제 운영 축을 다룬다.
+    details: 평가, RAG, tool calling, 배포, 모니터링, 비용, 보안을 실제 운영 관점으로 다룬다.
   - title: Korean and English
-    details: 같은 구조와 흐름으로 한국어와 영어 문서를 함께 제공한다.
+    details: 같은 학습 구조를 한국어와 영어로 함께 제공한다.
 ---
 
 ## 이 프로젝트가 지향하는 것

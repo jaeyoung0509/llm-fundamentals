@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: LLM Fundamentals
-  text: The Fastest Path from Python to LLM Mastery
-  tagline: A bilingual ebook project for a Python-fluent student entering high school and aiming to complete one full pass through math, PyTorch, Transformers, GPT-3, RL, and AI engineering.
+  text: From Math Foundations to GPT-3, RLHF, and AI Engineering
+  tagline: A bilingual ebook for readers who want to rebuild math intuition, implement with PyTorch, read Transformer and GPT-3 papers, and reason about evaluation and operations.
   image:
     src: /llm-mark.svg
     alt: LLM Fundamentals
@@ -20,35 +20,29 @@ hero:
       link: /en/roadmap
 
 features:
-  - title: One Full Pass First
-    details: The first goal is to complete the whole map once, then return to deepen weak spots.
   - title: Math for Builders
-    details: Re-learn functions, vectors, derivatives, and probability right before the deeper high-school math layer, always tied to models.
+    details: Re-learn functions, vectors, derivatives, and probability in model and paper-reading terms.
   - title: PyTorch First
-    details: Because the reader already knows Python, the book moves quickly into tensors, autograd, and training loops.
-  - title: GPT-3 Milestone
-    details: Follow the path into Transformers and GPT-3 without skipping the foundations.
-  - title: RL and RLHF
-    details: Learn bandits, MDPs, PPO, and RLHF at a practical, high-level depth.
+    details: Move quickly from concepts into tensors, autograd, training loops, and debugging.
+  - title: Transformer to GPT-3
+    details: Study attention, masking, decoder-only generation, scale, and in-context learning step by step.
+  - title: RLHF and Alignment
+    details: Build intuition for bandits, MDPs, reward models, PPO, and RLHF.
   - title: AI Engineering
-    details: Cover evaluation, RAG, deployment, monitoring, cost, and operational risk.
+    details: Cover evaluation, RAG, tool calling, deployment, monitoring, cost, and security.
   - title: Korean and English
-    details: Keep the same structure in both languages so the book can be read or contributed bilingually.
+    details: Keep the same learning structure available in both languages.
 ---
 
 ## What This Project Optimizes For
 
-This site is designed to help a Python-fluent student become a capable AI engineer: someone who can connect math, code, model intuition, evaluation, and operations.
+This site is designed for readers who want to connect math, code, model intuition, evaluation, and operations into one coherent AI engineering path.
 
-## Default Persona
+It is especially useful for:
 
-The default reader is a middle-school student who is already strong at Python and is about to enter high school. The goal is not just to use LLM products, but to understand, build, evaluate, and improve them.
-
-That persona drives three rules:
-
-- do not spend long on beginner Python,
-- do not hide from math, but teach only the math that unlocks models,
-- complete one full pass across the field before going back for depth.
+- developers who can code but need to rebuild math intuition,
+- learners who want to understand LLM structure rather than only use LLM products,
+- readers who want both model understanding and practical deployment instincts.
 
 Recommended starting points:
 

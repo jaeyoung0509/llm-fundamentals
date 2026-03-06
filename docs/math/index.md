@@ -25,14 +25,12 @@
   D --> E[&quot;PyTorch training loop&quot;]`"
 />
 
-## 수학 집중 TODO
+## 수학에서 집중해서 볼 것
 
-- [ ] 함수 그래프와 loss curve를 연결하는 설명 추가
-- [ ] 로그와 지수를 cross-entropy, softmax와 연결
-- [ ] 행렬곱을 임베딩과 선형층 사례로 설명
-- [ ] chain rule을 backpropagation 그림과 연결
-- [ ] 확률 분포, 기대값, 분산을 샘플링과 평가 관점으로 연결
-- [ ] 각 하위 페이지 끝에 연습 문제 3개 이상 추가
+- 함수, 로그, 지수가 softmax와 loss에서 어떻게 연결되는가
+- 행렬곱이 임베딩, 선형층, attention score에서 어떤 역할을 하는가
+- chain rule이 backpropagation으로 어떻게 이어지는가
+- 확률, 기대값, 분산이 샘플링과 평가에 어떻게 이어지는가
 
 ## 수학 서브모듈
 

@@ -8,14 +8,6 @@ This curriculum tries to hold three things at the same time:
 - PyTorch implementation is introduced early,
 - durable engineering patterns come before trend-chasing.
 
-## Default Mindset
-
-This book is best read with one concrete persona in mind: a middle-school student who is already good at Python and is entering high school with the goal of mastering LLMs.
-
-- Python syntax and basic programming are already comfortable.
-- Linear algebra, calculus, and probability have not yet been tied to models.
-- The first objective is not perfection. It is to complete one full pass across the map.
-
 ## One Sentence to Keep
 
 It is faster to complete one full pass across the field first, then return for depth, than to demand perfect understanding from page one.
@@ -72,13 +64,20 @@ It is faster to complete one full pass across the field first, then return for d
 
 ### If you can code but your theory is weak
 
-- Skim [Transformers](/en/transformers/) and [LLMs and GPT-3](/en/llms/) first.
-- Return to [Math Foundations](/en/math/) and [Deep Learning Basics](/en/deep-learning/) to patch the gaps.
+- Start with [Math Foundations](/en/math/) -> [Python and PyTorch](/en/python-pytorch/) -> [Transformers](/en/transformers/).
+- Return to [LLMs and GPT-3](/en/llms/) after the core ladder feels stable.
 
 ### If you want practical engineering context fast
 
 - Follow [Python and PyTorch](/en/python-pytorch/) -> [Transformers](/en/transformers/) -> [AI Engineering](/en/ai-engineering/).
 - Build something early, then deepen math and RLHF later.
+
+## Writing Principles
+
+- do not stop at definitions; connect intuition, formula, diagram, and code,
+- treat math as model language, not as isolated school content,
+- use Mermaid whenever sequence, transformation, or system flow becomes hard to hold in plain text,
+- end each chapter with practice and a bridge to the next chapter.
 
 ## Checklist
 

@@ -4,47 +4,52 @@
 
 이 책의 중간 목표는 GPT-3까지의 구조와 의미를 이해하는 것이다. 최종 목표는 평가, 배포, 운영까지 감당할 수 있는 AI 엔지니어가 되는 것이다.
 
-## 1차 목표
+## 현재 상태
 
-전체를 완벽하게 파고드는 것보다, 먼저 전체를 한 바퀴 완주하는 것이 우선이다.
+이제 저장소는 1차 패스를 넘어서 2차 심화 단계에 들어갔다. 수학, PyTorch, 딥러닝 기본기, Transformer, GPT-3, AI Engineering은 이미 중간 이상 밀도로 올라왔고, 남은 작업은 약한 장을 균형 있게 채우고 운영 문서를 실제 상태와 맞추는 것이다.
 
-- 수학의 핵심 감각을 잡는다.
-- PyTorch로 학습을 직접 돌린다.
-- Transformer와 GPT-3를 이해한다.
-- RLHF와 AI Engineering 지형을 한 번 본다.
-- 이후 부족한 부분을 다시 메운다.
+## 현재 학습 사다리
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;수학 기초&quot;] --> B[&quot;Python과 PyTorch&quot;]
+  B --> C[&quot;딥러닝 기본기&quot;]
+  C --> D[&quot;NLP 이전 배경&quot;]
+  D --> E[&quot;Transformer&quot;]
+  E --> F[&quot;LLM과 GPT-3&quot;]
+  F --> G[&quot;LLM 실전 기본기&quot;]
+  G --> H[&quot;RLHF&quot;]
+  H --> I[&quot;AI Engineering&quot;]
+  I --> J[&quot;Projects&quot;]`"
+/>
 
 ## 단계별 마일스톤
 
 | 단계 | 질문 | 완료 기준 |
 | --- | --- | --- |
-| 1 | 모델을 이해하는 데 필요한 수학은 무엇인가 | 벡터, 미분, 확률을 신경망 관점으로 설명할 수 있다 |
-| 2 | PyTorch로 학습 루프를 직접 만들 수 있는가 | 텐서, autograd, dataloader, optimizer를 사용할 수 있다 |
-| 3 | Transformer가 왜 등장했는가 | attention의 필요성과 구조를 설명할 수 있다 |
-| 4 | GPT-3는 무엇을 바꿨는가 | scale, in-context learning, 한계를 설명할 수 있다 |
-| 5 | RLHF와 최신 실무는 어떻게 이어지는가 | PPO, 평가, RAG, 배포, 운영 리스크를 개괄할 수 있다 |
+| 1 | 모델을 이해하는 데 필요한 수학은 무엇인가 | 벡터, 미분, 확률을 신경망과 논문 식 관점으로 설명할 수 있다 |
+| 2 | PyTorch로 학습 루프를 직접 만들 수 있는가 | 텐서, autograd, dataloader, optimizer, debugging을 설명할 수 있다 |
+| 3 | Transformer가 왜 등장했는가 | attention, masking, positional encoding, decoder-only 구조를 설명할 수 있다 |
+| 4 | GPT-3는 무엇을 바꿨는가 | scale, next-token prediction, in-context learning, 한계를 설명할 수 있다 |
+| 5 | RLHF와 최신 실무는 어떻게 이어지는가 | reward model, PPO, 평가, RAG, 배포, 운영 리스크를 개괄할 수 있다 |
 
-## 현재 우선순위
+## 남은 우선순위
 
-1. 전체 커리큘럼의 1차 패스를 먼저 완성한다.
-2. 수학 섹션을 가장 중요한 기반 축으로 유지한다.
-3. 한국어와 영어의 같은 목차를 유지한다.
-4. 예제 코드를 `examples/`에 분리한다.
-5. GitHub 이슈와 PR 템플릿으로 협업 구조를 만든다.
+1. 약한 장을 `solid intermediate` 수준까지 끌어올린다.
+2. 한국어 원본과 영어 미러의 구조를 계속 맞춘다.
+3. TODO와 로드맵을 실제 문서 상태와 동기화한다.
+4. 프로젝트 장을 포트폴리오 수준의 스펙으로 고도화한다.
 
-## 1차 패스 체크포인트
+## 완료 판정 기준
 
-- 프롤로그부터 프로젝트 장까지 모든 핵심 장에 최소 본문이 있어야 한다.
-- 각 장은 한 문장 핵심과 다음 장 연결을 가져야 한다.
-- 한국어와 영어가 같은 구조를 유지해야 한다.
-- 빌드와 배포가 모두 통과해야 한다.
-- 이 체크포인트가 모두 충족되면 1차 패스 완료로 보고 다음 단계 심화로 넘어간다.
+- 모든 핵심 한국어 장이 outline 수준을 벗어난다.
+- 영어 대응 문서가 같은 학습 사다리를 유지한다.
+- 핵심 장마다 다이어그램, 논문 읽기 신호, 연습, 다음 장 연결이 있다.
+- `npm test`가 통과한다.
 
-## 초기 챕터 우선순위
+## 추천 시작점
 
-- [수학 기초](/math/)
-- [Python과 PyTorch](/python-pytorch/)
-- [Transformer](/transformers/)
-- [LLM과 GPT-3](/llms/)
-- [강화학습과 RLHF](/rl/)
-- [AI Engineering](/ai-engineering/)
+- 수학이 약하면 [수학 기초](/math/)
+- 구현 감각부터 잡고 싶으면 [Python과 PyTorch](/python-pytorch/)
+- 모델 구조를 먼저 보고 싶으면 [Transformer](/transformers/)
+- 제품 감각까지 빨리 보고 싶으면 [AI Engineering](/ai-engineering/)
