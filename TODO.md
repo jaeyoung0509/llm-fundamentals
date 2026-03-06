@@ -68,6 +68,15 @@ docs/
 - [ ] 확률, 조건부확률, 기대값, 분산을 모델링 관점으로 설명한다.
 - [ ] 선형대수와 미적분이 신경망에서 어떻게 쓰이는지 연결한다.
 
+#### 수학 섹션 우선 TODO
+
+- [ ] 함수/로그/지수 페이지를 `softmax`, `cross-entropy`, `scale`과 직접 연결한다.
+- [ ] 벡터/행렬 페이지를 `embedding`, `linear layer`, `attention score` 사례와 연결한다.
+- [ ] 미분/gradient 페이지에 chain rule과 backpropagation 다이어그램을 추가한다.
+- [ ] 확률 페이지에 분포, 기대값, 분산, softmax, sampling의 연결을 추가한다.
+- [ ] 수학 하위 페이지마다 연습 문제와 "다음 장 연결" 섹션을 넣는다.
+- [ ] 영어 번역은 한국어 수학 원문이 안정화된 직후 동기화한다.
+
 ### 2. Python과 PyTorch 입문
 
 - [ ] Python 기초 문법보다 "텐서 사고 방식"에 초점을 둔 장을 만든다.

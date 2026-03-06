@@ -12,7 +12,11 @@ const koSidebar = [
   {
     text: '기초 트랙',
     items: [
-      { text: '수학 기초', link: '/math/' },
+      { text: '수학 기초 개요', link: '/math/' },
+      { text: '함수, 로그, 지수', link: '/math/functions-growth' },
+      { text: '벡터와 행렬', link: '/math/vectors-matrices' },
+      { text: '미분과 gradient', link: '/math/gradients' },
+      { text: '확률과 softmax', link: '/math/probability' },
       { text: 'Python과 PyTorch', link: '/python-pytorch/' },
       { text: '딥러닝 기본기', link: '/deep-learning/' }
     ]
@@ -46,7 +50,11 @@ const enSidebar = [
   {
     text: 'Foundations',
     items: [
-      { text: 'Math Foundations', link: '/en/math/' },
+      { text: 'Math Foundations Overview', link: '/en/math/' },
+      { text: 'Functions, Logs, and Growth', link: '/en/math/functions-growth' },
+      { text: 'Vectors and Matrices', link: '/en/math/vectors-matrices' },
+      { text: 'Derivatives and Gradients', link: '/en/math/gradients' },
+      { text: 'Probability and Softmax', link: '/en/math/probability' },
       { text: 'Python and PyTorch', link: '/en/python-pytorch/' },
       { text: 'Deep Learning Basics', link: '/en/deep-learning/' }
     ]

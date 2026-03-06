@@ -7,6 +7,38 @@
 - 미분을 변화율이 아니라 "손실을 줄이는 방향 신호"로 이해한다.
 - 확률을 불확실성과 예측의 언어로 받아들인다.
 
+## 왜 이 섹션이 특히 중요한가
+
+이 책에서 수학 섹션은 선택 과목이 아니라 기반 공사다. 여기서 헷갈리면 이후 PyTorch, Transformer, GPT-3, RLHF를 전부 "용어 암기"로 배우게 된다.
+
+## 권장 학습 순서
+
+<MermaidDiagram>
+flowchart TD
+  A["함수, 로그, 지수"] --> B["벡터와 행렬"]
+  B --> C["미분과 gradient"]
+  C --> D["확률과 softmax"]
+  D --> E["PyTorch training loop"]
+</MermaidDiagram>
+
+## 수학 집중 TODO
+
+- [ ] 함수 그래프와 loss curve를 연결하는 설명 추가
+- [ ] 로그와 지수를 cross-entropy, softmax와 연결
+- [ ] 행렬곱을 임베딩과 선형층 사례로 설명
+- [ ] chain rule을 backpropagation 그림과 연결
+- [ ] 확률 분포, 기대값, 분산을 샘플링과 평가 관점으로 연결
+- [ ] 각 하위 페이지 끝에 연습 문제 3개 이상 추가
+
+## 수학 서브모듈
+
+| 서브모듈 | 핵심 질문 | 페이지 |
+| --- | --- | --- |
+| 함수, 로그, 지수 | 모델에서 값이 왜 비선형으로 움직이는가 | [함수, 로그, 지수](/math/functions-growth) |
+| 벡터와 행렬 | 데이터를 어떻게 묶고 변환하는가 | [벡터와 행렬](/math/vectors-matrices) |
+| 미분과 gradient | 손실을 어떻게 줄이는가 | [미분과 gradient](/math/gradients) |
+| 확률과 softmax | 모델 출력은 왜 분포인가 | [확률과 softmax](/math/probability) |
+
 ## 최소 수학 실라버스
 
 ### 1. 함수, 로그, 지수
@@ -47,4 +79,3 @@ new_weight = old_weight - learning_rate * gradient
 3. softmax가 왜 확률처럼 보이는지 정리해본다.
 
 다음 장: [Python과 PyTorch](/python-pytorch/)
-
