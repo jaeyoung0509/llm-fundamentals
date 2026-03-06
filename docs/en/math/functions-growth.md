@@ -1,146 +1,137 @@
-# Functions, Logs, and Growth
+# Functions, Logs, and Exponentials
 
-## Goals
+## Why This Matters
 
-- understand functions as input-output rules in model terms,
-- see why logs and exponentials keep appearing in loss, probability, and scale,
-- build intuition for non-linearity.
+In LLM work, functions, logarithms, and exponentials are not decoration. They sit inside logits, softmax, cross-entropy, negative log-likelihood, temperature scaling, and perplexity.
 
-## Why It Matters
+If this chapter is weak, you end up using those terms by habit without being able to explain why they behave the way they do.
 
-Neural networks do not behave like one straight line. Values get amplified, normalized, and compressed across different scales.
+## One Sentence Takeaway
 
-## Flow at a Glance
+Functions transform values, exponentials magnify score gaps, and logarithms turn probabilities into a loss-friendly scale.
+
+## Notation Reboot
+
+| Symbol | Fast reading | Model context |
+| --- | --- | --- |
+| `f(x)` | rule that maps input to output | linear layer, activation |
+| `exp(z)` | magnify differences | softmax numerator |
+| `log p(y|x)` | log probability of the correct answer | likelihood |
+| `-log p(y|x)` | larger penalty when the correct probability is low | NLL, cross-entropy |
+| `softmax(z)` | normalize score vector into a distribution | next-token probabilities |
+
+## Mermaid Mental Model
 
 <MermaidDiagram
   :code="`flowchart LR
-  A[&quot;input x&quot;] --> B[&quot;linear transform&quot;]
-  B --> C[&quot;non-linear function&quot;]
-  C --> D[&quot;logits&quot;]
-  D --> E[&quot;exponentials&quot;]
-  E --> F[&quot;softmax probabilities&quot;]
-  F --> G[&quot;log loss&quot;]`"
+  A[&quot;input representation&quot;] --> B[&quot;linear layer&quot;]
+  B --> C[&quot;logits&quot;]
+  C --> D[&quot;exp&quot;]
+  D --> E[&quot;softmax probabilities&quot;]
+  E --> F[&quot;-log p(correct)&quot;]
+  F --> G[&quot;training loss&quot;]`"
 />
 
-## Core Ideas
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;small score gap&quot;] --> B[&quot;exp magnifies gap&quot;]
+  B --> C[&quot;top token stands out more&quot;]
+  C --> D[&quot;softmax sharpens the distribution&quot;]
+  D --> E[&quot;loss depends on correct-token probability&quot;]`"
+/>
 
-### Function
+## Intuition With One Concrete Example
 
-A function maps input to output. A model is a stack of such mappings.
-
-### Exponential
-
-Exponentials magnify score differences quickly.
-
-### Logarithm
-
-Logarithms compress multiplicative structure and help interpret loss.
-
-## Function Composition
+Suppose the model produces:
 
 ```text
-x -> linear -> activation -> logits -> softmax -> loss
+logits = [2.0, 1.0, 0.0]
 ```
 
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;input x&quot;] --> B[&quot;f1: linear&quot;]
-  B --> C[&quot;f2: non-linearity&quot;]
-  C --> D[&quot;f3: logits&quot;]
-  D --> E[&quot;f4: probability / loss&quot;]`"
-/>
-
-## Why Non-Linearity Matters
-
-Stacking only linear layers stays close to one large linear transform. Deep models become meaningfully expressive once non-linearities such as ReLU or GELU are inserted.
-
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;linear&quot;] --> B[&quot;linear&quot;]
-  B --> C[&quot;still mostly linear&quot;]
-  D[&quot;linear&quot;] --> E[&quot;non-linearity&quot;]
-  E --> F[&quot;richer decision boundary&quot;]`"
-/>
-
-## Linear vs Exponential As A Graph
+These are not probabilities yet. They are preference scores. `exp` widens the gap between them, and softmax turns them into a normalized distribution.
 
 <MermaidDiagram
   :code="`xychart
-    title &quot;Linear vs Exponential Growth&quot;
-    x-axis &quot;x&quot; [-2, -1, 0, 1, 2]
-    y-axis &quot;value&quot; -2 --> 8
-    line [-2, -1, 0, 1, 2]
-    line [0.14, 0.37, 1.0, 2.72, 7.39]`"
+    title &quot;Linear vs Exponential Response&quot;
+    x-axis &quot;score gap&quot; [0, 1, 2, 3, 4]
+    y-axis &quot;effect&quot; 0 --> 55
+    line [0, 1, 2, 3, 4]
+    line [1, 2.72, 7.39, 20.09, 54.60]`"
 />
 
-## Softmax Flow
-
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;logits&quot;] --> B[&quot;exp on each score&quot;]
-  B --> C[&quot;positive values&quot;]
-  C --> D[&quot;divide by total sum&quot;]
-  D --> E[&quot;probability distribution&quot;]`"
-/>
-
-## Reading Loss
-
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;model outputs p(correct)&quot;] --> B{&quot;is p high?&quot;}
-  B -->|&quot;yes&quot;| C[&quot;small loss&quot;]
-  B -->|&quot;no&quot;| D[&quot;large loss&quot;]`"
-/>
-
-## Negative Log Loss Curve
+And if the correct-token probability is `0.9`, `-log(0.9)` is small. If it is `0.1`, `-log(0.1)` is large.
 
 <MermaidDiagram
   :code="`xychart
-    title &quot;Negative Log Loss Curve&quot;
+    title &quot;Negative Log Loss&quot;
     x-axis &quot;p(correct)&quot; [0.1, 0.3, 0.5, 0.7, 0.9]
     y-axis &quot;-log(p)&quot; 0 --> 2.5
     line [2.30, 1.20, 0.69, 0.36, 0.10]`"
 />
 
-## Reading The Paper Formula
+## How This Shows Up In Papers
 
-<MermaidDiagram
-  :code="`flowchart TD
-  A[&quot;find p_theta(y_t | context)&quot;] --> B[&quot;take log&quot;]
-  B --> C[&quot;negate it&quot;]
-  C --> D[&quot;sum over tokens&quot;]
-  D --> E[&quot;training loss&quot;]`"
-/>
+The key formula for this chapter is:
 
-## Perplexity Connection
+```text
+L = -sum_t log p_theta(y_t | x, y_<t)
+```
 
-- when cross-entropy goes down, perplexity also goes down,
-- perplexity can be read as how confused the model still is about the next token.
+### Paper Formula Autopsy: Negative Log-Likelihood
 
-## Code Connection
+| Piece | Reading | What it does |
+| --- | --- | --- |
+| `p_theta(...)` | model probability under parameters `theta` | predicts the next-token distribution |
+| `y_t` | correct token at time `t` | target |
+| `x, y_<t` | input and prior context | conditioning information |
+| `log` | puts tiny probabilities onto an additive scale | stable accumulation |
+| `-` | makes high correct probability produce low loss | optimization direction |
+| `sum_t` | accumulates over time steps | sequence training |
 
-- `torch.softmax(logits, dim=-1)` makes logits readable as a distribution,
-- `torch.log(prob)` moves probabilities into log space,
-- `CrossEntropyLoss` compares logits and targets directly.
+Perplexity is just another view on the same learning signal. Lower cross-entropy means lower perplexity and less confusion about the next token.
 
-## Model Connections
+## How This Maps To PyTorch/Code
 
-| Math idea | Model example |
-| --- | --- |
-| function | linear layer, activation, loss |
-| exponential | numerator of softmax |
-| logarithm | negative log-likelihood, cross-entropy |
+- `logits = model(x)` produces scores, not probabilities.
+- `torch.softmax(logits, dim=-1)` is useful for inspection and sampling.
+- `nn.CrossEntropyLoss()` handles the log-softmax/NLL structure internally.
+- Temperature sampling is the same family of behavior as `logits / T` before softmax.
+
+Example links:
+
+- [softmax_sampling.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/softmax_sampling.py)
+- [linear_regression.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/torch-basics/linear_regression.py)
+
+## Common Failure Modes Or Misconceptions
+
+- Treating softmax as a memorized probability function without understanding score-gap amplification
+- Using cross-entropy without the `-log p(correct)` intuition
+- Treating perplexity as a disconnected metric instead of a loss-relative view
+- Assuming inference must always compute explicit probabilities before every decision
+- Forgetting that temperature acts on logits, not on final probabilities
 
 ## Exercises
 
-1. Explain why softmax would lose contrast without exponentials.
-2. Explain why `-log(p_correct)` punishes low correct-token probability strongly.
-3. Explain why deep networks need non-linearity.
+### Basic Check
 
-## Questions
+1. Explain why `[2, 1, 0]` is not yet a probability distribution.
+2. Explain why `-log(0.9)` and `-log(0.1)` differ so much.
+3. Explain why larger `T` makes `softmax(logits / T)` flatter.
 
-1. What would break if softmax had no exponentials
-2. Why does log loss shrink as the correct probability moves toward 1
-3. Why do stacked layers matter less without non-linearity
+### Paper-Reading Drill
+
+1. Explain each term in `L = -sum_t log p_theta(y_t | x, y_<t)`.
+2. Explain why a small cross-entropy improvement can still matter in generation quality.
+3. Explain why `negative log-likelihood` and cross-entropy often feel like the same training language in practice.
+
+### Code Drill
+
+1. Predict how `softmax_sampling.py` will change when temperature moves from `0.5` to `2.0`.
+2. Explain why `CrossEntropyLoss` expects logits directly.
+3. Explain the difference between sampling from probabilities and taking `argmax`.
+
+## Bridge To Next Chapter
+
+Once logits, softmax, loss, and perplexity feel connected, the next step is to understand the containers that hold those values: vectors, matrices, batches, embeddings, and attention score tables.
 
 Next: [Vectors and Matrices](/en/math/vectors-matrices)

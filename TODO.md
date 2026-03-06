@@ -6,7 +6,10 @@
 - [x] Mermaid rendering and runtime validation added
 - [x] GitHub Pages deployment and CI validation added
 - [x] Core chapters drafted in both Korean and English
-- [x] Math section deepened for paper reading
+- [x] Rewrite the math track as a coherent Korean-first ladder
+- [x] Add the `Math Final Checkpoint` chapter in Korean and English
+- [x] Mirror the rewritten Korean math structure to English with section parity
+- [x] Add a math-specific content lint to prevent duplicate headings and repeated blocks
 - [x] Python/PyTorch and deep learning sections deepened
 - [x] Transformer and GPT-3 sections expanded with Mermaid-heavy explanations
 - [x] RLHF, AI Engineering, and Projects chapters expanded beyond outline level
@@ -25,7 +28,7 @@
 - [x] Remove stale in-page TODO blocks where content is already present
 - [x] Align public guide pages and home pages with the current completion stage
 - [ ] Keep repo-facing docs in English while keeping the ebook bilingual
-- [ ] Verify chapter order, sidebar labels, and chapter bridges after the deepened content pass
+- [ ] Verify chapter order, sidebar labels, and chapter bridges after the math rewrite
 
 ### Operations
 

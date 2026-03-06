@@ -1,218 +1,147 @@
 # 함수, 로그, 지수
 
-## 이 페이지의 목표
-
-- 함수가 입력과 출력을 연결하는 규칙이라는 점을 모델 관점으로 이해한다.
-- 지수와 로그가 왜 loss, 확률, scale과 자주 연결되는지 본다.
-- 비선형성이 왜 필요한지 감각을 만든다.
-
 ## 왜 중요한가
 
-신경망은 단순한 직선 하나로 세상을 설명하지 못한다. 값이 빠르게 커지거나 작아지고, 확률처럼 정규화되고, 손실이 로그 스케일로 다뤄지는 순간마다 함수와 로그, 지수가 등장한다.
+LLM에서 함수, 로그, 지수는 장식이 아니다. 로짓을 확률로 바꾸는 `softmax`, 정답 확률을 벌점으로 바꾸는 `-log`, 모델 혼란도를 읽는 `perplexity`가 전부 이 장에 기대고 있다.
 
-## 한눈에 보는 흐름
+이 장에서 놓치면 생기는 문제도 명확하다. `softmax`는 외웠지만 왜 temperature가 분포를 바꾸는지 설명하지 못하고, cross-entropy는 쓰지만 왜 로그가 붙는지 감이 없고, 논문에 `NLL`이 나오면 새 개념처럼 느껴진다.
+
+## 한 문장 핵심
+
+함수는 값을 변환하고, 지수는 차이를 벌리며, 로그는 확률과 손실을 읽기 쉬운 스케일로 바꾼다.
+
+## 표기법 리부트
+
+| 표기 | 빠른 해석 | 모델 문맥 |
+| --- | --- | --- |
+| `f(x)` | 입력을 출력으로 바꾸는 규칙 | 선형층, 활성화 함수 |
+| `exp(z)` | 점수 차이를 더 강하게 벌림 | softmax 분자 |
+| `log p(y|x)` | 정답 확률의 로그 | likelihood |
+| `-log p(y|x)` | 정답 확률이 낮을수록 커지는 벌점 | NLL, cross-entropy |
+| `softmax(z)` | 점수 벡터를 분포로 정규화 | next-token probabilities |
+
+여기서 중요한 것은 정의 암기가 아니라 역할이다. `exp`는 차이를 증폭하고, `log`는 곱 구조를 더하기 쉬운 형태로 바꾸며, `softmax`는 점수 표를 확률 분포로 만든다.
+
+## Mermaid로 보는 핵심 구조
 
 <MermaidDiagram
   :code="`flowchart LR
-  A[&quot;입력 x&quot;] --> B[&quot;선형 변환&quot;]
-  B --> C[&quot;비선형 함수&quot;]
-  C --> D[&quot;로짓&quot;]
-  D --> E[&quot;지수&quot;]
-  E --> F[&quot;softmax 확률&quot;]
-  F --> G[&quot;log loss&quot;]`"
+  A[&quot;입력 표현&quot;] --> B[&quot;linear layer&quot;]
+  B --> C[&quot;logits&quot;]
+  C --> D[&quot;exp&quot;]
+  D --> E[&quot;softmax probabilities&quot;]
+  E --> F[&quot;-log p(correct)&quot;]
+  F --> G[&quot;training loss&quot;]`"
 />
 
-## 핵심 개념
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;score gap is small&quot;] --> B[&quot;exp magnifies gap&quot;]
+  B --> C[&quot;top token stands out more&quot;]
+  C --> D[&quot;softmax becomes sharper&quot;]
+  D --> E[&quot;loss depends on correct token probability&quot;]`"
+/>
 
-### 함수
+## 직관과 한 가지 예시
 
-함수는 "입력을 받아 출력을 만든다"는 규칙이다. 모델은 결국 아주 많은 함수를 겹겹이 쌓아 만든 시스템이다.
-
-실전에서 가장 자주 보는 함수는 아래 셋이다.
-
-- 입력을 다른 공간으로 보내는 선형 함수
-- 표현력을 만드는 비선형 활성화 함수
-- 모델이 잘했는지 판단하는 손실 함수
-
-### 지수
-
-지수는 작은 차이를 빠르게 벌린다. softmax에서 로짓 차이가 지수 함수를 거치며 확률 차이로 더 선명하게 드러나는 이유가 여기에 있다.
-
-### 로그
-
-로그는 곱셈 구조를 덧셈으로 바꾸고, 매우 큰 수나 작은 수를 다루기 쉽게 만든다. cross-entropy에서 로그가 등장하는 것도 이 때문이다.
-
-## 논문에서 자주 보이는 표기
-
-| 표기 | 직관 |
-| --- | --- |
-| `f(x)` | 입력 `x`를 다른 값으로 보내는 함수 |
-| `exp(z)` | 점수 차이를 더 크게 벌리는 연산 |
-| `log p(y|x)` | 입력 `x`에서 정답 `y`가 나올 확률의 로그 |
-| `-log p(y|x)` | 정답 확률이 낮을수록 커지는 손실 |
-| `sigma(x)` | 값을 0과 1 사이로 누르는 함수의 대표 예 |
-
-## 함수 합성 감각
-
-신경망은 보통 함수 하나가 아니라 함수 합성이다.
+같은 로짓이라도 함수 적용 순서에 따라 해석이 달라진다.
 
 ```text
-x -> linear -> activation -> logits -> softmax -> loss
+logits = [2.0, 1.0, 0.0]
 ```
 
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;input x&quot;] --> B[&quot;f1: linear&quot;]
-  B --> C[&quot;f2: non-linearity&quot;]
-  C --> D[&quot;f3: logits&quot;]
-  D --> E[&quot;f4: probability / loss&quot;]`"
-/>
-
-## 왜 비선형성이 필요한가
-
-선형층만 여러 개 쌓으면 결국 하나의 큰 선형층과 크게 다르지 않다. 깊은 모델이 의미를 갖기 시작하는 지점은 ReLU, GELU 같은 비선형 함수가 들어갈 때다.
-
-| 경우 | 결과 |
-| --- | --- |
-| 선형 + 선형 + 선형 | 여전히 선형 변환에 가깝다 |
-| 선형 + 비선형 + 선형 | 더 복잡한 경계를 표현할 수 있다 |
-
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;linear&quot;] --> B[&quot;linear&quot;]
-  B --> C[&quot;still mostly linear&quot;]
-  D[&quot;linear&quot;] --> E[&quot;non-linearity&quot;]
-  E --> F[&quot;richer decision boundary&quot;]`"
-/>
-
-## 그래프로 보는 선형과 지수
+이 벡터는 아직 확률이 아니다. 단지 "모델이 각 후보를 얼마나 선호하는지"를 나타내는 점수다. 여기에 `exp`를 적용하면 큰 점수와 작은 점수의 차이가 더 벌어진다. 그리고 그 합으로 다시 나누면 확률처럼 읽을 수 있는 분포가 된다.
 
 <MermaidDiagram
   :code="`xychart
-    title &quot;Linear vs Exponential Growth&quot;
-    x-axis &quot;x&quot; [-2, -1, 0, 1, 2]
-    y-axis &quot;value&quot; -2 --> 8
-    line [-2, -1, 0, 1, 2]
-    line [0.14, 0.37, 1.0, 2.72, 7.39]`"
+    title &quot;Linear vs Exponential Response&quot;
+    x-axis &quot;score gap&quot; [0, 1, 2, 3, 4]
+    y-axis &quot;effect&quot; 0 --> 55
+    line [0, 1, 2, 3, 4]
+    line [1, 2.72, 7.39, 20.09, 54.60]`"
 />
 
-## 모델 예시
-
-### softmax
-
-```text
-prob_i = exp(logit_i) / sum_j exp(logit_j)
-```
-
-이 식에서 지수는 점수 차이를 확률 차이로 키우고, 분모는 전체를 0과 1 사이의 분포로 정규화한다.
-
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;logits&quot;] --> B[&quot;exp on each score&quot;]
-  B --> C[&quot;positive values&quot;]
-  C --> D[&quot;divide by total sum&quot;]
-  D --> E[&quot;probability distribution&quot;]`"
-/>
-
-### cross-entropy
-
-```text
-loss = -log(p_correct)
-```
-
-이 식은 정답 토큰의 확률이 낮을수록 손실을 크게 만든다.
-
-## loss를 읽는 습관
-
-논문에서 loss 식을 보면 먼저 아래 순서로 읽는다.
-
-1. 무엇을 맞히려는지 본다.
-2. 정답 확률이 어디에 들어가는지 본다.
-3. `log`가 왜 붙는지 본다.
-4. 여러 토큰이나 샘플에 대해 합인지 평균인지 본다.
-
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;model outputs p(correct)&quot;] --> B{&quot;is p high?&quot;}
-  B -->|&quot;yes&quot;| C[&quot;small loss&quot;]
-  B -->|&quot;no&quot;| D[&quot;large loss&quot;]`"
-/>
-
-## 그래프로 보는 log loss
+정답 토큰 확률이 `0.9`면 `-log(0.9)`는 작고, `0.1`이면 `-log(0.1)`은 크다. 즉, loss는 "정답을 자신 있게 맞히는가"를 아주 민감하게 본다.
 
 <MermaidDiagram
   :code="`xychart
-    title &quot;Negative Log Loss Curve&quot;
+    title &quot;Negative Log Loss&quot;
     x-axis &quot;p(correct)&quot; [0.1, 0.3, 0.5, 0.7, 0.9]
     y-axis &quot;-log(p)&quot; 0 --> 2.5
     line [2.30, 1.20, 0.69, 0.36, 0.10]`"
 />
 
-## scale 감각
+## 논문에서는 이렇게 보인다
 
-- 지수는 작은 점수 차이를 더 눈에 띄게 만든다.
-- 로그는 너무 큰 수와 너무 작은 수를 읽기 쉬운 범위로 바꾼다.
-- 논문 그래프에서 loss가 천천히 줄어들어도 perplexity나 확률 관점에서는 의미 있는 차이일 수 있다.
-
-## perplexity를 어떻게 연결할까
-
-- cross-entropy가 내려가면 perplexity도 같이 내려간다
-- perplexity는 "모델이 다음 토큰을 얼마나 덜 헷갈려 하는가"를 보는 지표처럼 읽을 수 있다
-
-## 코드 연결
-
-- `torch.softmax(logits, dim=-1)`는 로짓을 확률 분포처럼 읽게 만든다
-- `torch.log(prob)`는 확률을 로그 스케일로 옮긴다
-- `CrossEntropyLoss`는 로짓과 정답을 비교해 손실을 만든다
-
-## 논문에서 이렇게 읽는다
+이 장의 대표 식은 아래 한 줄이다.
 
 ```text
 L = -sum_t log p_theta(y_t | x, y_<t)
 ```
 
-- `p_theta(...)`: 파라미터 `theta`를 가진 모델의 확률 분포
-- `y_t`: 현재 시점의 정답 토큰
-- `y_<t`: 이전까지의 토큰 문맥
-- `log`: 정답 확률을 손실로 읽기 쉽게 바꾸는 장치
-- `-sum_t`: 모든 시점에서 틀린 정도를 모아 벌점으로 만든 것
+### Paper Formula Autopsy: Negative Log-Likelihood
 
-<MermaidDiagram
-  :code="`flowchart TD
-  A[&quot;find p_theta(y_t | context)&quot;] --> B[&quot;take log&quot;]
-  B --> C[&quot;negate it&quot;]
-  C --> D[&quot;sum over tokens&quot;]
-  D --> E[&quot;training loss&quot;]`"
-/>
+| 조각 | 읽는 법 | 모델에서 실제로 하는 일 |
+| --- | --- | --- |
+| `p_theta(...)` | 파라미터 `theta`를 가진 모델의 확률 | 문맥을 보고 다음 토큰 분포를 출력 |
+| `y_t` | 현재 시점의 정답 토큰 | 맞혀야 하는 target |
+| `x, y_<t` | 입력과 이전 문맥 | 조건부 정보 |
+| `log` | 확률을 더하기 쉬운 스케일로 변환 | 매우 작은 확률을 안정적으로 다룸 |
+| `-` | 높은 확률일수록 손실이 작아지도록 뒤집음 | 최적화 방향을 만듦 |
+| `sum_t` | 모든 위치의 손실을 모음 | 시퀀스 전체 학습 |
 
-## 작은 실험으로 확인하기
+이 식을 짧게 말하면 "문맥을 보고 정답 토큰 확률을 높이도록 학습한다"다.
 
-- [softmax_sampling.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/softmax_sampling.py)를 보면 같은 로짓에서 temperature가 분포를 어떻게 바꾸는지 확인할 수 있다.
+perplexity는 여기서 한 걸음 더 나간다. cross-entropy가 줄어들면 perplexity도 줄고, 이는 모델이 다음 토큰에서 덜 헷갈린다는 뜻으로 읽을 수 있다.
+
+## PyTorch와 코드로 연결하기
+
+- `logits = model(x)`는 아직 점수 벡터다.
+- `torch.softmax(logits, dim=-1)`는 분포 확인용이며, 학습에서는 보통 직접 호출하지 않아도 된다.
+- `nn.CrossEntropyLoss()`는 내부적으로 `log-softmax + NLL` 구조를 처리한다.
+- temperature sampling은 `logits / T` 뒤에 `softmax`를 적용하는 것과 같다.
+
+바로 연결해서 볼 수 있는 예제는 아래다.
+
+- [softmax_sampling.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/softmax_sampling.py)
+- [linear_regression.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/torch-basics/linear_regression.py)
+
+## 자주 틀리는 지점
+
+- `softmax`를 "확률 만들기"로만 기억하고, score gap 확대 효과를 놓친다.
+- cross-entropy를 외워도 `-log p(correct)` 직관이 없어서 loss 숫자 해석이 약하다.
+- perplexity를 별도 개념으로 외우고 cross-entropy와 연결하지 못한다.
+- inference에서도 무조건 `softmax`를 먼저 계산해야 한다고 생각하고, logits 기반 비교를 잊는다.
+- temperature를 확률에 나누는 것이 아니라 logits에 적용한다는 점을 놓친다.
+
+### 엔지니어가 여기서 자주 오해하는 것
+
+- 큰 로짓이 "확률 1에 가깝다"는 뜻은 아니다. softmax 전에는 확률이 아니다.
+- loss가 `0.2`에서 `0.1`로 줄어든 것이 작아 보여도, 확률과 perplexity 관점에서는 의미 있는 차이일 수 있다.
+- `exp`는 계산상 위험할 수 있어서 실제 구현은 log-sum-exp 같은 안정화 트릭을 쓴다.
 
 ## 연습
 
 ### 기초 확인
 
-1. 로짓이 `[2, 1, 0]`일 때 가장 큰 로짓이 왜 softmax 후 더 두드러지는지 말로 설명해본다.
-2. `loss = -log(p_correct)`에서 `p_correct = 0.9`와 `0.1`의 차이를 직관적으로 설명해본다.
-3. 활성화 함수가 없는 MLP가 왜 표현력이 약해지는지 적어본다.
+1. 로짓 `[2, 1, 0]`이 왜 그대로는 확률이 아닌지 설명해본다.
+2. `-log(0.9)`와 `-log(0.1)`이 왜 크게 차이 나는지 직관적으로 적어본다.
+3. `softmax(logits / T)`에서 `T`가 커질수록 분포가 왜 평평해지는지 설명해본다.
 
 ### 논문 읽기 훈련
 
-1. `L = -sum_t log p_theta(y_t | x, y_<t)`에서 `log`, `sum`, `p_theta`의 역할을 각각 한 문장으로 적어본다.
-2. 어떤 논문이 "cross-entropy improved slightly"라고 썼을 때, 왜 그 작은 차이가 실제 생성 품질 차이로 이어질 수 있는지 적어본다.
-3. `softmax(logits / T)`에서 `T`가 커질수록 분포가 왜 평평해지는지 설명해본다.
+1. `L = -sum_t log p_theta(y_t | x, y_<t)`에서 각 항의 역할을 한 문장씩 적어본다.
+2. 논문에서 `negative log-likelihood`가 나오면 왜 cross-entropy와 거의 같은 학습 언어로 읽어도 되는지 정리해본다.
+3. 어떤 실험에서 perplexity가 내려갔는데 생성 품질 체감이 작다면 그 이유를 두 가지 적어본다.
 
 ### 코드 연결 훈련
 
-1. `torch.softmax(logits, dim=-1)`와 `CrossEntropyLoss`가 각각 어디에 쓰이는지 PyTorch 코드 관점에서 적어본다.
-2. `softmax_sampling.py`에서 temperature를 `0.5`, `1.0`, `2.0`으로 바꿨을 때 어떤 변화가 나올지 실행 전에 예측해본다.
+1. `softmax_sampling.py`에서 temperature를 `0.5`, `1.0`, `2.0`으로 바꿨을 때 분포가 어떻게 바뀔지 먼저 예측해본다.
+2. PyTorch에서 `CrossEntropyLoss`가 logits를 직접 받는 이유를 적어본다.
+3. 모델 출력 logits를 바로 `argmax`할 때와 sampling할 때의 차이를 적어본다.
 
-## 생각해볼 질문
+## 다음 장으로 연결
 
-1. softmax에 지수가 없다면 어떤 문제가 생길까
-2. 왜 확률이 1에 가까울수록 log loss는 작아질까
-3. 비선형성이 없다면 여러 층을 쌓는 의미가 얼마나 줄어들까
-4. perplexity가 낮아졌다고 해서 항상 사람이 보기에도 좋아졌다고 말할 수 있을까
+함수·로그·지수 감각이 잡히면 이제 벡터와 행렬을 "숫자 배열"이 아니라 "표현을 담고 옮기는 구조"로 읽을 차례다. 이 감각이 있어야 `XW`, 임베딩 테이블, `QK^T`가 한 줄로 이어진다.
 
-다음: [벡터와 행렬](/math/vectors-matrices)
+다음 장: [벡터와 행렬](/math/vectors-matrices)

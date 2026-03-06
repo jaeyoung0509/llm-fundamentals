@@ -1,97 +1,135 @@
 # Math Foundations
 
-## Goals
+## Why This Matters
 
-- read functions, logs, and exponentials through model behavior,
-- understand vectors and matrices as containers for data and parameters,
-- interpret derivatives as signals for reducing loss,
-- treat probability as the language of uncertainty and prediction.
+The place where many engineers get stuck in LLM reading is not advanced theory. It is rusty fluency in the basic math language behind `XW`, `softmax(z)`, `-log p(y)`, and `grad_theta L`.
 
-## Why This Section Matters So Much
+The goal of this section is not to replay school math from the beginning. The goal is to rebuild just enough mathematical fluency to read models and papers without turning every formula into a memorization exercise.
 
-This is the load-bearing section of the book. If the math layer stays fuzzy, PyTorch, Transformers, GPT-3, and RLHF all risk turning into vocabulary memorization.
+## One Sentence Takeaway
 
-The goal is not to rebuild all of school math. The goal is to rebuild the minimum language needed to read models, formulas, and code without panic.
+Math is not a separate subject here. It is the language for reading inputs, representations, probabilities, losses, and updates.
 
-## One Sentence to Keep
+## Notation Reboot
 
-Math is not a separate school subject here. It is the language needed to read every later model and training loop.
-
-## Recommended Order
-
-<MermaidDiagram
-  :code="`flowchart TD
-  A[&quot;Functions, logs, growth&quot;] --> B[&quot;Vectors and matrices&quot;]
-  B --> C[&quot;Derivatives and gradients&quot;]
-  C --> D[&quot;Probability and softmax&quot;]
-  D --> E[&quot;PyTorch training loop&quot;]`"
-/>
-
-## What To Focus On In This Section
-
-- how functions, logs, and exponentials connect to softmax and loss,
-- how matrix multiplication shows up in embeddings, linear layers, and attention,
-- how the chain rule becomes backpropagation,
-- how probability, expectation, and variance connect to sampling and evaluation.
-
-## Minimal Syllabus
-
-### 1. Functions, Logs, and Exponentials
-
-Neural networks constantly rely on non-linear behavior. Softmax, cross-entropy, and decay schedules all bring logs and exponentials into practice.
-
-### 2. Vectors and Matrices
-
-- vector: one bundle of features,
-- matrix: many bundles of data or weights,
-- matrix multiplication: a way to remix features into new representations.
-
-### 3. Derivatives and Gradients
-
-A derivative measures how much the loss changes when you nudge something slightly. Gradient descent uses that signal to move parameters in the opposite direction.
-
-```text
-new_weight = old_weight - learning_rate * gradient
-```
-
-### 4. Probability and Expectation
-
-Models do not output certainty. They estimate distributions over possible answers. Expectation captures average outcome, while variance captures spread.
-
-## Submodules
-
-| Submodule | Core question | Page |
+| Symbol | First role to see | Common model example |
 | --- | --- | --- |
-| Functions, Logs, and Growth | why do model values move non-linearly | [Functions, Logs, and Growth](/en/math/functions-growth) |
-| Vectors and Matrices | how do we bundle and transform data | [Vectors and Matrices](/en/math/vectors-matrices) |
-| Derivatives and Gradients | how do we reduce loss | [Derivatives and Gradients](/en/math/gradients) |
-| Probability and Softmax | why is model output a distribution | [Probability and Softmax](/en/math/probability) |
+| `x`, `X` | data | token ids, embeddings, batches |
+| `W`, `theta` | parameters | linear weights, model parameters |
+| `h`, `Q`, `K`, `V` | intermediate representations | hidden states, attention inputs |
+| `p(.)` | probability distribution | next-token distribution |
+| `L` | objective to minimize | cross-entropy, NLL |
 
-## Math Reading Loop
+When you read a formula, read symbols by role before you read them by name. `W` should feel like “learned weights,” `p` like “uncertainty over outcomes,” and `L` like “the penalty we are trying to reduce.”
+
+## Mermaid Mental Model
 
 <MermaidDiagram
   :code="`flowchart LR
-  A[&quot;read symbols&quot;] --> B[&quot;read shapes&quot;]
-  B --> C[&quot;read operation roles&quot;]
-  C --> D[&quot;interpret loss / probability&quot;]
-  D --> E[&quot;map to PyTorch code&quot;]
-  E --> F[&quot;read the formula again&quot;]`"
+  A[&quot;data x, X&quot;] --> B[&quot;representation h, XW&quot;]
+  B --> C[&quot;logits&quot;]
+  C --> D[&quot;probability p(y|x)&quot;]
+  D --> E[&quot;loss L&quot;]
+  E --> F[&quot;gradient update&quot;]`"
 />
 
-## Checklist
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;see a formula&quot;] --> B[&quot;separate data and parameters&quot;]
+  B --> C[&quot;imagine shapes&quot;]
+  C --> D[&quot;identify operation role&quot;]
+  D --> E[&quot;map to tensor ops&quot;]
+  E --> F[&quot;interpret training or generation meaning&quot;]`"
+/>
 
-- can you explain why vectors matter for representations,
-- can you explain gradients as loss-reduction signals,
-- can you explain why model outputs are distributions.
+## Intuition With One Concrete Example
 
-## Example Links
+The fastest way to rebuild fluency is to diagnose where formula reading currently breaks.
+
+### Quick Diagnostic
+
+- Does `QK^T` make you think about shapes before arithmetic?
+- Does `softmax(logits)` read as a distribution transform?
+- Can you explain `L = -log p(y)` as “low correct-token probability means high penalty”?
+- Does `theta = theta - lr * grad` immediately read as an update rule?
+- Does `p_theta(y_t | context)` immediately read as a next-token distribution?
+
+If three or more feel shaky, the issue is usually not weak intelligence or weak math. It is rusty model-math fluency.
+
+Use this line as a compact example:
+
+```text
+L = -log p_theta(y_t | x, y_<t)
+```
+
+It already packs probability, logarithms, loss, and learning direction into one line.
+
+## How This Shows Up In Papers
+
+Use the same reading rubric every time:
+
+| Question | What to inspect | Example |
+| --- | --- | --- |
+| What kind of term is this | data / parameter / representation / probability / loss | `X`, `W`, `h`, `p`, `L` |
+| What is the shape | vector / matrix / batch / sequence | `X in R^(n x d)` |
+| What is the operation doing | projection / scoring / normalization / penalty | `XW`, `QK^T`, `softmax`, `-log` |
+| What behavior follows | generation / classification / update | next-token prediction, gradient step |
+
+Five expressions should become automatic:
+
+| Expression | Fast reading |
+| --- | --- |
+| `XW` | project inputs into a new space |
+| `QK^T` | build a token-to-token score table |
+| `softmax(z)` | normalize scores into a distribution |
+| `L = -log p(y)` | low correct probability means large loss |
+| `grad_theta L` | signal for how parameters should move |
+
+## How This Maps To PyTorch/Code
+
+- `XW` usually becomes `x @ W` or `nn.Linear(...)`
+- `softmax(z)` becomes `torch.softmax(logits, dim=-1)`
+- `-log p(y)` becomes `CrossEntropyLoss` or `F.nll_loss`
+- `grad_theta L` becomes `loss.backward()` followed by `param.grad`
+
+Useful examples:
 
 - [gradient_chain_rule.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/gradient_chain_rule.py)
 - [softmax_sampling.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/softmax_sampling.py)
 - [linear_regression.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/torch-basics/linear_regression.py)
 
-## How This Connects Forward
+## Common Failure Modes Or Misconceptions
 
-Once math starts to feel like model language, the next step is to express that language directly in tensors and training loops.
+- Reading symbol names without identifying their role
+- Treating every formula like scalar algebra instead of imagining tensor shapes
+- Memorizing `softmax` without understanding what it does to score gaps
+- Treating gradients as textbook derivatives instead of update signals
+- Failing to connect paper notation to tensor operations in code
 
-Next: [Python and PyTorch](/en/python-pytorch/)
+## Exercises
+
+### Basic Check
+
+1. Classify `X`, `W`, `p(.)`, and `L` as data, parameter, probability, or loss.
+2. Explain the role of `softmax(z)` and `-log p(y)` in one sentence each.
+3. Explain why `QK^T` should make you think of a `(seq, seq)` relation table.
+
+### Paper-Reading Drill
+
+1. Break `L = -log p_theta(y_t | x, y_<t)` into data, probability, and loss pieces.
+2. Explain why `XW` should be read as a projection before it is read as multiplication.
+3. Pick one paper page and annotate five symbols with their role.
+
+### Code Drill
+
+1. Explain which part of the math is represented by `loss.backward()`.
+2. Explain how `torch.softmax(logits, dim=-1)` maps to paper notation.
+3. Open one example file and label its tensors as data, parameters, representations, or losses.
+
+## Bridge To Next Chapter
+
+Now that the reboot target is clear, the first real recovery step is functions, logarithms, and exponentials. That chapter unlocks logits, softmax, loss, and perplexity in one pass.
+
+If you need a synthesis pass later, return to [Math Final Checkpoint](/en/math/final-checkpoint).
+
+Next: [Functions, Logs, and Exponentials](/en/math/functions-growth)

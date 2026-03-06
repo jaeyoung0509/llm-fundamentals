@@ -12,6 +12,7 @@ This repository is building a bilingual ebook that helps readers move from math 
 - Put runnable code in `examples/`.
 - Keep diagrams reproducible with Mermaid when possible.
 - Run `npm test` before pushing when Mermaid diagrams or VitePress pages change.
+- Run `npm run test:content` when editing the math track to catch duplicate headings, repeated blocks, and missing section structure.
 
 ## Branch and PR Policy
 

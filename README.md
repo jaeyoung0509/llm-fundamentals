@@ -21,6 +21,7 @@ Validation:
 
 ```bash
 npx playwright install chromium
+npm run test:content
 npm test
 ```
 

@@ -1,189 +1,148 @@
 # 벡터와 행렬
 
-## 이 페이지의 목표
+## 왜 중요한가
 
-- 벡터와 행렬을 데이터와 파라미터를 담는 기본 구조로 이해한다.
-- shape를 읽는 습관을 만든다.
-- 행렬곱이 표현 변환이라는 점을 잡는다.
+벡터와 행렬은 딥러닝 수학의 저장 형식이자 연산 단위다. 입력 샘플, 토큰 임베딩, 배치, 가중치, attention score가 전부 벡터와 행렬로 표현된다.
 
-## 핵심 직관
+이 장을 놓치면 구현에서 shape error가 자주 나고, 논문에서는 `XW`, `QK^T`, `R^(n x d)` 같은 표현이 전부 비슷비슷하게 보인다. 반대로 이 장이 잡히면 수식이 숫자 놀이가 아니라 "표현을 어디서 어디로 옮기는지"를 보여주는 지도처럼 읽힌다.
 
-- 벡터: 한 샘플의 특징 묶음
-- 행렬: 여러 샘플 또는 여러 파라미터 묶음
-- 행렬곱: 입력을 다른 표현 공간으로 보내는 변환
+## 한 문장 핵심
 
-## 한눈에 보는 shape 감각
+행렬곱은 단순 계산이 아니라, 표현을 다른 공간으로 투영하고 관계 표를 만드는 연산이다.
+
+## 표기법 리부트
+
+| 표기 | 빠른 해석 | 자주 보는 위치 |
+| --- | --- | --- |
+| `x in R^d` | 길이 `d`인 벡터 하나 | 한 샘플, 한 토큰 표현 |
+| `X in R^(n x d)` | 벡터 `n`개를 쌓은 행렬 | 시퀀스 표현 |
+| `W in R^(d x h)` | `d -> h` 투영 가중치 | 선형층, attention projection |
+| `E in R^(V x d)` | 단어 사전 크기 `V`의 임베딩 테이블 | embedding lookup |
+| `A in R^(n x n)` | 토큰 간 관계 표 | attention score, mask |
+
+논문에 배치 차원이 생략돼 있어도 실제 구현에서는 `(batch, seq, dim)`처럼 앞에 배치가 붙는 경우가 많다. 식을 볼 때는 항상 "실제 코드에서는 배치가 하나 더 있겠지"를 같이 상상해야 한다.
+
+## Mermaid로 보는 핵심 구조
 
 <MermaidDiagram
   :code="`flowchart LR
-  A[&quot;입력 벡터 x: (d,)&quot;] --> B[&quot;가중치 W: (d, h)&quot;]
-  B --> C[&quot;출력 표현 h: (h,)&quot;]
-  D[&quot;토큰 행렬 X: (n, d)&quot;] --> E[&quot;W_q, W_k, W_v&quot;]
-  E --> F[&quot;Q, K, V: (n, h)&quot;]`"
+  A[&quot;token ids&quot;] --> B[&quot;embedding table E&quot;]
+  B --> C[&quot;X: (seq, dim)&quot;]
+  C --> D[&quot;projection XW&quot;]
+  D --> E[&quot;new representation&quot;]`"
 />
-
-## 왜 shape를 읽는 습관이 중요한가
-
-딥러닝 구현에서 자주 생기는 오류는 수학적 아이디어 부족보다 shape 감각 부족에서 나온다. 모델을 읽는다는 것은 값뿐 아니라 차원을 읽는 일이다.
-
-shape는 단순한 디버깅 도구가 아니라 의미 해석 도구다. `(batch, seq, dim)`이면 "문장 여러 개의 토큰 표현 묶음", `(seq, seq)`이면 "토큰끼리 관계 표"라고 읽어야 한다.
-
-shape는 단순한 디버깅 도구가 아니라 의미 해석 도구다. `(batch, seq, dim)`이면 "문장 여러 개의 토큰 표현 묶음", `(seq, seq)`이면 "토큰끼리 관계 표"라고 읽어야 한다.
-
-## 표기법을 shape로 번역하기
-
-논문에서는 같은 연산이라도 기호가 압축돼서 나온다. 그래서 아래처럼 바로 번역하는 습관이 필요하다.
-
-| 표기 | 보통 의미 |
-| --- | --- |
-| `x in R^d` | 길이 `d`인 벡터 |
-| `X in R^(n x d)` | 토큰 `n`개, 특성 `d`개인 행렬 |
-| `W in R^(d x h)` | 입력 `d`를 출력 `h`로 보내는 가중치 |
-| `Q, K, V in R^(n x h)` | 각 토큰에 대한 query, key, value 표현 |
-| `A in R^(n x n)` | 토큰끼리 관계를 적은 점수 표 |
-
-기호를 보면 먼저 숫자를 대입해보는 습관이 좋다. 예를 들어 `n=128`, `d=768`처럼 상상하면 attention 식이 훨씬 덜 추상적으로 보인다.
 
 <MermaidDiagram
   :code="`flowchart TD
-  A[&quot;x in R^d&quot;] --> B[&quot;one vector&quot;]
-  C[&quot;X in R^(n x d)&quot;] --> D[&quot;n vectors stacked&quot;]
-  E[&quot;W in R^(d x h)&quot;] --> F[&quot;projection matrix&quot;]
-  D --> G[&quot;XW in R^(n x h)&quot;]
-  F --> G`"
+  A[&quot;Q: (seq, head_dim)&quot;] --> C[&quot;QK^T&quot;]
+  B[&quot;K^T: (head_dim, seq)&quot;] --> C
+  C --> D[&quot;scores: (seq, seq)&quot;]
+  D --> E[&quot;which token looks at which token&quot;]`"
 />
 
-## 기본 예시
+## 직관과 한 가지 예시
 
-### 선형층
+가장 기본 예시는 선형층이다.
 
-입력 벡터 `x`가 `(d,)`이고 가중치 행렬 `W`가 `(d, h)`이면 출력은 `(h,)`가 된다. 이때 모델은 "입력 특징 d개를 새로운 표현 h개로 바꾼다"고 해석할 수 있다.
+```text
+x: (d,)
+W: (d, h)
+xW: (h,)
+```
 
-### 배치 데이터
+이 식은 "길이 `d`의 입력 특징을 길이 `h`의 새 표현으로 보낸다"는 뜻이다. 숫자를 하나씩 곱하고 더하는 계산보다, 표현 공간이 바뀐다는 점이 핵심이다.
 
-입력 배치가 `(batch, d)`라면 한 번에 여러 샘플을 같은 규칙으로 변환할 수 있다. 이게 딥러닝에서 행렬 연산이 중요한 이유다.
+배치가 붙으면 식의 의미는 더 분명해진다.
 
-### 미니배치와 GPU
+```text
+X: (batch, d)
+W: (d, h)
+XW: (batch, h)
+```
 
-논문에서는 배치 차원이 생략돼도, 실제 코드에서는 거의 항상 배치 차원이 붙는다. 그래서 구현에서는 `batch` 차원을 자동으로 상상하는 습관이 중요하다.
+같은 투영 규칙을 여러 샘플에 한 번에 적용하는 것이다. GPU가 빠른 이유도 이 대량 행렬 연산을 잘 처리하기 때문이다.
 
-### 미니배치와 GPU
+### Row, Column, Transpose를 어떻게 읽을까
 
-논문에서는 배치 차원이 생략돼도, 실제 코드에서는 거의 항상 배치 차원이 붙는다. 그래서 구현에서는 `batch` 차원을 자동으로 상상하는 습관이 중요하다.
+- row는 보통 샘플이나 토큰 하나의 표현이다.
+- column은 특정 feature나 채널을 가로지르는 축이다.
+- transpose는 축의 의미를 바꿔 곱셈을 가능하게 만든다.
 
-### attention score
-
-`Q`가 `(n, h)`, `K`가 `(n, h)`라면 `QK^T`는 `(n, n)`이 된다. 각 토큰이 다른 토큰을 얼마나 참고할지 계산하는 표가 만들어지는 셈이다.
+`QK^T`가 중요한 이유는 shape만 `(seq, seq)`로 바뀌어서가 아니다. "토큰 표현"이 "토큰 간 관련도 표"로 의미가 바뀐다. 이 전환이 attention의 핵심이다.
 
 <MermaidDiagram
   :code="`flowchart LR
-  A[&quot;Q: (n, h)&quot;] --> C[&quot;QK^T&quot;]
-  B[&quot;K^T: (h, n)&quot;] --> C
-  C --> D[&quot;scores: (n, n)&quot;]
-  D --> E[&quot;token-to-token relation table&quot;]`"
+  A[&quot;X: token representations&quot;] --> B[&quot;W_Q, W_K, W_V&quot;]
+  B --> C[&quot;Q, K, V&quot;]
+  C --> D[&quot;QK^T = relation scores&quot;]
+  D --> E[&quot;softmax over scores&quot;]
+  E --> F[&quot;weighted sum of V&quot;]`"
 />
 
-### 임베딩 행렬
+## 논문에서는 이렇게 보인다
 
-어휘 수가 `V`, 임베딩 차원이 `d_model`이면 임베딩 행렬은 `(V, d_model)`이다. 토큰 하나를 조회하면 길이 `d_model`짜리 벡터가 나온다.
-
-이 관점이 잡히면 "토큰 ID -> 임베딩 벡터 -> attention 입력" 흐름이 자연스럽게 이어진다.
-
-## 모델 연결
-
-| 연산 | 모델에서의 역할 |
-| --- | --- |
-| 벡터 | 토큰 임베딩, 특성 표현 |
-| 행렬 | 가중치, 배치 데이터 |
-| 행렬곱 | 선형층, attention score 계산의 핵심 |
-
-## 논문에서 이렇게 읽는다
-
-아래 식은 Transformer에서 매우 자주 본다.
+이 장의 대표 식은 아래다.
 
 ```text
 Q = XW_Q, K = XW_K, V = XW_V
+AttentionScores = QK^T
 ```
 
-읽는 법은 이렇다.
+이걸 줄 단위로 읽으면:
 
-- `X`: 입력 토큰들의 현재 표현 행렬
-- `W_Q`, `W_K`, `W_V`: 같은 입력을 서로 다른 관점으로 투영하는 가중치
-- 결과 `Q`, `K`, `V`: attention 계산에 쓰일 새 표현들
-
-즉, 행렬곱은 단순 계산 기술이 아니라 "표현을 다른 역할로 바꾸는 변환"이다.
-
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;X&quot;] --> B[&quot;W_Q&quot;]
-  A --> C[&quot;W_K&quot;]
-  A --> D[&quot;W_V&quot;]
-  B --> E[&quot;Q&quot;]
-  C --> F[&quot;K&quot;]
-  D --> G[&quot;V&quot;]`"
-/>
-
-## 자주 나오는 shape 패턴
-
-| shape | 보통 뜻 |
+| 줄 | 읽는 법 |
 | --- | --- |
-| `(batch, dim)` | 배치 벡터 |
-| `(batch, seq, dim)` | 토큰 시퀀스 배치 |
-| `(seq, seq)` | attention score 또는 mask |
-| `(vocab, dim)` | 임베딩 테이블 |
+| `XW_Q` | 입력 표현을 query 관점으로 투영 |
+| `XW_K` | 같은 입력을 key 관점으로 투영 |
+| `XW_V` | 같은 입력을 value 관점으로 투영 |
+| `QK^T` | 토큰끼리 얼마나 참고할지 점수 표 생성 |
 
-## 코드 연결
+`QK^T`에서 자주 틀리는 포인트는 두 가지다.
 
-- `nn.Linear(d, h)`는 보통 `(…, d)`를 `(…, h)`로 바꾼다
-- `x @ W`는 표현을 새 공간으로 투영하는 기본 연산이다
-- `query @ key.transpose(-2, -1)`는 토큰 관계 점수 표를 만든다
+- `K`를 그대로 곱하는 것이 아니라 `K^T`로 축을 바꿔 score table을 만든다.
+- 결과는 새 토큰 표현이 아니라, 아직 확률화 전의 점수 표다.
 
-## 작은 실험으로 확인하기
+## PyTorch와 코드로 연결하기
 
-- [self_attention.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/transformers/self_attention.py)에서 `weights.shape`와 `output.shape`를 직접 보면 `QK^T`와 가중합 결과 shape를 확인할 수 있다.
+- `nn.Embedding(V, d)`는 `(V, d)` 임베딩 테이블을 가진다.
+- `nn.Linear(d, h)`는 마지막 차원을 `d -> h`로 바꾸는 투영이다.
+- `query @ key.transpose(-2, -1)`는 attention score table을 만든다.
+- 실제 구현에서는 거의 항상 `(batch, seq, dim)` 또는 `(batch, heads, seq, head_dim)` shape를 본다.
 
-## 논문을 읽을 때 자주 틀리는 포인트
+직접 shape를 확인할 예제:
 
-- `(n, d)`와 `(d, n)`을 무심코 뒤집는다.
-- 배치 차원을 생략한 식을 보고 실제 구현 shape를 놓친다.
-- `QK^T`를 값 변환으로 착각하고, 사실은 점수 계산이라는 점을 놓친다.
+- [self_attention.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/transformers/self_attention.py)
 
-## 실수하기 쉬운 지점
+## 자주 틀리는 지점
 
-- row와 column의 의미를 놓치기
-- shape 호환을 확인하지 않고 곱하려 하기
-- "값"만 보고 "차원"을 놓치기
-
-## 빠른 체크 규칙
-
-- 마지막 차원끼리 맞는지 본다
-- 배치 차원은 보통 유지된다고 본다
-- 결과 shape가 무엇을 의미하는지 말로 설명해본다
+- `(n, d)`와 `(d, n)`을 같은 것으로 착각한다.
+- 논문에서 배치 차원이 생략된 식을 보고 구현 shape를 상상하지 못한다.
+- 행렬곱을 숫자 계산으로만 보고 투영 의미를 놓친다.
+- `QK^T` 결과를 새로운 표현으로 착각하고, 사실은 관계 점수 표라는 점을 놓친다.
+- transpose를 "그냥 뒤집기"로 외우고 왜 축 의미가 바뀌는지 생각하지 않는다.
 
 ## 연습
 
 ### 기초 확인
 
-1. 입력이 `(32, 128)`이고 가중치가 `(128, 256)`일 때 출력 shape를 써본다.
-2. 임베딩 행렬이 왜 "단어 사전 x 임베딩 차원" 구조가 되는지 설명해본다.
-3. `QK^T`가 `(n, n)`이 되는 이유를 토큰 관계 표 관점으로 설명해본다.
+1. `X: (32, 128)`, `W: (128, 256)`이면 `XW` shape를 적고 의미를 설명해본다.
+2. 임베딩 테이블이 왜 `(vocab, dim)` 구조인지 적어본다.
+3. `QK^T` 결과가 왜 `(seq, seq)`인지 설명해본다.
 
 ### 논문 읽기 훈련
 
-1. `Q = XW_Q, K = XW_K, V = XW_V`에서 `X`, `W_Q`, `Q`의 shape 역할을 각각 적어본다.
-2. 어떤 논문에서 배치 차원을 생략하고 `X in R^(n x d)`만 적어놓았을 때, 실제 코드에서는 어떤 차원이 추가될 가능성이 큰지 적어본다.
-3. `A in R^(n x n)`이 나오면 왜 "토큰 관계 표"를 먼저 떠올려야 하는지 설명해본다.
+1. `Q = XW_Q, K = XW_K, V = XW_V`에서 `X`, `W_Q`, `Q`의 역할을 각각 적어본다.
+2. 어떤 논문에서 `X in R^(n x d)`라고만 적혀 있을 때 실제 코드에서 추가될 가능성이 큰 차원을 적어본다.
+3. `A in R^(n x n)`이 보이면 왜 "관계 표"를 먼저 떠올려야 하는지 적어본다.
 
 ### 코드 연결 훈련
 
-1. `self_attention.py`에서 `weights.shape`와 `output.shape`를 실행 전에 먼저 예측해본다.
-2. `nn.Linear(d, h)`를 attention projection과 연결해서 설명해본다.
+1. `self_attention.py`를 열고 `weights.shape`와 `output.shape`를 실행 전에 예측해본다.
+2. `nn.Linear(d, h)`와 `x @ W`가 같은 투영 언어라는 점을 적어본다.
+3. `(batch, seq, dim)`에서 마지막 차원만 바꾸는 선형층이 왜 편리한지 설명해본다.
 
-## 생각해볼 질문
+## 다음 장으로 연결
 
-1. 임베딩 벡터는 왜 단순 숫자 묶음이 아닌가
-2. 선형층이 하는 일을 행렬곱 관점에서 설명할 수 있는가
-3. attention에서 `QK^T`가 왜 shape를 바꾸는가
-4. 논문 식에는 없지만 구현에는 꼭 필요한 차원은 무엇이 있을까
+이제 표현이 어떤 그릇에 담기는지는 알게 됐다. 다음은 그 표현이 잘못된 방향으로 갔을 때 손실이 어떻게 "수정 신호"를 보내는지 보는 차례다. 그게 미분과 gradient다.
 
-다음: [미분과 gradient](/math/gradients)
+다음 장: [미분과 gradient](/math/gradients)

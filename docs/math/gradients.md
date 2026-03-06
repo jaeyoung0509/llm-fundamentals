@@ -1,179 +1,160 @@
 # 미분과 gradient
 
-## 이 페이지의 목표
+## 왜 중요한가
 
-- 미분을 변화율이 아니라 손실 감소 신호로 이해한다.
-- gradient descent의 핵심 문장을 이해한다.
-- chain rule이 backpropagation과 연결된다는 점을 잡는다.
+딥러닝에서 미분은 교과서적인 기울기 계산보다 훨씬 실용적인 의미를 가진다. 손실을 줄이려면 파라미터를 어느 방향으로 얼마나 움직여야 하는지 알려주는 신호가 바로 gradient다.
 
-## 핵심 문장
+이 장이 약하면 `loss.backward()`는 쓰지만 실제로 무슨 정보가 흘러가는지 설명하지 못하고, 논문에 gradient 식이 나오면 수학이 갑자기 어려워진 것처럼 느껴진다. 반대로 이 장이 잡히면 optimization 관련 문장을 훨씬 빠르게 읽게 된다.
 
-파라미터를 조금 바꿨을 때 손실이 얼마나 달라지는지 알려주는 값이 gradient다.
+## 한 문장 핵심
 
-```text
-parameter = parameter - learning_rate * gradient
-```
+gradient는 "조금 바꿨을 때 손실이 어떻게 움직이는가"를 요약한 업데이트 신호다.
 
-## 학습이 일어나는 흐름
+## 표기법 리부트
 
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;입력 x&quot;] --> B[&quot;모델 예측 y_hat&quot;]
-  B --> C[&quot;손실 계산&quot;]
-  C --> D[&quot;gradient 계산&quot;]
-  D --> E[&quot;파라미터 업데이트&quot;]
-  E --> B`"
-/>
+| 표기 | 빠른 해석 | 모델 문맥 |
+| --- | --- | --- |
+| `dL/dw` | 파라미터 `w`를 조금 바꿀 때 손실 변화량 | 스칼라 파라미터 |
+| `partial L / partial w_i` | 여러 변수 중 하나에 대한 변화량 | 부분 미분 |
+| `grad_theta L` | 전체 파라미터 방향 벡터 | optimizer 입력 |
+| `theta <- theta - lr * grad` | gradient 반대 방향 업데이트 | gradient descent |
+| `chain rule` | 중간 연산을 거친 변화가 앞단까지 전달됨 | backpropagation |
 
-## 왜 chain rule이 중요한가
+미분은 "공식 암기"보다 "어떤 연산이 앞단에 어떤 영향 신호를 보내는가"로 이해하면 훨씬 실용적이다.
 
-신경망은 함수 여러 개가 이어진 구조다. backpropagation은 마지막 손실에서 시작해 앞단 파라미터들까지 영향도를 전파해야 하므로 chain rule이 필요하다.
-
-## 계산 그래프로 읽기
-
-```text
-x -> linear -> activation -> logits -> loss
-```
-
-forward에서는 왼쪽에서 오른쪽으로 값을 계산하고, backward에서는 오른쪽에서 왼쪽으로 영향도를 돌려보낸다.
+## Mermaid로 보는 핵심 구조
 
 <MermaidDiagram
   :code="`flowchart LR
-  A[&quot;forward&quot;] --> B[&quot;representation&quot;]
-  B --> C[&quot;logits&quot;]
-  C --> D[&quot;loss&quot;]
-  D --> E[&quot;backward&quot;]
-  E --> F[&quot;gradients on parameters&quot;]`"
+  A[&quot;forward: input -> model&quot;] --> B[&quot;loss L&quot;]
+  B --> C[&quot;backward: gradients&quot;]
+  C --> D[&quot;optimizer step&quot;]
+  D --> E[&quot;updated parameters&quot;]`"
 />
-
-## 아주 작은 chain rule 예시
-
-`z = wx + b`, `L = z^2`라고 하자.
-
-1. `w`가 `z`를 바꾼다.
-2. `z`가 `L`을 바꾼다.
-
-즉, 앞 변수의 변화가 중간 변수를 거쳐 마지막 loss까지 어떻게 전달되는가를 곱해서 읽는 것이 chain rule의 핵심이다.
-
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;w changes&quot;] --> B[&quot;z changes&quot;]
-  B --> C[&quot;L changes&quot;]
-  C --> D[&quot;combine local effects&quot;]`"
-/>
-
-## 손실 함수 관점에서 미분 보기
-
-| gradient 부호 | 의미 |
-| --- | --- |
-| 양수 | 값을 줄이는 쪽이 loss 감소에 유리 |
-| 음수 | 값을 키우는 쪽이 loss 감소에 유리 |
-| 0 근처 | 변화가 작거나 정체 구간일 수 있음 |
-
-## 논문에서 자주 보이는 표기
-
-| 표기 | 읽는 법 |
-| --- | --- |
-| `grad_theta L` | 파라미터 `theta`에 대한 loss의 기울기 |
-| `partial L / partial w` | 특정 파라미터를 조금 바꿨을 때의 민감도 |
-| `theta <- theta - eta g` | gradient 반대 방향 업데이트 |
-| `E[L]` | 평균 loss |
 
 <MermaidDiagram
   :code="`flowchart TD
-  A[&quot;loss L&quot;] --> B[&quot;partial L / partial w&quot;]
-  B --> C[&quot;direction signal&quot;]
-  C --> D[&quot;optimizer update&quot;]`"
+  A[&quot;scalar derivative&quot;] --> B[&quot;partial derivatives&quot;]
+  B --> C[&quot;gradient vector&quot;]
+  C --> D[&quot;chain rule&quot;]
+  D --> E[&quot;backpropagation&quot;]
+  E --> F[&quot;parameter update&quot;]`"
 />
 
-## learning rate는 왜 중요한가
+## 직관과 한 가지 예시
 
-- 너무 작으면 거의 움직이지 않는다
-- 너무 크면 지나쳐서 흔들린다
-- 적당하면 안정적으로 loss를 줄인다
+가장 작은 예시는 선형 회귀 한 개다.
 
-optimizer는 결국 이 gradient 신호를 얼마나, 어떤 방식으로 반영할지 정하는 규칙이다.
+```text
+y_hat = wx
+L = (y_hat - y)^2
+```
 
-## 그래프로 보는 학습 안정성
+여기서 `dL/dw`는 "가중치 `w`를 조금 올렸을 때 loss가 커지는가, 작아지는가"를 알려준다. 값이 양수면 `w`를 줄이고, 음수면 `w`를 늘리면 된다.
+
+이 관점을 여러 파라미터로 확장하면 gradient 벡터가 된다. 즉, gradient는 "현재 loss 지형에서 내려가는 방향 화살표 묶음"이다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;prediction error&quot;] --> B[&quot;loss&quot;]
+  B --> C[&quot;dL/dw&quot;]
+  C --> D[&quot;update w&quot;]
+  D --> E[&quot;new prediction&quot;]`"
+/>
 
 <MermaidDiagram
   :code="`xychart
     title &quot;Stable vs Unstable Loss Curves&quot;
     x-axis &quot;step&quot; [1, 2, 3, 4, 5, 6]
-    y-axis &quot;loss&quot; 0 --> 3.5
-    line [3.0, 2.2, 1.6, 1.1, 0.8, 0.6]
-    line [3.0, 2.4, 2.9, 1.7, 2.5, 1.4]`"
+    y-axis &quot;loss&quot; 0 --> 7
+    line [6.0, 4.8, 3.7, 2.9, 2.2, 1.8]
+    line [6.0, 5.7, 5.9, 5.1, 5.8, 4.9]`"
 />
 
-## gradient가 사라지거나 커지는 문제
+## 논문에서는 이렇게 보인다
 
-- 너무 작아지면 앞단 층이 거의 안 배운다
-- 너무 커지면 업데이트가 불안정해진다
+대표 식은 아래다.
 
-그래서 activation, initialization, normalization이 같이 중요해진다.
+```text
+theta <- theta - eta * grad_theta L
+```
+
+### 줄 단위로 읽는 gradient 식
+
+| 조각 | 읽는 법 | 실제 의미 |
+| --- | --- | --- |
+| `theta` | 현재 파라미터 | 모델이 가진 모든 가중치 |
+| `grad_theta L` | 파라미터별 손실 증가 방향 | 그대로 가면 손실이 커짐 |
+| `eta` | learning rate | 얼마나 크게 움직일지 |
+| `-` | gradient 반대 방향 | 손실을 줄이려는 이동 |
+
+좀 더 압축된 논문 식으로는 아래도 자주 본다.
+
+```text
+partial L / partial W = partial L / partial h * partial h / partial W
+```
+
+이 식은 chain rule의 핵심을 보여준다. 중간 표현 `h`가 loss에 미친 영향과, 가중치 `W`가 `h`에 미친 영향을 곱해서 최종적으로 `W`가 loss에 미친 영향을 계산한다.
+
+Transformer 쪽으로 가면 residual connection과 layer norm이 gradient 흐름을 덜 불안정하게 만드는 문맥에서 다시 등장한다. 즉, gradient scale 문제는 수학 장에서 끝나는 이야기가 아니라 모델 구조 선택으로 이어진다.
+
+## PyTorch와 코드로 연결하기
+
+- `loss.backward()`가 chain rule을 따라 gradient를 자동 계산한다.
+- `param.grad`에는 각 파라미터의 gradient가 들어간다.
+- `optimizer.step()`은 `theta <- theta - lr * grad`를 구현한다.
+- `optimizer.zero_grad()`를 빼먹으면 이전 gradient가 누적된다.
+
+바로 연결해서 볼 예제:
+
+- [gradient_chain_rule.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/gradient_chain_rule.py)
+- [linear_regression.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/torch-basics/linear_regression.py)
+
+## 자주 틀리는 지점
+
+- 미분을 변화율 정의로만 기억하고 업데이트 신호 관점을 놓친다.
+- `gradient가 크다`를 항상 좋은 것으로 오해한다.
+- learning rate와 gradient scale을 분리해서 생각하지 못한다.
+- `loss.backward()`가 loss만 미분한다고 생각하고 계산 그래프 전체를 통한 전파를 놓친다.
+- residual, normalization 같은 구조가 왜 optimization 안정성에 중요한지 연결하지 못한다.
+
+### gradient scale pathology를 왜 미리 알아야 하나
+
+- gradient가 너무 작으면 앞단 레이어가 거의 학습되지 않는다.
+- gradient가 너무 크면 업데이트가 튀어서 loss가 흔들린다.
+- 깊은 네트워크일수록 이 문제가 커져서 residual connection, normalization, initialization이 중요해진다.
 
 <MermaidDiagram
   :code="`xychart
     title &quot;Gradient Scale Across Layers&quot;
-    x-axis &quot;layer&quot; [1, 2, 3, 4, 5]
-    y-axis &quot;|gradient|&quot; 0 --> 1.2
-    line [1.0, 0.55, 0.24, 0.08, 0.02]
-    line [0.10, 0.22, 0.45, 0.82, 1.10]`"
+    x-axis &quot;layer depth&quot; [1, 2, 3, 4, 5]
+    y-axis &quot;gradient magnitude&quot; 0 --> 5
+    line [1.8, 1.3, 0.9, 0.5, 0.2]
+    line [0.9, 1.2, 1.8, 2.9, 4.4]`"
 />
-
-## 논문에서 이렇게 읽는다
-
-```text
-We optimize the parameters theta by minimizing cross-entropy with Adam.
-```
-
-- 목표: cross-entropy를 줄인다
-- 대상: 파라미터 `theta`
-- 신호: gradient
-- 방법: Adam optimizer가 업데이트 크기와 방향을 조절한다
-
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;current parameters&quot;] --> B[&quot;compute loss&quot;]
-  B --> C[&quot;compute gradients&quot;]
-  C --> D[&quot;optimizer rule&quot;]
-  D --> E[&quot;new parameters&quot;]`"
-/>
-
-## 코드 연결
-
-- `loss.backward()`는 계산 그래프를 거꾸로 따라가며 gradient를 누적한다
-- `parameter.grad`에는 각 파라미터의 기울기가 저장된다
-- `optimizer.step()`은 그 gradient를 이용해 파라미터를 갱신한다
-
-## 작은 실험으로 확인하기
-
-- [gradient_chain_rule.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/gradient_chain_rule.py)를 보면 chain rule과 PyTorch autograd 결과를 같이 확인할 수 있다.
 
 ## 연습
 
 ### 기초 확인
 
-1. gradient가 양수라는 말이 파라미터 업데이트에 어떤 의미인지 설명해본다.
-2. learning rate가 너무 큰 경우 어떤 학습 곡선이 나올지 상상해본다.
-3. chain rule이 왜 깊은 네트워크에서 필수인지 적어본다.
+1. `dL/dw`를 "가중치 `w`를 조금 바꾸면 무엇이 달라지는가" 관점으로 설명해본다.
+2. learning rate가 너무 크면 어떤 문제가 생기는지 적어본다.
+3. chain rule이 왜 필요한지 한 문장으로 적어본다.
 
 ### 논문 읽기 훈련
 
-1. `theta <- theta - eta grad_theta L`에서 `theta`, `eta`, `grad_theta L`이 각각 무엇을 뜻하는지 적어본다.
-2. 어떤 논문이 "training became unstable"라고 했을 때, learning rate와 gradient scale 관점에서 어떤 문제를 의심할 수 있는지 적어본다.
-3. `E[L]`가 loss 식에 나오면 왜 "샘플 전체 평균"을 먼저 떠올려야 하는지 설명해본다.
+1. `theta <- theta - eta * grad_theta L`에서 각 항의 역할을 적어본다.
+2. `partial L / partial W = partial L / partial h * partial h / partial W`를 말로 풀어본다.
+3. 어떤 논문이 optimization instability를 줄이기 위해 residual과 norm을 강조한다면, 그게 gradient와 어떻게 연결되는지 적어본다.
 
 ### 코드 연결 훈련
 
-1. `loss.backward()`와 `optimizer.step()`의 차이를 코드와 수식 양쪽으로 설명해본다.
-2. `gradient_chain_rule.py`에서 `dL/dw`가 왜 그 값이 되는지 손으로 먼저 계산해본다.
+1. `gradient_chain_rule.py`에서 어떤 값이 forward 결과이고 어떤 값이 backward 신호인지 구분해본다.
+2. `linear_regression.py`에서 `loss.backward()`와 `optimizer.step()`가 수식의 어느 부분과 연결되는지 적어본다.
+3. gradient accumulation이 의도치 않게 발생하면 어떤 현상이 보일지 설명해본다.
 
-## 생각해볼 질문
+## 다음 장으로 연결
 
-1. gradient가 0에 가까우면 학습은 어떻게 될까
-2. learning rate가 너무 크면 어떤 일이 생길까
-3. backpropagation을 chain rule 없이 설명할 수 있을까
-4. optimizer를 바꾸는 것과 loss를 바꾸는 것은 왜 완전히 다른 결정일까
+이제 손실을 줄이는 업데이트 신호가 어떻게 생기는지는 알게 됐다. 다음은 모델 출력이 왜 확률 분포로 읽히는지, 그리고 sampling과 평가가 왜 확률 언어 위에 서 있는지 보는 차례다.
 
-다음: [확률과 softmax](/math/probability)
+다음 장: [확률과 softmax](/math/probability)

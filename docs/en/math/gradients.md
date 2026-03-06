@@ -1,114 +1,152 @@
 # Derivatives and Gradients
 
-## Goals
+## Why This Matters
 
-- interpret derivatives as signals for reducing loss,
-- understand gradient descent at a sentence level,
-- connect the chain rule to backpropagation.
+In deep learning, derivatives matter because they tell us how to reduce loss. A gradient is a compact update signal: which way should the parameters move, and how strongly?
 
-## Core Sentence
+If this chapter is weak, `loss.backward()` works like magic. If it is strong, optimizer behavior, instability, and training dynamics become much easier to read.
 
-The gradient tells us how much the loss changes when a parameter moves a little.
+## One Sentence Takeaway
 
-```text
-parameter = parameter - learning_rate * gradient
-```
+The gradient summarizes how the loss changes when parameters move.
 
-## Learning Loop
+## Notation Reboot
 
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;input x&quot;] --> B[&quot;prediction y_hat&quot;]
-  B --> C[&quot;loss&quot;]
-  C --> D[&quot;gradient&quot;]
-  D --> E[&quot;parameter update&quot;]
-  E --> B`"
-/>
+| Symbol | Fast reading | Model context |
+| --- | --- | --- |
+| `dL/dw` | how loss changes when `w` changes | single parameter |
+| `partial L / partial w_i` | effect of one variable inside many | partial derivative |
+| `grad_theta L` | direction signal across all parameters | optimizer input |
+| `theta <- theta - lr * grad` | update rule | gradient descent |
+| `chain rule` | influence flows backward through intermediate computations | backpropagation |
 
-## Why the Chain Rule Matters
-
-Neural networks are compositions of functions. Backpropagation works because the chain rule propagates the final loss back through earlier layers.
+## Mermaid Mental Model
 
 <MermaidDiagram
   :code="`flowchart LR
-  A[&quot;forward&quot;] --> B[&quot;representation&quot;]
-  B --> C[&quot;logits&quot;]
-  C --> D[&quot;loss&quot;]
-  D --> E[&quot;backward&quot;]
-  E --> F[&quot;gradients on parameters&quot;]`"
+  A[&quot;forward: input -> model&quot;] --> B[&quot;loss L&quot;]
+  B --> C[&quot;backward: gradients&quot;]
+  C --> D[&quot;optimizer step&quot;]
+  D --> E[&quot;updated parameters&quot;]`"
 />
-
-## Tiny Chain Rule Example
-
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;w changes&quot;] --> B[&quot;z changes&quot;]
-  B --> C[&quot;L changes&quot;]
-  C --> D[&quot;combine local effects&quot;]`"
-/>
-
-## Gradient To Update
 
 <MermaidDiagram
   :code="`flowchart TD
-  A[&quot;loss L&quot;] --> B[&quot;partial L / partial w&quot;]
-  B --> C[&quot;direction signal&quot;]
-  C --> D[&quot;optimizer update&quot;]`"
+  A[&quot;scalar derivative&quot;] --> B[&quot;partial derivatives&quot;]
+  B --> C[&quot;gradient vector&quot;]
+  C --> D[&quot;chain rule&quot;]
+  D --> E[&quot;backpropagation&quot;]
+  E --> F[&quot;parameter update&quot;]`"
 />
 
-## Stable vs Unstable Loss Curves
+## Intuition With One Concrete Example
+
+Take a tiny regression example:
+
+```text
+y_hat = wx
+L = (y_hat - y)^2
+```
+
+`dL/dw` tells you what happens to loss if `w` moves a little. Positive means moving `w` upward makes loss worse. Negative means moving `w` upward helps.
+
+With many parameters, those signals stack into a gradient vector.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;prediction error&quot;] --> B[&quot;loss&quot;]
+  B --> C[&quot;dL/dw&quot;]
+  C --> D[&quot;update w&quot;]
+  D --> E[&quot;new prediction&quot;]`"
+/>
 
 <MermaidDiagram
   :code="`xychart
     title &quot;Stable vs Unstable Loss Curves&quot;
     x-axis &quot;step&quot; [1, 2, 3, 4, 5, 6]
-    y-axis &quot;loss&quot; 0 --> 3.5
-    line [3.0, 2.2, 1.6, 1.1, 0.8, 0.6]
-    line [3.0, 2.4, 2.9, 1.7, 2.5, 1.4]`"
+    y-axis &quot;loss&quot; 0 --> 7
+    line [6.0, 4.8, 3.7, 2.9, 2.2, 1.8]
+    line [6.0, 5.7, 5.9, 5.1, 5.8, 4.9]`"
 />
 
-## Vanishing And Exploding Gradients
+## How This Shows Up In Papers
 
-- if gradients become too small, early layers barely learn,
-- if gradients become too large, updates become unstable.
+The canonical update rule is:
+
+```text
+theta <- theta - eta * grad_theta L
+```
+
+### Read The Gradient Formula Line By Line
+
+| Piece | Reading | Meaning |
+| --- | --- | --- |
+| `theta` | current parameters | all learnable weights |
+| `grad_theta L` | direction that increases loss | move against it |
+| `eta` | learning rate | step size |
+| `-` | opposite direction of the gradient | loss reduction |
+
+Another common paper form is:
+
+```text
+partial L / partial W = partial L / partial h * partial h / partial W
+```
+
+This is chain rule in compressed form. The loss depends on an intermediate representation `h`, and `h` depends on `W`, so the effect on `W` is the product of those dependencies.
+
+Gradient-scale problems also matter later in Transformers. Residual connections and normalization are partly about keeping optimization signals more stable.
+
+## How This Maps To PyTorch/Code
+
+- `loss.backward()` computes gradients through the graph
+- `param.grad` stores the gradient for each parameter
+- `optimizer.step()` applies the update
+- `optimizer.zero_grad()` prevents accidental accumulation
+
+Example links:
+
+- [gradient_chain_rule.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/gradient_chain_rule.py)
+- [linear_regression.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/torch-basics/linear_regression.py)
+
+## Common Failure Modes Or Misconceptions
+
+- Thinking derivatives are only about textbook slopes instead of update signals
+- Assuming bigger gradients are always better
+- Failing to connect learning rate to gradient scale
+- Treating `loss.backward()` as local loss math instead of graph-wide propagation
+- Missing why residuals and normalization matter for optimization stability
 
 <MermaidDiagram
   :code="`xychart
     title &quot;Gradient Scale Across Layers&quot;
-    x-axis &quot;layer&quot; [1, 2, 3, 4, 5]
-    y-axis &quot;|gradient|&quot; 0 --> 1.2
-    line [1.0, 0.55, 0.24, 0.08, 0.02]
-    line [0.10, 0.22, 0.45, 0.82, 1.10]`"
+    x-axis &quot;layer depth&quot; [1, 2, 3, 4, 5]
+    y-axis &quot;gradient magnitude&quot; 0 --> 5
+    line [1.8, 1.3, 0.9, 0.5, 0.2]
+    line [0.9, 1.2, 1.8, 2.9, 4.4]`"
 />
-
-## Optimization Loop
-
-<MermaidDiagram
-  :code="`flowchart LR
-  A[&quot;current parameters&quot;] --> B[&quot;compute loss&quot;]
-  B --> C[&quot;compute gradients&quot;]
-  C --> D[&quot;optimizer rule&quot;]
-  D --> E[&quot;new parameters&quot;]`"
-/>
-
-## Code Connection
-
-- `loss.backward()` accumulates gradients through the graph,
-- `parameter.grad` stores the local update signal,
-- `optimizer.step()` applies the update.
-
-## Model Connections
-
-| Math idea | Model role |
-| --- | --- |
-| derivative | local sensitivity of loss |
-| gradient | update direction |
-| chain rule | backpropagation |
 
 ## Exercises
 
-1. Explain what a positive gradient implies for the update direction.
-2. Explain what happens when the learning rate is too large.
-3. Explain why backpropagation depends on the chain rule.
+### Basic Check
+
+1. Explain `dL/dw` as “what happens to loss if `w` moves a little.”
+2. What happens if the learning rate is too large?
+3. Why do we need the chain rule?
+
+### Paper-Reading Drill
+
+1. Explain each term in `theta <- theta - eta * grad_theta L`.
+2. Explain `partial L / partial W = partial L / partial h * partial h / partial W` in plain language.
+3. If a paper says residuals improve optimization stability, how does that relate to gradients?
+
+### Code Drill
+
+1. In `gradient_chain_rule.py`, separate forward values from backward signals.
+2. In `linear_regression.py`, map `loss.backward()` and `optimizer.step()` to the math.
+3. Explain what you would observe if gradients accidentally accumulated across steps.
+
+## Bridge To Next Chapter
+
+Now the update signal is clear. The next step is to understand why model outputs are distributions, and how sampling, entropy, and calibration sit on top of that view.
 
 Next: [Probability and Softmax](/en/math/probability)
