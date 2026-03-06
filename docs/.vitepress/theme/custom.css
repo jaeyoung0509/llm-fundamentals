@@ -14,6 +14,19 @@
   --vp-font-family-mono: "JetBrains Mono", "SFMono-Regular", monospace;
 }
 
+.dark {
+  --vp-c-brand-1: #8fb8b0;
+  --vp-c-brand-2: #78a9a1;
+  --vp-c-brand-3: #5d9089;
+  --vp-c-brand-soft: rgba(143, 184, 176, 0.18);
+  --vp-c-bg: #15191d;
+  --vp-c-bg-soft: #1c2328;
+  --vp-c-bg-alt: #12171b;
+  --vp-c-text-1: #f3efe4;
+  --vp-c-text-2: #c3c8c2;
+  --vp-home-hero-name-background: linear-gradient(120deg, #c6e5de 0%, #f1b36b 100%);
+}
+
 body {
   background:
     radial-gradient(circle at top left, rgba(255, 216, 160, 0.28), transparent 30%),
@@ -21,9 +34,20 @@ body {
     linear-gradient(180deg, #fcfaf6 0%, #f7f5ef 100%);
 }
 
+.dark body {
+  background:
+    radial-gradient(circle at top left, rgba(77, 116, 116, 0.22), transparent 28%),
+    radial-gradient(circle at top right, rgba(190, 129, 68, 0.12), transparent 24%),
+    linear-gradient(180deg, #15191d 0%, #101417 100%);
+}
+
 .VPHomeHero .image-bg {
   background-image: linear-gradient(135deg, rgba(15, 61, 62, 0.28), rgba(197, 109, 31, 0.22));
   filter: blur(72px);
+}
+
+.dark .VPHomeHero .image-bg {
+  background-image: linear-gradient(135deg, rgba(143, 184, 176, 0.22), rgba(197, 109, 31, 0.16));
 }
 
 .VPHomeHero .image-container {
@@ -43,6 +67,12 @@ body {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   box-shadow: 0 18px 40px rgba(24, 33, 36, 0.07);
+}
+
+.dark .VPFeature {
+  border: 1px solid rgba(143, 184, 176, 0.14);
+  background: rgba(24, 31, 35, 0.78);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
 }
 
 .vp-doc h1,
@@ -68,6 +98,12 @@ body {
   box-shadow: 0 18px 40px rgba(24, 33, 36, 0.06);
 }
 
+.dark .mermaid-block {
+  border: 1px solid rgba(143, 184, 176, 0.16);
+  background: linear-gradient(180deg, rgba(24, 31, 35, 0.92), rgba(20, 25, 29, 0.92));
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+}
+
 .mermaid-diagram svg {
   display: block;
   max-width: 100%;
@@ -75,8 +111,16 @@ body {
   margin: 0 auto;
 }
 
+.mermaid-diagram svg {
+  background: transparent;
+}
+
 .mermaid-error {
   margin-top: 12px;
   color: #a0382b;
   font-size: 0.95rem;
+}
+
+.dark .mermaid-error {
+  color: #ef9f8f;
 }
