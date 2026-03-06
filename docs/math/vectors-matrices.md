@@ -28,6 +28,8 @@
 
 shape는 단순한 디버깅 도구가 아니라 의미 해석 도구다. `(batch, seq, dim)`이면 "문장 여러 개의 토큰 표현 묶음", `(seq, seq)`이면 "토큰끼리 관계 표"라고 읽어야 한다.
 
+shape는 단순한 디버깅 도구가 아니라 의미 해석 도구다. `(batch, seq, dim)`이면 "문장 여러 개의 토큰 표현 묶음", `(seq, seq)`이면 "토큰끼리 관계 표"라고 읽어야 한다.
+
 ## 표기법을 shape로 번역하기
 
 논문에서는 같은 연산이라도 기호가 압축돼서 나온다. 그래서 아래처럼 바로 번역하는 습관이 필요하다.
@@ -60,6 +62,10 @@ shape는 단순한 디버깅 도구가 아니라 의미 해석 도구다. `(batc
 ### 배치 데이터
 
 입력 배치가 `(batch, d)`라면 한 번에 여러 샘플을 같은 규칙으로 변환할 수 있다. 이게 딥러닝에서 행렬 연산이 중요한 이유다.
+
+### 미니배치와 GPU
+
+논문에서는 배치 차원이 생략돼도, 실제 코드에서는 거의 항상 배치 차원이 붙는다. 그래서 구현에서는 `batch` 차원을 자동으로 상상하는 습관이 중요하다.
 
 ### 미니배치와 GPU
 
@@ -116,6 +122,25 @@ Q = XW_Q, K = XW_K, V = XW_V
   C --> F[&quot;K&quot;]
   D --> G[&quot;V&quot;]`"
 />
+
+## 자주 나오는 shape 패턴
+
+| shape | 보통 뜻 |
+| --- | --- |
+| `(batch, dim)` | 배치 벡터 |
+| `(batch, seq, dim)` | 토큰 시퀀스 배치 |
+| `(seq, seq)` | attention score 또는 mask |
+| `(vocab, dim)` | 임베딩 테이블 |
+
+## 코드 연결
+
+- `nn.Linear(d, h)`는 보통 `(…, d)`를 `(…, h)`로 바꾼다
+- `x @ W`는 표현을 새 공간으로 투영하는 기본 연산이다
+- `query @ key.transpose(-2, -1)`는 토큰 관계 점수 표를 만든다
+
+## 작은 실험으로 확인하기
+
+- [self_attention.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/transformers/self_attention.py)에서 `weights.shape`와 `output.shape`를 직접 보면 `QK^T`와 가중합 결과 shape를 확인할 수 있다.
 
 ## 자주 나오는 shape 패턴
 

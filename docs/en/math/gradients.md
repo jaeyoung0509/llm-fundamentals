@@ -47,6 +47,8 @@ Neural networks are compositions of functions. Backpropagation works because the
   C --> D[&quot;combine local effects&quot;]`"
 />
 
+The key habit is not only computing a derivative, but seeing the path by which influence travels.
+
 ## Gradient To Update
 
 <MermaidDiagram
@@ -65,6 +67,19 @@ Neural networks are compositions of functions. Backpropagation works because the
   C --> D[&quot;optimizer rule&quot;]
   D --> E[&quot;new parameters&quot;]`"
 />
+
+## Vanishing And Exploding Gradients
+
+- if gradients become too small, early layers barely learn,
+- if gradients become too large, updates become unstable.
+
+This is why activations, initialization, and normalization matter.
+
+## Code Connection
+
+- `loss.backward()` accumulates gradients through the graph,
+- `parameter.grad` stores the local update signal,
+- `optimizer.step()` applies the update.
 
 ## Model Connections
 

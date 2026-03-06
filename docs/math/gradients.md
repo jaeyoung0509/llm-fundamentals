@@ -63,6 +63,8 @@ forward에서는 왼쪽에서 오른쪽으로 값을 계산하고, backward에�
 
 중요한 것은 미분값 하나를 계산하는 기술보다 "영향이 전달되는 경로"를 읽는 습관이다.
 
+중요한 것은 미분값 하나를 계산하는 기술보다 "영향이 전달되는 경로"를 읽는 습관이다.
+
 <MermaidDiagram
   :code="`flowchart LR
   A[&quot;w changes&quot;] --> B[&quot;z changes&quot;]
@@ -123,6 +125,15 @@ optimizer는 결국 이 gradient 신호를 얼마나, 어떤 방식으로 반영
 
 그래서 activation, initialization, normalization이 같이 중요해진다.
 
+## gradient가 사라지거나 커지는 문제
+
+깊은 네트워크에서는 gradient가 너무 작아지거나 너무 커져 학습이 어려워질 수 있다.
+
+- 너무 작아지면 앞단 층이 거의 안 배운다
+- 너무 커지면 업데이트가 불안정해진다
+
+그래서 activation, initialization, normalization이 같이 중요해진다.
+
 ## 논문에서 이렇게 읽는다
 
 예를 들어 아래 같은 문장을 만나면:
@@ -147,6 +158,16 @@ We optimize the parameters theta by minimizing cross-entropy with Adam.
   C --> D[&quot;optimizer rule&quot;]
   D --> E[&quot;new parameters&quot;]`"
 />
+
+## 코드 연결
+
+- `loss.backward()`는 계산 그래프를 거꾸로 따라가며 gradient를 누적한다
+- `parameter.grad`에는 각 파라미터의 기울기가 저장된다
+- `optimizer.step()`은 그 gradient를 이용해 파라미터를 갱신한다
+
+## 작은 실험으로 확인하기
+
+- [gradient_chain_rule.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/gradient_chain_rule.py)를 보면 chain rule과 PyTorch autograd 결과를 같이 확인할 수 있다.
 
 ## 코드 연결
 

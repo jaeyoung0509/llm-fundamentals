@@ -11,6 +11,8 @@
 
 This is the load-bearing section of the book. If the math layer stays fuzzy, PyTorch, Transformers, GPT-3, and RLHF all risk turning into vocabulary memorization.
 
+The goal is not to rebuild all of school math. The goal is to rebuild the minimum language needed to read models, formulas, and code without panic.
+
 ## One Sentence to Keep
 
 Math is not a separate school subject here. It is the language needed to read every later model and training loop.
@@ -65,11 +67,28 @@ Models do not output certainty. They estimate distributions over possible answer
 | Derivatives and Gradients | how do we reduce loss | [Derivatives and Gradients](/en/math/gradients) |
 | Probability and Softmax | why is model output a distribution | [Probability and Softmax](/en/math/probability) |
 
+## Math Reading Loop
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;read symbols&quot;] --> B[&quot;read shapes&quot;]
+  B --> C[&quot;read operation roles&quot;]
+  C --> D[&quot;interpret loss / probability&quot;]
+  D --> E[&quot;map to PyTorch code&quot;]
+  E --> F[&quot;read the formula again&quot;]`"
+/>
+
 ## Checklist
 
 - can you explain why vectors matter for representations,
 - can you explain gradients as loss-reduction signals,
 - can you explain why model outputs are distributions.
+
+## Example Links
+
+- [gradient_chain_rule.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/gradient_chain_rule.py)
+- [softmax_sampling.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/softmax_sampling.py)
+- [linear_regression.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/torch-basics/linear_regression.py)
 
 ## How This Connects Forward
 

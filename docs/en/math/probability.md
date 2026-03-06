@@ -29,6 +29,10 @@ A model is not a machine that always emits one certain answer. It produces a dis
   C --> D[&quot;distribution over candidates&quot;]`"
 />
 
+## Calibration Intuition
+
+High probability does not automatically mean trustworthy probability. Calibration asks whether predicted confidence matches actual correctness.
+
 ## Sampling Flow
 
 <MermaidDiagram
@@ -48,6 +52,13 @@ A model is not a machine that always emits one certain answer. It produces a dis
   C[&quot;minimize cross-entropy&quot;] --> D`"
 />
 
+## Entropy Intuition
+
+- sharp distributions have lower entropy,
+- flatter distributions have higher entropy.
+
+This helps when reasoning about stability and diversity.
+
 ## Next-Token Reading
 
 <MermaidDiagram
@@ -65,6 +76,12 @@ A model is not a machine that always emits one certain answer. It produces a dis
 | expectation | average loss, average reward |
 | variance | uncertainty and training stability |
 | softmax | turning logits into a readable distribution |
+
+## Code Connection
+
+- `torch.softmax(logits, dim=-1)` builds a distribution,
+- `torch.multinomial(probs, num_samples=1)` is a simple sampling example,
+- temperature changes the shape of that distribution.
 
 ## Exercises
 

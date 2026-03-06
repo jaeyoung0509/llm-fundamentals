@@ -36,6 +36,22 @@ Exponentials magnify score differences quickly. That is why softmax can turn mod
 
 Logarithms compress multiplicative structure and make very large or very small values easier to work with. That is why they appear in cross-entropy and negative log-likelihood.
 
+## Function Composition
+
+Neural networks are usually compositions of functions, not single functions.
+
+```text
+x -> linear -> activation -> logits -> softmax -> loss
+```
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;input x&quot;] --> B[&quot;f1: linear&quot;]
+  B --> C[&quot;f2: non-linearity&quot;]
+  C --> D[&quot;f3: logits&quot;]
+  D --> E[&quot;f4: probability / loss&quot;]`"
+/>
+
 ## Why Non-Linearity Matters
 
 Stacking only linear layers stays close to one large linear transform. Deep models become meaningfully expressive once non-linearities such as ReLU or GELU are inserted.
@@ -76,6 +92,17 @@ Stacking only linear layers stays close to one large linear transform. Deep mode
   C --> D[&quot;sum over tokens&quot;]
   D --> E[&quot;training loss&quot;]`"
 />
+
+## Perplexity Connection
+
+- when cross-entropy goes down, perplexity also goes down,
+- perplexity can be read as a rough measure of how confused the model still is about the next token.
+
+## Code Connection
+
+- `torch.softmax(logits, dim=-1)` makes logits readable as a distribution,
+- `torch.log(prob)` moves probabilities into log space,
+- `CrossEntropyLoss` compares logits and targets directly.
 
 ## Model Connections
 

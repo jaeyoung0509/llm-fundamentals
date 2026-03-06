@@ -26,6 +26,8 @@
 
 Many implementation mistakes are shape mistakes. Reading a model means reading both values and dimensions.
 
+Shapes are not only debugging tools. They are meaning tools. `(batch, seq, dim)` means token representations in a batch. `(seq, seq)` usually means a relation table over tokens.
+
 <MermaidDiagram
   :code="`flowchart TD
   A[&quot;x in R^d&quot;] --> B[&quot;one vector&quot;]
@@ -56,6 +58,21 @@ Many implementation mistakes are shape mistakes. Reading a model means reading b
   C --> F[&quot;K&quot;]
   D --> G[&quot;V&quot;]`"
 />
+
+## Common Shape Patterns
+
+| Shape | Common meaning |
+| --- | --- |
+| `(batch, dim)` | batch of vectors |
+| `(batch, seq, dim)` | batch of token sequences |
+| `(seq, seq)` | attention score table or mask |
+| `(vocab, dim)` | embedding table |
+
+## Code Connection
+
+- `nn.Linear(d, h)` usually maps `(…, d)` to `(…, h)`,
+- `x @ W` projects a representation,
+- `query @ key.transpose(-2, -1)` builds token-relation scores.
 
 ## Model Connections
 
