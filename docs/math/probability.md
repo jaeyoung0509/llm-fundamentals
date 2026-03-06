@@ -53,6 +53,12 @@
 
 학습에서 loss의 평균과 흔들림을 보는 것도 이 감각과 이어진다.
 
+## calibration 감각
+
+확률이 높다고 해서 항상 실제로도 정답률이 높은 것은 아니다. 모델이 내놓는 확률과 실제 맞는 비율이 얼마나 잘 맞는지를 calibration 관점으로 본다.
+
+즉, softmax 값이 높다는 것과 "정말 믿을 수 있다"는 것은 같은 말이 아니다.
+
 ## softmax와 sampling
 
 softmax는 점수를 분포처럼 읽을 수 있게 해 준다. 그 다음 선택 방식은 보통 둘 중 하나다.
@@ -81,6 +87,13 @@ temperature는 이 분포를 더 날카롭게 하거나 더 평평하게 만든�
 - cross-entropy는 실제 정답 분포와 모델 분포 차이를 줄이는 손실로 읽을 수 있다.
 
 표현이 달라 보여도 "정답에 더 높은 확률을 주도록 학습한다"는 핵심은 같다.
+
+## entropy를 어떻게 직관적으로 볼까
+
+- 분포가 뾰족하면 entropy가 낮다
+- 분포가 퍼져 있으면 entropy가 높다
+
+sampling 다양성과 출력 안정성을 같이 볼 때 이 감각이 유용하다.
 
 <MermaidDiagram
   :code="`flowchart TD
@@ -134,6 +147,16 @@ p_theta(y_t | y_<t, x)
 - 샘플마다 loss 흔들림이 크면 분산 관점으로 본다.
 - beam search, top-k, top-p는 모두 분포에서 무엇을 남길지 정하는 선택 규칙으로 읽는다.
 - calibration 문제는 높은 확률이 실제 정답률과 얼마나 맞는지의 문제다.
+
+## 코드 연결
+
+- `torch.softmax(logits, dim=-1)`는 분포를 만든다
+- `torch.multinomial(probs, num_samples=1)`는 sampling의 간단한 예다
+- temperature를 적용하면 분포 모양이 달라진다
+
+## 작은 실험으로 확인하기
+
+- [softmax_sampling.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/softmax_sampling.py)를 보면 같은 로짓에서 temperature가 분포와 샘플링에 어떤 변화를 주는지 볼 수 있다.
 
 ## 연습
 

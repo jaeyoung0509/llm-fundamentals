@@ -15,15 +15,15 @@
 
 ### Content
 
-- [ ] Deepen `Practical LLM Basics` to match the newer chapter density
-- [ ] Add more paper-reading cues and Mermaid support to remaining lighter English mirror pages
-- [ ] Add explicit code references or runnable examples where a chapter now discusses implementation but only gestures at examples
-- [ ] Add a glossary page for notation, common abbreviations, and LLM engineering vocabulary
+- [x] Deepen `Practical LLM Basics` to match the newer chapter density
+- [x] Add more paper-reading cues and Mermaid support to remaining lighter English mirror pages
+- [x] Add explicit code references or runnable examples where a chapter now discusses implementation but only gestures at examples
+- [x] Add a glossary page for notation, common abbreviations, and LLM engineering vocabulary
 
 ### Editorial and Structure
 
-- [ ] Remove stale in-page TODO blocks where content is already present
-- [ ] Align public guide pages and home pages with the current completion stage
+- [x] Remove stale in-page TODO blocks where content is already present
+- [x] Align public guide pages and home pages with the current completion stage
 - [ ] Keep repo-facing docs in English while keeping the ebook bilingual
 - [ ] Verify chapter order, sidebar labels, and chapter bridges after the deepened content pass
 

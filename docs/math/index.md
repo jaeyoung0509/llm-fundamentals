@@ -11,6 +11,8 @@
 
 이 책에서 수학 섹션은 선택 과목이 아니라 기반 공사다. 여기서 헷갈리면 이후 PyTorch, Transformer, GPT-3, RLHF를 전부 "용어 암기"로 배우게 된다.
 
+특히 이 장의 목적은 학교 수학을 전부 다시 하는 것이 아니다. 더 중요한 목표는 모델과 논문을 읽는 데 필요한 최소 언어를 다시 세우는 것이다.
+
 ## 이 장에서 꼭 가져갈 한 문장
 
 수학은 따로 존재하는 과목이 아니라, 이후 모든 모델과 학습 루프를 읽기 위한 언어다.
@@ -40,6 +42,17 @@
 | 벡터와 행렬 | 데이터를 어떻게 묶고 변환하는가 | [벡터와 행렬](/math/vectors-matrices) |
 | 미분과 gradient | 손실을 어떻게 줄이는가 | [미분과 gradient](/math/gradients) |
 | 확률과 softmax | 모델 출력은 왜 분포인가 | [확률과 softmax](/math/probability) |
+
+## 수학 학습 루프
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;기호 읽기&quot;] --> B[&quot;shape 읽기&quot;]
+  B --> C[&quot;연산 역할 읽기&quot;]
+  C --> D[&quot;loss / probability 해석&quot;]
+  D --> E[&quot;PyTorch 코드 대응&quot;]
+  E --> F[&quot;다시 논문 식 읽기&quot;]`"
+/>
 
 ## 최소 수학 실라버스
 
@@ -98,12 +111,25 @@ new_weight = old_weight - learning_rate * gradient
 
 이 기호들은 이름보다 역할로 읽는 습관이 중요하다. `W`를 보면 "가중치", `p`를 보면 "분포", `L`을 보면 "최소화 대상"이라고 바로 떠올라야 한다.
 
+## 논문 식을 읽는 4단계
+
+1. 데이터와 파라미터를 먼저 가른다.
+2. shape를 상상한다.
+3. 연산이 점수 계산인지, 정규화인지, 업데이트 신호인지 구분한다.
+4. 같은 아이디어를 코드에서 어떤 텐서 연산으로 구현하는지 대응시킨다.
+
 ## 이 장을 끝내면 할 수 있어야 하는 것
 
 - 논문 식에서 어떤 항이 데이터이고 어떤 항이 파라미터인지 구분한다.
 - `shape`를 말로 설명한다.
 - `softmax`, `log`, `expectation`, `gradient`가 왜 등장하는지 설명한다.
 - 수학 기호를 PyTorch 코드의 텐서 연산으로 대응시킨다.
+
+## 예제 연결
+
+- [gradient_chain_rule.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/gradient_chain_rule.py): chain rule과 autograd 연결
+- [softmax_sampling.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/softmax_sampling.py): logits, softmax, temperature 연결
+- [linear_regression.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/torch-basics/linear_regression.py): loss와 gradient 업데이트 복습
 
 ## 연습
 

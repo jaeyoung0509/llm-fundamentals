@@ -58,6 +58,24 @@
 
 처음에는 식 전체를 외우지 말고, `exp`는 점수 확대, `log`는 손실 해석, `f(x)`는 함수 합성이라는 정도만 붙잡아도 충분하다.
 
+## 함수 합성 감각
+
+신경망은 보통 함수 하나가 아니라 함수 합성이다.
+
+```text
+x -> linear -> activation -> logits -> softmax -> loss
+```
+
+그래서 긴 식이 나와도 "지금 어느 단계의 함수인가"를 나눠 읽는 습관이 중요하다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;input x&quot;] --> B[&quot;f1: linear&quot;]
+  B --> C[&quot;f2: non-linearity&quot;]
+  C --> D[&quot;f3: logits&quot;]
+  D --> E[&quot;f4: probability / loss&quot;]`"
+/>
+
 ## 왜 비선형성이 필요한가
 
 선형층만 여러 개 쌓으면 결국 하나의 큰 선형층과 크게 다르지 않다. 깊은 모델이 의미를 갖기 시작하는 지점은 ReLU, GELU 같은 비선형 함수가 들어갈 때다.
@@ -129,6 +147,13 @@ loss = -log(p_correct)
 
 이 감각이 없으면 학습 곡선, 온도 조절, cross-entropy 해석이 전부 따로 놀게 된다.
 
+## perplexity를 어떻게 연결할까
+
+LLM 문맥에서는 cross-entropy와 함께 perplexity가 자주 나온다. 여기서 중요한 것은 공식 암기보다 관계다.
+
+- cross-entropy가 내려가면 perplexity도 같이 내려간다
+- perplexity는 "모델이 다음 토큰을 얼마나 덜 헷갈려 하는가"를 보는 지표처럼 읽을 수 있다
+
 ## 모델 연결
 
 | 수학 개념 | 모델 예시 |
@@ -136,6 +161,12 @@ loss = -log(p_correct)
 | 함수 | 선형층, 활성화 함수, 손실 함수 |
 | 지수 | softmax의 분자 |
 | 로그 | negative log-likelihood, cross-entropy |
+
+## 코드 연결
+
+- `torch.softmax(logits, dim=-1)`는 로짓을 확률 분포처럼 읽게 만든다
+- `torch.log(prob)`는 확률을 로그 스케일로 옮긴다
+- `CrossEntropyLoss`는 로짓과 정답을 비교해 손실을 만든다
 
 ## 실수하기 쉬운 지점
 
@@ -174,6 +205,10 @@ L = -sum_t log p_theta(y_t | x, y_<t)
   C --> D[&quot;sum over tokens&quot;]
   D --> E[&quot;training loss&quot;]`"
 />
+
+## 작은 실험으로 확인하기
+
+- [softmax_sampling.py](https://github.com/jaeyoung0509/llm-fundamentals/blob/develop/examples/math/softmax_sampling.py)를 보면 같은 로짓에서 temperature가 분포를 어떻게 바꾸는지 확인할 수 있다.
 
 ## 생각해볼 질문
 
