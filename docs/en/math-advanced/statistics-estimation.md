@@ -10,6 +10,14 @@ Without this chapter, metric fluctuations and uncertainty often feel like noise.
 
 Statistics and estimation are the language of learning from limited samples under uncertainty.
 
+### 30-Second Intuition
+
+The easiest summary is: statistics is how you guess the whole world from a limited amount of data, while remembering that the guess can wobble.
+
+### Developer Lens
+
+If validation scores swing around, or sample counts are small, this chapter explains why. MLE is not a mysterious new algorithm; it is “pick the parameter that best explains the data.”
+
 ## Notation Reboot
 
 | Symbol | Fast reading | Model context |

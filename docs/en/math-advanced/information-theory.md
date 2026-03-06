@@ -10,6 +10,14 @@ The core probability chapter introduced distributions. This chapter deepens that
 
 Information theory explains how spread out a distribution is, how different two distributions are, and how much information one variable carries about another.
 
+### 30-Second Intuition
+
+The easiest summary is: information theory measures how confused a model is and how far its distribution is from the target distribution. Entropy is spread; KL is mismatch.
+
+### Developer Lens
+
+If you already use cross-entropy loss, you are already using information theory. This chapter deepens the meaning of losses you already see in code.
+
 ## Notation Reboot
 
 | Symbol | Fast reading | Model context |

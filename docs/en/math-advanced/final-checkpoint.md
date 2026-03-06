@@ -10,6 +10,14 @@ If something still feels weak here, the issue is often not one missing definitio
 
 Advanced math fluency means reading periodicity, geometry, curvature, estimation, and distribution shift as one integrated paper language.
 
+### 30-Second Intuition
+
+The goal here is not to memorize every chapter. It is to look at one dense paper formula and quickly detect: “this is trig,” “this is KL,” “this is low-rank geometry,” or “this is curvature.”
+
+### How To Use This Page
+
+When a paper blocks you, return here first and classify the math signals. Then jump back only to the chapter that matches the blocker. You do not need to reread the whole track every time.
+
 ## Notation Reboot
 
 | Math layer | Common symbols | Fast reading |

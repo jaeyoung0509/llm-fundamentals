@@ -10,6 +10,14 @@ If this chapter is weak, terms like conditioning, curvature, and sensitivity rem
 
 Multivariable calculus reads how change spreads across many dimensions at once.
 
+### 30-Second Intuition
+
+Single-variable calculus asks what happens when one knob moves. Multivariable calculus asks what happens when thousands or millions of knobs move together.
+
+### Developer Lens
+
+You already use gradients. Jacobians are the bigger version for input-output sensitivity, and Hessians are the bigger version for local curvature and sharpness.
+
 ## Notation Reboot
 
 | Symbol | Fast reading | Model context |

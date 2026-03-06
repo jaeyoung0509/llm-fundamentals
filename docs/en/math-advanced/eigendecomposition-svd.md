@@ -10,6 +10,14 @@ If this chapter is weak, `U Sigma V^T` stays mechanical. If it is strong, large 
 
 SVD and eigendecomposition turn a matrix into principal directions and their strength.
 
+### 30-Second Intuition
+
+The easiest summary is: SVD tells you which directions matter most and how much they matter. Large matrices often behave like “a few important directions plus a lot of weak leftovers.”
+
+### Developer Lens
+
+Low-rank adapters and compression become easier once you read them as “do not adjust everything; adjust the most useful directions.”
+
 ## Notation Reboot
 
 | Symbol | Fast reading | Model context |

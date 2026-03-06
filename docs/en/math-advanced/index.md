@@ -10,6 +10,16 @@ This is not a broad school-math survey. It is an ML-relevant deep-dive branch fo
 
 The advanced math track is an optional acceleration path that turns higher-level formulas into readable model, implementation, and debugging language.
 
+### 30-Second Intuition
+
+This track is not “learn more math for its own sake.” It is “when a paper throws `sin`, `SVD`, `KL`, or `Hessian` at you, do not freeze; read the role.”
+
+### How To Read This Track
+
+- do not try to master every page in one pass,
+- follow the math signal that is blocking your current paper or model,
+- use the order `one-sentence takeaway -> diagram -> small example -> formula -> code`.
+
 ## Notation Reboot
 
 | Symbol | Fast reading | Main chapter link |

@@ -10,6 +10,14 @@ This chapter is not a proof-heavy convex optimization course. It is the practica
 
 Optimization and numerical stability explain not only how loss is reduced, but how that process stays reliable.
 
+### 30-Second Intuition
+
+This chapter is the story of walking downhill without falling over. A correct direction is not enough if the step size or the number scale is unstable.
+
+### Developer Lens
+
+`NaN`, exploding loss, mixed-precision weirdness, clipping, and warmup all belong to the same world: the math of whether training can numerically survive.
+
 ## Notation Reboot
 
 | Symbol | Fast reading | Model context |

@@ -10,6 +10,14 @@ If the trigonometry chapter taught one wave, this chapter teaches how many waves
 
 The Fourier view turns complex signals into combinations of frequency components.
 
+### 30-Second Intuition
+
+The easiest summary is: even a complicated pattern can be described as a mixture of slow waves and fast waves. That makes position and signal structure easier to represent.
+
+### Developer Lens
+
+Positional encoding is easier to read as “lay down different waves in different channels.” Spectral bias is easier to read as “the model learns slower patterns first.”
+
 ## Notation Reboot
 
 | Symbol | Fast reading | Model context |

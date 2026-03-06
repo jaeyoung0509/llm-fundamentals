@@ -10,6 +10,14 @@ Without this, embedding geometry, feature subspaces, and projection-heavy papers
 
 Advanced linear algebra is the language of directions, independence, projection, and compression inside representation spaces.
 
+### 30-Second Intuition
+
+The easiest summary is: this chapter studies where vectors point and how many truly independent directions matter. Models often operate by pushing information into a few useful directions.
+
+### Developer Lens
+
+A `Linear` layer is easier to read as “send this representation into a new directional space” than as “just multiply numbers.” Q/K/V projections are the same story.
+
 ## Notation Reboot
 
 | Symbol | Fast reading | Model context |

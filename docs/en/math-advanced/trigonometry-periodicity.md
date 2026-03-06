@@ -10,6 +10,14 @@ School trig may have felt like angle bookkeeping. In ML, the more useful view is
 
 Trigonometry is both the language of angles and the language of repeating signals, which makes it central to positional and rotational structure in models.
 
+### 30-Second Intuition
+
+The easiest way to think about trig here is: it is a way to write repeating waves as numbers. That is why it is useful for encoding order and relative position.
+
+### Developer Lens
+
+In code, this usually becomes `integer positions -> sin/cos table -> add or rotate embeddings`. Read it as a feature transform before you read it as abstract math.
+
 ## Notation Reboot
 
 | Symbol | Fast reading | Model context |
