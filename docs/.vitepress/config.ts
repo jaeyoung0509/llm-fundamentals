@@ -6,7 +6,8 @@ const koSidebar = [
     items: [
       { text: '프로젝트 소개', link: '/' },
       { text: '학습 가이드', link: '/guide/' },
-      { text: '로드맵', link: '/roadmap' }
+      { text: '로드맵', link: '/roadmap' },
+      { text: '용어집', link: '/glossary' }
     ]
   },
   {
@@ -46,7 +47,8 @@ const enSidebar = [
     items: [
       { text: 'Overview', link: '/en/' },
       { text: 'Learning Guide', link: '/en/guide/' },
-      { text: 'Roadmap', link: '/en/roadmap' }
+      { text: 'Roadmap', link: '/en/roadmap' },
+      { text: 'Glossary', link: '/en/glossary' }
     ]
   },
   {
