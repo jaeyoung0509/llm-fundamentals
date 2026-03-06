@@ -28,6 +28,19 @@ Transformers dramatically increased language-model capability by letting each to
   F --> G[&quot;FFN + residual&quot;]`"
 />
 
+## Transformer Block At A Glance
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;token ids&quot;] --> B[&quot;embedding&quot;]
+  B --> C[&quot;positional info&quot;]
+  C --> D[&quot;multi-head self-attention&quot;]
+  D --> E[&quot;add &amp; norm&quot;]
+  E --> F[&quot;feed-forward network&quot;]
+  F --> G[&quot;add &amp; norm&quot;]
+  G --> H[&quot;next layer or logits&quot;]`"
+/>
+
 ## Minimal Self-Attention Sketch
 
 ```python
@@ -39,6 +52,30 @@ output = weights @ value
 Runnable example:
 
 - `examples/transformers/self_attention.py`
+
+## Why Multi-Head Attention Helps
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;shared input X&quot;] --> B1[&quot;head 1&quot;]
+  A --> B2[&quot;head 2&quot;]
+  A --> B3[&quot;head 3&quot;]
+  B1 --> C[&quot;concat&quot;]
+  B2 --> C
+  B3 --> C
+  C --> D[&quot;output projection&quot;]`"
+/>
+
+## Decoder-Only Generation Loop
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;prompt tokens&quot;] --> B[&quot;masked self-attention&quot;]
+  B --> C[&quot;next-token logits&quot;]
+  C --> D[&quot;sampling or argmax&quot;]
+  D --> E[&quot;append next token&quot;]
+  E --> B`"
+/>
 
 ## Checklist
 

@@ -42,6 +42,15 @@ for inputs, targets in dataloader:
 
 이 다섯 줄을 이해하면 이후의 대부분은 이 패턴의 변형이다.
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;batch input&quot;] --> B[&quot;model forward&quot;]
+  B --> C[&quot;loss&quot;]
+  C --> D[&quot;backward&quot;]
+  D --> E[&quot;optimizer step&quot;]
+  E --> F[&quot;updated parameters&quot;]`"
+/>
+
 ## 텐서 shape를 읽는 습관
 
 딥러닝 코드에서 가장 자주 터지는 버그는 문법보다 shape에서 나온다. 최소한 아래 정도는 즉시 읽을 수 있어야 한다.
@@ -58,6 +67,14 @@ shape는 숫자 묶음이 아니라 "모델이 지금 무엇을 들고 있는가
 ## autograd를 어떻게 이해할까
 
 autograd는 "미분을 자동으로 해준다"에서 끝나지 않는다. 더 정확히는 forward에서 계산 그래프를 만들고, backward에서 그 그래프를 거꾸로 따라가며 gradient를 누적하는 시스템이다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;x tensor&quot;] --> B[&quot;forward ops&quot;]
+  B --> C[&quot;loss scalar&quot;]
+  C --> D[&quot;backward graph walk&quot;]
+  D --> E[&quot;x.grad / parameter.grad&quot;]`"
+/>
 
 ```python
 import torch
@@ -77,6 +94,14 @@ print(x.grad)  # dy/dx at x = 2
 ## Dataset과 DataLoader의 역할
 
 논문에서는 보통 데이터셋이 한 줄로 지나가지만, 구현에서는 이 부분이 학습 재현성과 속도를 크게 좌우한다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;raw samples&quot;] --> B[&quot;Dataset.__getitem__&quot;]
+  B --> C[&quot;DataLoader batching&quot;]
+  C --> D[&quot;mini-batch tensors&quot;]
+  D --> E[&quot;training loop&quot;]`"
+/>
 
 - `Dataset`: 한 샘플을 어떻게 읽고 반환할지 정의
 - `DataLoader`: 샘플을 배치로 묶고 섞고 병렬 로딩

@@ -28,6 +28,19 @@ Transformer는 각 토큰이 다른 토큰을 얼마나 참고할지 직접 계�
   F --> G[&quot;FFN + Residual&quot;]`"
 />
 
+## Transformer 블록을 한 번에 보기
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;token ids&quot;] --> B[&quot;embedding&quot;]
+  B --> C[&quot;positional info&quot;]
+  C --> D[&quot;multi-head self-attention&quot;]
+  D --> E[&quot;add &amp; norm&quot;]
+  E --> F[&quot;feed-forward network&quot;]
+  F --> G[&quot;add &amp; norm&quot;]
+  G --> H[&quot;next layer or logits&quot;]`"
+/>
+
 ## 최소 self-attention 구현 스케치
 
 ```python
@@ -39,6 +52,34 @@ output = weights @ value
 실행 가능한 예제:
 
 - `examples/transformers/self_attention.py`
+
+## multi-head attention이 왜 필요한가
+
+한 개의 attention만 쓰면 모든 관계를 한 종류의 점수 표로만 읽게 된다. multi-head는 서로 다른 관계를 병렬로 읽게 해준다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;shared input X&quot;] --> B1[&quot;head 1&quot;]
+  A --> B2[&quot;head 2&quot;]
+  A --> B3[&quot;head 3&quot;]
+  B1 --> C[&quot;concat&quot;]
+  B2 --> C
+  B3 --> C
+  C --> D[&quot;output projection&quot;]`"
+/>
+
+## decoder-only 생성 흐름
+
+GPT 계열을 읽으려면 encoder-decoder 전체보다 decoder-only 생성 루프를 먼저 보는 편이 낫다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;prompt tokens&quot;] --> B[&quot;masked self-attention&quot;]
+  B --> C[&quot;next-token logits&quot;]
+  C --> D[&quot;sampling or argmax&quot;]
+  D --> E[&quot;append next token&quot;]
+  E --> B`"
+/>
 
 ## 학습 포인트
 

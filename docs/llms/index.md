@@ -18,6 +18,15 @@ GPT-3의 핵심은 "새 구조"보다 "같은 구조를 엄청난 규모로 밀�
 | GPT-2 | 대규모 언어 모델의 생성 능력을 대중적으로 보여줌 |
 | GPT-3 | scale과 in-context learning의 위력을 강하게 드러냄 |
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;GPT-1&quot;] --> B[&quot;GPT-2&quot;]
+  B --> C[&quot;GPT-3&quot;]
+  A --> D[&quot;decoder-only recipe&quot;]
+  B --> E[&quot;larger scale&quot;]
+  C --> F[&quot;in-context learning signal&quot;]`"
+/>
+
 ## 꼭 이해해야 하는 것
 
 - decoder-only autoregressive 구조
@@ -25,6 +34,29 @@ GPT-3의 핵심은 "새 구조"보다 "같은 구조를 엄청난 규모로 밀�
 - scale law의 직관
 - few-shot과 zero-shot의 차이
 - 한계: 비용, 환각, 제어 어려움
+
+## autoregressive 생성 그림
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;context tokens&quot;] --> B[&quot;decoder-only Transformer&quot;]
+  B --> C[&quot;next-token distribution&quot;]
+  C --> D[&quot;pick one token&quot;]
+  D --> E[&quot;append to context&quot;]
+  E --> B`"
+/>
+
+## scale이 의미하는 것
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;same core architecture&quot;] --> B[&quot;more parameters&quot;]
+  A --> C[&quot;more data&quot;]
+  A --> D[&quot;more compute&quot;]
+  B --> E[&quot;stronger few-shot behavior&quot;]
+  C --> E
+  D --> E`"
+/>
 
 ## 실무 연결
 

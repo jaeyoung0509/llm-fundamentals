@@ -28,6 +28,14 @@
 | 선형 + 활성화 + 선형 | 더 복잡한 패턴 표현 |
 | 깊은 MLP | 여러 단계 표현 학습 |
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;input&quot;] --> B[&quot;linear&quot;]
+  B --> C[&quot;activation&quot;]
+  C --> D[&quot;linear&quot;]
+  D --> E[&quot;logits&quot;]`"
+/>
+
 ## activation이 왜 필요한가
 
 활성화 함수가 없으면 층을 여러 개 쌓아도 결국 큰 선형 변환 하나와 크게 다르지 않다. ReLU, GELU 같은 비선형 함수가 들어가야 깊이가 표현력으로 바뀐다.
@@ -55,6 +63,16 @@ input -> linear -> activation -> linear -> logits -> loss
 
 forward에서는 값을 만들고, backward에서는 loss가 각 파라미터에 미친 영향을 거꾸로 전파한다. 이 관점이 잡혀야 backpropagation, residual connection, normalization도 덜 추상적으로 보인다.
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;input&quot;] --> B[&quot;representation&quot;]
+  B --> C[&quot;logits&quot;]
+  C --> D[&quot;loss&quot;]
+  D --> E[&quot;gradient&quot;]
+  E --> F[&quot;parameter update&quot;]
+  F --> B`"
+/>
+
 ## regularization과 normalization을 왜 보는가
 
 실무에서는 모델 구조만큼 학습 안정성도 중요하다.
@@ -65,6 +83,14 @@ forward에서는 값을 만들고, backward에서는 loss가 각 파라미터에
 - weight decay: 파라미터가 과도하게 커지는 것을 억제
 
 즉, 좋은 모델은 구조뿐 아니라 학습되는 방식까지 함께 설계된다.
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;model gets better on train&quot;] --> B{&quot;generalizes?&quot;}
+  B -->|&quot;yes&quot;| C[&quot;keep training policy&quot;]
+  B -->|&quot;no&quot;| D[&quot;add regularization&quot;]
+  D --> E[&quot;dropout / weight decay / normalization&quot;]`"
+/>
 
 ## 논문에서 자주 보이는 표현
 

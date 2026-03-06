@@ -40,6 +40,15 @@ for inputs, targets in dataloader:
 
 Most practical model training is a variation of this loop.
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;batch input&quot;] --> B[&quot;model forward&quot;]
+  B --> C[&quot;loss&quot;]
+  C --> D[&quot;backward&quot;]
+  D --> E[&quot;optimizer step&quot;]
+  E --> F[&quot;updated parameters&quot;]`"
+/>
+
 ## Shape reading
 
 The most common beginner failure in deep learning code is not syntax. It is shape confusion.
@@ -54,6 +63,14 @@ The most common beginner failure in deep learning code is not syntax. It is shap
 ## Why autograd matters
 
 Autograd records the forward computation graph and then walks backward through it to accumulate gradients.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;x tensor&quot;] --> B[&quot;forward ops&quot;]
+  B --> C[&quot;loss scalar&quot;]
+  C --> D[&quot;backward graph walk&quot;]
+  D --> E[&quot;x.grad / parameter.grad&quot;]`"
+/>
 
 ```python
 import torch
@@ -76,6 +93,14 @@ The important questions are:
 - `DataLoader`: batches, shuffles, and loads samples efficiently
 
 Papers often skip this layer quickly, but practical training quality depends on it.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;raw samples&quot;] --> B[&quot;Dataset.__getitem__&quot;]
+  B --> C[&quot;DataLoader batching&quot;]
+  C --> D[&quot;mini-batch tensors&quot;]
+  D --> E[&quot;training loop&quot;]`"
+/>
 
 ## Debugging checklist
 

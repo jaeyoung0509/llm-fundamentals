@@ -29,6 +29,18 @@ AI Engineering은 모델 성능만이 아니라 평가, 배포, 관측성, 비�
   F --> B`"
 />
 
+## eval-driven 개발 루프
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;task definition&quot;] --> B[&quot;eval set&quot;]
+  B --> C[&quot;prompt or model change&quot;]
+  C --> D[&quot;score results&quot;]
+  D --> E{&quot;better?&quot;}
+  E -->|&quot;yes&quot;| F[&quot;deploy candidate&quot;]
+  E -->|&quot;no&quot;| C`"
+/>
+
 ## 실무에서 자주 보는 질문
 
 ### eval-driven development
@@ -43,9 +55,26 @@ AI Engineering은 모델 성능만이 아니라 평가, 배포, 관측성, 비�
 | tool calling | 계산, 검색, 외부 API 호출 같은 행동 수행 |
 | agent workflow | 여러 단계의 계획과 실행을 조합 |
 
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;user request&quot;] --> B{&quot;what is missing?&quot;}
+  B -->|&quot;knowledge&quot;| C[&quot;RAG&quot;]
+  B -->|&quot;action&quot;| D[&quot;tool calling&quot;]
+  B -->|&quot;multi-step coordination&quot;| E[&quot;agent workflow&quot;]`"
+/>
+
 ### 모니터링
 
 운영에서는 정확도만 보면 부족하다. latency, 실패율, 비용, 사용자 피드백, 안전성 이벤트까지 같이 봐야 한다.
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;production traffic&quot;] --> B[&quot;latency / cost / quality&quot;]
+  B --> C[&quot;alerts&quot;]
+  C --> D[&quot;rollback or fix&quot;]
+  D --> E[&quot;new evaluation&quot;]
+  E --> F[&quot;redeploy&quot;]`"
+/>
 
 ## 운영 리스크 예시
 

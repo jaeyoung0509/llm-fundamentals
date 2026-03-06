@@ -28,6 +28,14 @@ A single perceptron gives you a simple linear decision boundary. Real data rarel
 | linear + activation + linear | more expressive patterns |
 | deeper MLP | layered representation learning |
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;input&quot;] --> B[&quot;linear&quot;]
+  B --> C[&quot;activation&quot;]
+  C --> D[&quot;linear&quot;]
+  D --> E[&quot;logits&quot;]`"
+/>
+
 ## Why activations matter
 
 Without activations, many stacked linear layers still collapse into something close to one large linear transform. ReLU and GELU are what turn depth into expressive power.
@@ -51,6 +59,16 @@ input -> linear -> activation -> linear -> logits -> loss
 
 Forward pass computes values. Backward pass sends influence from the loss back through the graph. This view makes backpropagation much easier to reason about.
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;input&quot;] --> B[&quot;representation&quot;]
+  B --> C[&quot;logits&quot;]
+  C --> D[&quot;loss&quot;]
+  D --> E[&quot;gradient&quot;]
+  E --> F[&quot;parameter update&quot;]
+  F --> B`"
+/>
+
 ## Regularization and normalization
 
 - regularization: reduce overfitting
@@ -59,6 +77,14 @@ Forward pass computes values. Backward pass sends influence from the loss back t
 - weight decay: discourage overly large parameters
 
 Model quality depends on the architecture and on how training is stabilized.
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;model improves on train&quot;] --> B{&quot;generalizes?&quot;}
+  B -->|&quot;yes&quot;| C[&quot;keep current setup&quot;]
+  B -->|&quot;no&quot;| D[&quot;add regularization&quot;]
+  D --> E[&quot;dropout / weight decay / normalization&quot;]`"
+/>
 
 ## Paper-reading cues
 

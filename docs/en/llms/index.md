@@ -18,6 +18,15 @@ The deepest lesson of GPT-3 is not a brand-new architecture, but what happens wh
 | GPT-2 | made large-scale language generation visible to many practitioners |
 | GPT-3 | highlighted scale and in-context learning much more clearly |
 
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;GPT-1&quot;] --> B[&quot;GPT-2&quot;]
+  B --> C[&quot;GPT-3&quot;]
+  A --> D[&quot;decoder-only recipe&quot;]
+  B --> E[&quot;larger scale&quot;]
+  C --> F[&quot;in-context learning signal&quot;]`"
+/>
+
 ## Must-Know Ideas
 
 - decoder-only autoregressive structure,
@@ -25,6 +34,29 @@ The deepest lesson of GPT-3 is not a brand-new architecture, but what happens wh
 - scale intuition,
 - few-shot vs zero-shot,
 - limitations in cost, hallucination, and control.
+
+## Autoregressive Generation
+
+<MermaidDiagram
+  :code="`flowchart LR
+  A[&quot;context tokens&quot;] --> B[&quot;decoder-only Transformer&quot;]
+  B --> C[&quot;next-token distribution&quot;]
+  C --> D[&quot;pick one token&quot;]
+  D --> E[&quot;append to context&quot;]
+  E --> B`"
+/>
+
+## What Scale Changes
+
+<MermaidDiagram
+  :code="`flowchart TD
+  A[&quot;same core architecture&quot;] --> B[&quot;more parameters&quot;]
+  A --> C[&quot;more data&quot;]
+  A --> D[&quot;more compute&quot;]
+  B --> E[&quot;stronger few-shot behavior&quot;]
+  C --> E
+  D --> E`"
+/>
 
 ## Checklist
 
