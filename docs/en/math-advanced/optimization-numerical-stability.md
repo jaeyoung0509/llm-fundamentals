@@ -53,6 +53,16 @@ The main question is not “which optimizer name is trendy,” but “why does t
 
 Even with a correct gradient direction, a learning rate that is too large can make loss jump wildly, while one that is too small can make training crawl.
 
+### Tiny Worked Example
+
+Suppose the current parameter is `w = 10` and the gradient is `g = 2`.
+
+- with learning rate `0.1`, the update gives `w = 9.8`
+- with learning rate `1.0`, the update gives `w = 8`
+- if the step is too large, you can jump across the valley instead of descending smoothly
+
+That is the basic optimization split: a correct direction can still fail if the step size is wrong.
+
 ### Formula Autopsy: Stable Softmax
 
 ```text

@@ -66,6 +66,17 @@ One line invokes several advanced layers:
 
 That is the main lesson of this track: advanced math is not separated by chapter once you reach real papers.
 
+### Worked Reading Order
+
+If a formula feels dense, use this order:
+
+1. separate probability symbols from linear-algebra symbols
+2. identify which part is the loss and which part is the regularizer
+3. reduce it to a tiny numeric example and ask what makes the penalty larger
+4. only then map each part into tensors and code
+
+This avoids the common failure mode of trying to understand every symbol at once.
+
 ## How This Shows Up In Papers
 
 ### Formula Autopsy: Advanced Reading Order

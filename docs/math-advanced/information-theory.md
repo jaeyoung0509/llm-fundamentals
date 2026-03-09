@@ -53,6 +53,15 @@ cross-entropy loss를 이미 쓰고 있다면 정보 이론을 이미 쓰고 있
 
 분포가 한 토큰에 몰려 있으면 entropy가 낮고, 여러 토큰에 퍼져 있으면 entropy가 높다. 이 감각은 생성 다양성, confidence, calibration을 읽을 때도 계속 나온다.
 
+### 아주 작은 숫자 예시
+
+정답 토큰이 첫 번째라고 하자.
+
+- 모델 A: `q = [0.7, 0.2, 0.1]`
+- 모델 B: `q = [0.4, 0.3, 0.3]`
+
+두 모델 모두 첫 번째 토큰을 가장 높게 보지만, 모델 A가 정답에 더 자신 있다. 그래서 `-log q(correct)`는 A가 더 작고, cross-entropy도 더 작다. 정보 이론은 결국 이런 "얼마나 자신 있게 맞췄는가"를 분포 전체로 읽는 언어다.
+
 ### Formula Autopsy: Cross-Entropy와 KL의 관계
 
 ```text

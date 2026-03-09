@@ -53,6 +53,15 @@ The key upgrade is to stop thinking only about single probabilities and start th
 
 A distribution concentrated on one token has low entropy. A flatter distribution has high entropy. That intuition links directly to confidence, diversity, and uncertainty in generation.
 
+### Tiny Worked Example
+
+Assume the correct token is the first one.
+
+- model A: `q = [0.7, 0.2, 0.1]`
+- model B: `q = [0.4, 0.3, 0.3]`
+
+Both models rank the correct token first, but model A is more confident on the correct answer. So `-log q(correct)` is smaller for A, and its cross-entropy is smaller too.
+
 ### Formula Autopsy: Cross-Entropy and KL
 
 ```text

@@ -56,6 +56,16 @@ You already know gradients as update signals. Jacobians and Hessians add two mor
 - Jacobian: how one input change affects many outputs
 - Hessian: how sharply the local loss landscape bends
 
+### Tiny Worked Example
+
+Take `L(w_1, w_2) = w_1^2 + 4w_2^2`.
+
+- at `w_1 = 1`, `w_2 = 1`, the gradient is `[2, 8]`
+- so the `w_2` direction is much steeper
+- the Hessian reflects the same asymmetry in curvature
+
+This one toy example already separates two ideas: gradient tells you where to move now, Hessian tells you which directions are sharper.
+
 ### Formula Autopsy: Second-Order Taylor Intuition
 
 ```text

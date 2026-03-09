@@ -20,6 +20,15 @@ This track is not “learn more math for its own sake.” It is “when a paper 
 - follow the math signal that is blocking your current paper or model,
 - use the order `one-sentence takeaway -> diagram -> small example -> formula -> code`.
 
+### What To Do When You Get Stuck
+
+1. Mark visible math signals such as `sin`, `rank`, `KL`, or `Jacobian`.
+2. Write one short phrase for each: position, direction, sensitivity, or distribution gap.
+3. Shrink the formula into a tiny numeric example.
+4. Only then map it into PyTorch operations.
+
+This prevents advanced notation from feeling like a sudden wall of definitions.
+
 ## Notation Reboot
 
 | Symbol | Fast reading | Main chapter link |
@@ -67,6 +76,16 @@ CE(p, q) = H(p) + KL(p || q)
 ```
 
 The first calls periodicity and angles. The second calls low-rank geometry. The third calls distribution comparison. The advanced track exists to make those formulas feel like readable engineering language instead of separate intimidating subjects.
+
+### Tiny Starting Example
+
+Take `CE(p, q) = H(p) + KL(p || q)`.
+
+- `CE`: the loss you optimize
+- `H(p)`: the difficulty of the target distribution itself
+- `KL(p || q)`: the extra mismatch from the model
+
+That habit of breaking one dense formula into role-sized pieces works across the whole advanced track.
 
 ## How This Shows Up In Papers
 

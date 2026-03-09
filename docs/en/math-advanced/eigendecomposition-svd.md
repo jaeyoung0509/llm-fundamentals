@@ -52,6 +52,16 @@ The simplest useful distinction: eigendecomposition is narrower, SVD is the broa
 
 If singular values fall quickly, only a few directions carry most of the structure. That means the matrix can be approximated well with fewer components.
 
+### Tiny Worked Example
+
+Take `X = [[5, 0], [0, 1]]`.
+
+- one direction is scaled by `5`
+- the other is scaled by only `1`
+- so the first direction matters much more
+
+A rank-1 approximation is then a simple idea: keep the strong direction and drop the weak one. That is often the easiest first mental model for SVD.
+
 ### Formula Autopsy: Low-Rank Approximation
 
 ```text

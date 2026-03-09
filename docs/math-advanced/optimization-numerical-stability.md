@@ -53,6 +53,16 @@
 
 같은 gradient라도 learning rate가 너무 크면 손실이 튀고, 너무 작으면 거의 움직이지 않는다. 따라서 optimization은 "방향이 맞는가"뿐 아니라 "걸음걸이가 적절한가"의 문제이기도 하다.
 
+### 아주 작은 숫자 예시
+
+현재 파라미터가 `w = 10`, gradient가 `g = 2`라고 하자.
+
+- learning rate가 `0.1`이면 업데이트 후 `w = 9.8`
+- learning rate가 `1.0`이면 업데이트 후 `w = 8`
+- learning rate가 너무 크면 한 번에 너무 멀리 뛰어 손실 골짜기를 지나칠 수 있다
+
+즉, gradient가 맞아도 step size가 틀리면 학습이 흔들릴 수 있다. optimizer를 읽을 때는 항상 "방향"과 "걸음 크기"를 따로 생각하는 편이 좋다.
+
 ### Formula Autopsy: Stable Softmax
 
 ```text

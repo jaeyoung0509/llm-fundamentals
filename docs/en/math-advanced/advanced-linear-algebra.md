@@ -60,6 +60,16 @@ In ML terms, that is the same kind of intuition behind “extract the component 
 
 Rank matters for the same reason. A large matrix can still behave like only a few meaningful directions are active. That is what makes low-rank compression possible.
 
+### Tiny Worked Example
+
+Let `u = [1, 0]` and `v = [3, 4]`. Here `u` is just the x-axis direction.
+
+- `v` contains both x and y information
+- projecting onto `u` gives `[3, 0]`
+- the y-direction value `4` is discarded
+
+That is the simplest useful projection intuition: do not keep everything, keep only the component along the direction you currently care about.
+
 ## How This Shows Up In Papers
 
 ### Formula Autopsy: Projection And Change Of Basis

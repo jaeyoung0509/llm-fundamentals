@@ -52,6 +52,15 @@ The crucial habit is to ask not only “what is the estimate,” but also “how
 
 The sample mean is simple but revealing. With few samples, the estimate fluctuates more. With many samples, it stabilizes. The same intuition underlies evaluation variance and confidence in results.
 
+### Tiny Worked Example
+
+Compare two mini-batches:
+
+- batch A: `[4, 5, 6]`, mean `5`
+- batch B: `[1, 5, 9]`, mean `5`
+
+The means match, but batch B is much more spread out. So average alone is not enough. This is exactly why variance and uncertainty matter in evaluation.
+
 ### Formula Autopsy: Maximum Likelihood Estimation
 
 ```text

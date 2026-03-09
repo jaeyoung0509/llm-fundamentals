@@ -55,6 +55,16 @@ Imagine a point moving around the unit circle. `cos(theta)` is its x-coordinate 
 
 Because of that periodicity, a model can encode positions not just as integers, but as combinations of waves at different frequencies.
 
+### Tiny Worked Example
+
+Take positions `0`, `1`, and `2` and look at one rough wave:
+
+- `sin(0) = 0`, `cos(0) = 1`
+- `sin(1) ≈ 0.84`, `cos(1) ≈ 0.54`
+- `sin(2) ≈ 0.91`, `cos(2) ≈ -0.42`
+
+The important part is not memorizing the numbers. Nearby positions produce nearby wave coordinates, so order becomes a smooth geometric change instead of a raw counter.
+
 ### Formula Autopsy: Sinusoidal Positional Encoding
 
 ```text

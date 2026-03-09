@@ -53,6 +53,15 @@ The main mental shift is to stop seeing a signal only in position space and also
 
 A complicated signal can often be decomposed into slow-changing components and fast-changing components. Positional encodings use the same idea: different frequencies capture different scales of positional difference.
 
+### Tiny Worked Example
+
+Compare these two signals:
+
+- slow signal: `[0.0, 0.4, 0.8, 1.0]`
+- fast signal: `[0.0, 1.0, 0.0, -1.0]`
+
+The first changes gradually. The second flips quickly. That is the core low-frequency vs high-frequency intuition, and it is exactly why multiple frequencies help encode position.
+
 ### Formula Autopsy: Fourier-Series Intuition
 
 ```text
